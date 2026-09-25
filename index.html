@@ -539,14 +539,7 @@
                         document.getElementById('mob-profile-name').innerText = data.name || currentUser.displayName;
                         var avatarUrl = data.photoURL;
                         if (!avatarUrl) {
-                            var hash = currentUser.uid.split('').reduce(function(a, b) {
-                                a = ((a << 5) - a) + b.charCodeAt(0);
-                                return a & a;
-                            }, 0);
-                            var colors = ['5E83A9', '8A9CB5', 'A1B3C8', '74A0C4', '4B739B'];
-                            var color = colors[Math.abs(hash) % colors.length];
-                            var letter = (data.name || '?').charAt(0).toUpperCase();
-                            avatarUrl = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='40' fill='%23" + color + "%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='30' font-weight='bold'%3E" + letter + "%3C/text%3E%3C/svg%3E";
+                            avatarUrl = generateAvatar(currentUser.uid, data.name);
                         }
                         document.getElementById('mob-profile-avatar').src = avatarUrl;
                         var infoHtml = '';
@@ -655,7 +648,7 @@
             var textEl = document.getElementById(device === 'desktop' ? 'desk-post-text' : 'mob-post-text');
             var text = textEl.value.trim();
             var fileInput = document.getElementById(device === 'desktop' ? 'desk-post-image' : 'mob-post-image');
-            var file = fileInput.files[0];
+            var file = fileInput ? fileInput.files[0] : null; // На десктопе может не быть input для файла, но на всякий случай
             if (!text && !file) {
                 alert("Напишите текст или выберите фото!");
                 return;
@@ -669,17 +662,22 @@
                 return;
             }
             textEl.value = '';
-            fileInput.value = '';
+            if(fileInput) fileInput.value = '';
             var btn = document.getElementById(device === 'desktop' ? 'desk-send-btn' : 'mob-send-btn');
-            var original = btn.innerText;
-            btn.innerText = '...';
-            btn.disabled = true;
+            var original = btn ? btn.innerText : '';
+            if(btn) {
+                btn.innerText = '...';
+                btn.disabled = true;
+            }
+            
+            // ИСПРАВЛЕНО: authorId вместо authorld
             var postData = {
                 authorName: currentUser.displayName,
-                authorId: currentUser.uid,
+                authorId: currentUser.uid, 
                 text: text,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             };
+            
             if (file) {
                 var storageRef = storage.ref('post_images/' + Date.now() + '_' + currentUser.uid);
                 storageRef.put(file).then(function() {
@@ -695,8 +693,10 @@
                     renderUI(device);
                 });
             }
-            btn.innerText = original;
-            btn.disabled = false;
+            if(btn) {
+                btn.innerText = original;
+                btn.disabled = false;
+            }
         }
 
         function renderUI(device) {
@@ -709,6 +709,7 @@
 
         function renderDesktopWall() {
             var container = document.getElementById('desktop-wall-content');
+            // ИСПРАВЛЕНО: authorId
             db.collection('posts').where('authorId', '==', currentUser.uid).orderBy('createdAt', 'desc').limit(50).get()
                 .then(function(snap) {
                     var html = '';
@@ -722,6 +723,7 @@
                             if (p.imageURL) {
                                 imgHtml = '<div class="post-image-container"><img src="' + p.imageURL + '" alt="Фото поста"></div>';
                             }
+                            // ИСПРАВЛЕНО: p.authorId
                             getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
                                 html += '<div class="desktop-post"><img src="' + avatar + '" class="post-avatar"><div><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div>';
                             });
@@ -743,6 +745,7 @@
                         return;
                     }
                     var chunk = ids.slice(0, 10);
+                    // ИСПРАВЛЕНО: authorId
                     db.collection('posts')
                         .where('authorId', 'in', chunk)
                         .orderBy('createdAt', 'desc')
@@ -759,6 +762,7 @@
                                     if (p.imageURL) {
                                         imgHtml = '<div class="post-image-container"><img src="' + p.imageURL + '"></div>';
                                     }
+                                    // ИСПРАВЛЕНО: p.authorId
                                     getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
                                         html += '<div class="desktop-post"><img src="' + avatar + '" class="post-avatar"><div><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div>';
                                     });
@@ -830,6 +834,7 @@
         function renderMobileWall() {
             if (unsubscribeWall) { unsubscribeWall(); unsubscribeWall = null; }
             var container = document.getElementById('mobile-wall-content');
+            // ИСПРАВЛЕНО: authorId
             unsubscribeWall = db.collection('posts')
                 .where('authorId', '==', currentUser.uid)
                 .orderBy('createdAt', 'desc')
@@ -846,6 +851,7 @@
                             if (p.imageURL) {
                                 imgHtml = '<div class="post-image-container"><img src="' + p.imageURL + '" alt="Фото поста"></div>';
                             }
+                            // ИСПРАВЛЕНО: p.authorId
                             getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
                                 html += '<div class="mobile-post"><div class="post-content-area"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div></div>';
                             });
@@ -856,6 +862,7 @@
         }
 
         function renderMobileNews() {
+            // ИСПРАВЛЕНО: добавлена проверка и присвоение unsubscribeNews
             if (unsubscribeNews) unsubscribeNews();
             var container = document.getElementById('mob-news');
             container.innerHTML = '<div class="mobile-empty"><h3>Загрузка...</h3></div>';
@@ -868,7 +875,8 @@
                         return;
                     }
                     var chunk = ids.slice(0, 10);
-                    db.collection('posts')
+                    // ИСПРАВЛЕНО: authorId и присвоение unsubscribeNews
+                    unsubscribeNews = db.collection('posts')
                         .where('authorId', 'in', chunk)
                         .orderBy('createdAt', 'desc')
                         .limit(50)
@@ -884,6 +892,7 @@
                                     if (p.imageURL) {
                                         imgHtml = '<div class="post-image-container"><img src="' + p.imageURL + '"></div>';
                                     }
+                                    // ИСПРАВЛЕНО: p.authorId
                                     getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
                                         html += '<div class="mobile-post"><div class="post-content-area"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div></div>';
                                     });
