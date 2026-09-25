@@ -569,27 +569,32 @@
         }
 
         // =============================================
-        // ИСПРАВЛЕННАЯ ФУНКЦИЯ getAvatar
-        // Всегда возвращает Promise, даже если берет из кэша
+        // ИСПРАВЛЕННАЯ ФУНКЦИЯ - ГАРАНТИРОВАННО ВОЗВРАЩАЕТ PROMISE
         // =============================================
         function getUserAvatar(userId, name) {
-            if (!userId) {
-                return Promise.resolve(generateAvatar('unknown', name || '?'));
-            }
-            if (avatarCache[userId]) {
-                return Promise.resolve(avatarCache[userId]);
-            }
-            return db.collection('users').doc(userId).get()
-                .then(function(doc) {
-                    var url = (doc.exists && doc.data().photoURL) ? doc.data().photoURL : generateAvatar(userId, name || (doc.exists ? doc.data().name : '?'));
-                    avatarCache[userId] = url;
-                    return url;
-                })
-                .catch(function() {
-                    var url = generateAvatar(userId, name || '?');
-                    avatarCache[userId] = url;
-                    return url;
-                });
+            return new Promise(function(resolve) {
+                if (!userId) {
+                    resolve(generateAvatar('unknown', name || '?'));
+                    return;
+                }
+                if (avatarCache[userId]) {
+                    resolve(avatarCache[userId]);
+                    return;
+                }
+                db.collection('users').doc(userId).get()
+                    .then(function(doc) {
+                        var url = (doc.exists && doc.data().photoURL) 
+                            ? doc.data().photoURL 
+                            : generateAvatar(userId, name || (doc.exists ? doc.data().name : '?'));
+                        avatarCache[userId] = url;
+                        resolve(url);
+                    })
+                    .catch(function() {
+                        var url = generateAvatar(userId, name || '?');
+                        avatarCache[userId] = url;
+                        resolve(url);
+                    });
+            });
         }
 
         function uploadAvatar() {
@@ -718,29 +723,25 @@
             var container = document.getElementById('desktop-wall-content');
             db.collection('posts').where('authorId', '==', currentUser.uid).orderBy('createdAt', 'desc').limit(50).get()
                 .then(function(snap) {
-                    var html = '';
                     if (snap.empty) {
-                        html = '<div style="text-align:center;padding:20px;color:#777;">Здесь пока пусто</div>';
-                    } else {
-                        var promises = [];
-                        snap.forEach(function(doc) {
-                            var p = doc.data();
-                            if (!p.authorId) return; // Пропускаем битые посты
-                            var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
-                            var imgHtml = '';
-                            if (p.imageURL) {
-                                imgHtml = '<div class="post-image-container"><img src="' + p.imageURL + '" alt="Фото поста"></div>';
-                            }
-                            var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                                html += '<div class="desktop-post"><img src="' + avatar + '" class="post-avatar"><div><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div>';
-                            });
-                            promises.push(promise);
-                        });
-                        Promise.all(promises).then(function() {
-                            container.innerHTML = html;
-                        });
+                        container.innerHTML = '<div style="text-align:center;padding:20px;color:#777;">Здесь пока пусто</div>';
+                        return;
                     }
-                    container.innerHTML = html;
+                    var html = '';
+                    var promises = [];
+                    snap.forEach(function(doc) {
+                        var p = doc.data();
+                        if (!p.authorId) return;
+                        var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
+                        var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '" alt="Фото поста"></div>' : '';
+                        var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
+                            html += '<div class="desktop-post"><img src="' + avatar + '" class="post-avatar"><div><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div>';
+                        });
+                        promises.push(promise);
+                    });
+                    Promise.all(promises).then(function() {
+                        container.innerHTML = html;
+                    });
                 });
         }
 
@@ -761,29 +762,25 @@
                         .orderBy('createdAt', 'desc')
                         .limit(50)
                         .onSnapshot(function(snapshot) {
-                            var html = '';
                             if (snapshot.empty) {
-                                html = '<div style="padding:20px;color:#777;">У друзей пока нет постов</div>';
-                            } else {
-                                var promises = [];
-                                snapshot.forEach(function(doc) {
-                                    var p = doc.data();
-                                    if (!p.authorId) return;
-                                    var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
-                                    var imgHtml = '';
-                                    if (p.imageURL) {
-                                        imgHtml = '<div class="post-image-container"><img src="' + p.imageURL + '"></div>';
-                                    }
-                                    var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                                        html += '<div class="desktop-post"><img src="' + avatar + '" class="post-avatar"><div><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div>';
-                                    });
-                                    promises.push(promise);
-                                });
-                                Promise.all(promises).then(function() {
-                                    container.innerHTML = html;
-                                });
+                                container.innerHTML = '<div style="padding:20px;color:#777;">У друзей пока нет постов</div>';
+                                return;
                             }
-                            container.innerHTML = html;
+                            var html = '';
+                            var promises = [];
+                            snapshot.forEach(function(doc) {
+                                var p = doc.data();
+                                if (!p.authorId) return;
+                                var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
+                                var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
+                                var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
+                                    html += '<div class="desktop-post"><img src="' + avatar + '" class="post-avatar"><div><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div>';
+                                });
+                                promises.push(promise);
+                            });
+                            Promise.all(promises).then(function() {
+                                container.innerHTML = html;
+                            });
                         });
                 });
         }
@@ -854,29 +851,25 @@
                 .orderBy('createdAt', 'desc')
                 .limit(50)
                 .onSnapshot(function(snapshot) {
-                    var html = '';
                     if (snapshot.empty) {
-                        html = '<div class="mobile-empty"><h3>Здесь пока пусто</h3></div>';
-                        container.innerHTML = html;
-                    } else {
-                        var promises = [];
-                        snapshot.forEach(function(doc) {
-                            var p = doc.data();
-                            if (!p.authorId) return;
-                            var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
-                            var imgHtml = '';
-                            if (p.imageURL) {
-                                imgHtml = '<div class="post-image-container"><img src="' + p.imageURL + '" alt="Фото поста"></div>';
-                            }
-                            var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                                html += '<div class="mobile-post"><div class="post-content-area"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div></div>';
-                            });
-                            promises.push(promise);
-                        });
-                        Promise.all(promises).then(function() {
-                            container.innerHTML = html;
-                        });
+                        container.innerHTML = '<div class="mobile-empty"><h3>Здесь пока пусто</h3></div>';
+                        return;
                     }
+                    var html = '';
+                    var promises = [];
+                    snapshot.forEach(function(doc) {
+                        var p = doc.data();
+                        if (!p.authorId) return;
+                        var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
+                        var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '" alt="Фото поста"></div>' : '';
+                        var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
+                            html += '<div class="mobile-post"><div class="post-content-area"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div></div>';
+                        });
+                        promises.push(promise);
+                    });
+                    Promise.all(promises).then(function() {
+                        container.innerHTML = html;
+                    });
                 });
         }
 
@@ -898,29 +891,25 @@
                         .orderBy('createdAt', 'desc')
                         .limit(50)
                         .onSnapshot(function(snapshot) {
-                            var html = '';
                             if (snapshot.empty) {
-                                html = '<div class="mobile-empty"><h3>У друзей пока нет постов</h3></div>';
-                                container.innerHTML = html;
-                            } else {
-                                var promises = [];
-                                snapshot.forEach(function(doc) {
-                                    var p = doc.data();
-                                    if (!p.authorId) return;
-                                    var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
-                                    var imgHtml = '';
-                                    if (p.imageURL) {
-                                        imgHtml = '<div class="post-image-container"><img src="' + p.imageURL + '"></div>';
-                                    }
-                                    var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                                        html += '<div class="mobile-post"><div class="post-content-area"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div></div>';
-                                    });
-                                    promises.push(promise);
-                                });
-                                Promise.all(promises).then(function() {
-                                    container.innerHTML = html;
-                                });
+                                container.innerHTML = '<div class="mobile-empty"><h3>У друзей пока нет постов</h3></div>';
+                                return;
                             }
+                            var html = '';
+                            var promises = [];
+                            snapshot.forEach(function(doc) {
+                                var p = doc.data();
+                                if (!p.authorId) return;
+                                var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
+                                var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
+                                var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
+                                    html += '<div class="mobile-post"><div class="post-content-area"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div></div>';
+                                });
+                                promises.push(promise);
+                            });
+                            Promise.all(promises).then(function() {
+                                container.innerHTML = html;
+                            });
                         });
                 });
         }
@@ -1063,23 +1052,22 @@
             var container = document.getElementById('mobile-friends-list');
             db.collection('friends').where('userId', '==', currentUser.uid).get()
                 .then(function(snap) {
-                    var html = '';
                     if (snap.empty) {
-                        html = '<div class="mobile-empty"><h3>Список друзей пуст</h3></div>';
-                    } else {
-                        var promises = [];
-                        snap.forEach(function(doc) {
-                            var f = doc.data();
-                            var promise = getUserAvatar(f.friendId, f.friendName).then(function(avatar) {
-                                html += '<div class="friend-item" onclick="openChat(\'' + f.friendId + '\')"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b></div></div></div>';
-                            });
-                            promises.push(promise);
-                        });
-                        Promise.all(promises).then(function() {
-                            container.innerHTML = html;
-                        });
+                        container.innerHTML = '<div class="mobile-empty"><h3>Список друзей пуст</h3></div>';
+                        return;
                     }
-                    container.innerHTML = html;
+                    var html = '';
+                    var promises = [];
+                    snap.forEach(function(doc) {
+                        var f = doc.data();
+                        var promise = getUserAvatar(f.friendId, f.friendName).then(function(avatar) {
+                            html += '<div class="friend-item" onclick="openChat(\'' + f.friendId + '\')"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b></div></div></div>';
+                        });
+                        promises.push(promise);
+                    });
+                    Promise.all(promises).then(function() {
+                        container.innerHTML = html;
+                    });
                 });
         }
 
@@ -1087,23 +1075,22 @@
             var container = document.getElementById('mobile-msg-list');
             db.collection('friends').where('userId', '==', currentUser.uid).get()
                 .then(function(snap) {
-                    var html = '';
                     if (snap.empty) {
-                        html = '<div class="mobile-empty"><h3>Нет сообщений</h3></div>';
-                    } else {
-                        var promises = [];
-                        snap.forEach(function(doc) {
-                            var f = doc.data();
-                            var promise = getUserAvatar(f.friendId, f.friendName).then(function(avatar) {
-                                html += '<div class="chat-item" onclick="openChat(\'' + f.friendId + '\')"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b></div></div></div>';
-                            });
-                            promises.push(promise);
-                        });
-                        Promise.all(promises).then(function() {
-                            container.innerHTML = html;
-                        });
+                        container.innerHTML = '<div class="mobile-empty"><h3>Нет сообщений</h3></div>';
+                        return;
                     }
-                    container.innerHTML = html;
+                    var html = '';
+                    var promises = [];
+                    snap.forEach(function(doc) {
+                        var f = doc.data();
+                        var promise = getUserAvatar(f.friendId, f.friendName).then(function(avatar) {
+                            html += '<div class="chat-item" onclick="openChat(\'' + f.friendId + '\')"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b></div></div></div>';
+                        });
+                        promises.push(promise);
+                    });
+                    Promise.all(promises).then(function() {
+                        container.innerHTML = html;
+                    });
                 });
         }
 
@@ -1111,23 +1098,22 @@
             var container = document.getElementById('desk-friends-list');
             db.collection('friends').where('userId', '==', currentUser.uid).get()
                 .then(function(snap) {
-                    var html = '';
                     if (snap.empty) {
-                        html = '<div style="padding:20px;color:#777;">У вас пока нет друзей</div>';
-                    } else {
-                        var promises = [];
-                        snap.forEach(function(doc) {
-                            var f = doc.data();
-                            var promise = getUserAvatar(f.friendId, f.friendName).then(function(avatar) {
-                                html += '<div class="friend-item" onclick="openChat(\'' + f.friendId + '\')" style="cursor:pointer;"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b></div></div></div>';
-                            });
-                            promises.push(promise);
-                        });
-                        Promise.all(promises).then(function() {
-                            container.innerHTML = html;
-                        });
+                        container.innerHTML = '<div style="padding:20px;color:#777;">У вас пока нет друзей</div>';
+                        return;
                     }
-                    container.innerHTML = html;
+                    var html = '';
+                    var promises = [];
+                    snap.forEach(function(doc) {
+                        var f = doc.data();
+                        var promise = getUserAvatar(f.friendId, f.friendName).then(function(avatar) {
+                            html += '<div class="friend-item" onclick="openChat(\'' + f.friendId + '\')" style="cursor:pointer;"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b></div></div></div>';
+                        });
+                        promises.push(promise);
+                    });
+                    Promise.all(promises).then(function() {
+                        container.innerHTML = html;
+                    });
                 });
         }
 
@@ -1135,23 +1121,22 @@
             var container = document.getElementById('desk-msg-list');
             db.collection('friends').where('userId', '==', currentUser.uid).get()
                 .then(function(snap) {
-                    var html = '';
                     if (snap.empty) {
-                        html = '<div style="padding:20px;color:#777;">Нет активных чатов</div>';
-                    } else {
-                        var promises = [];
-                        snap.forEach(function(doc) {
-                            var f = doc.data();
-                            var promise = getUserAvatar(f.friendId, f.friendName).then(function(avatar) {
-                                html += '<div class="chat-item" onclick="openChat(\'' + f.friendId + '\')" style="cursor:pointer;padding:10px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #ddd;"><img src="' + avatar + '" style="width:40px;height:40px;border-radius:50%;"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b></div></div>';
-                            });
-                            promises.push(promise);
-                        });
-                        Promise.all(promises).then(function() {
-                            container.innerHTML = html;
-                        });
+                        container.innerHTML = '<div style="padding:20px;color:#777;">Нет активных чатов</div>';
+                        return;
                     }
-                    container.innerHTML = html;
+                    var html = '';
+                    var promises = [];
+                    snap.forEach(function(doc) {
+                        var f = doc.data();
+                        var promise = getUserAvatar(f.friendId, f.friendName).then(function(avatar) {
+                            html += '<div class="chat-item" onclick="openChat(\'' + f.friendId + '\')" style="cursor:pointer;padding:10px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #ddd;"><img src="' + avatar + '" style="width:40px;height:40px;border-radius:50%;"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b></div></div>';
+                        });
+                        promises.push(promise);
+                    });
+                    Promise.all(promises).then(function() {
+                        container.innerHTML = html;
+                    });
                 });
         }
 
