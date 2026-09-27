@@ -8,7 +8,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tahoma', 'Verdana', Arial, sans-serif; }
@@ -366,7 +365,6 @@
     <!-- МОБИЛЬНЫЙ (В СТИЛЕ СТАРОГО ВК) -->
     <div id="mobile-app" class="mobile-view">
         
-        <!-- Верхние синие вкладки -->
         <div class="mobile-top-tabs">
             <div class="mobile-top-tab active" onclick="switchMobTopTab('news', this)">Новости</div>
             <div class="mobile-top-tab" onclick="switchMobTopTab('wall', this)">Стена</div>
@@ -374,12 +372,10 @@
             <div class="mobile-top-tab" onclick="switchMobTopTab('messages', this)">Диалоги</div>
         </div>
 
-        <!-- ====== СТРАНИЦА: НОВОСТИ ====== -->
         <div id="mob-news" class="mobile-view-container active">
             <div class="mobile-empty"><h3>Загрузка новостей...</h3></div>
         </div>
 
-        <!-- ====== СТРАНИЦА: СТЕНА (ПРОФИЛЬ) ====== -->
         <div id="mob-wall" class="mobile-view-container">
             <div id="mob-profile-render"></div>
             <div class="mobile-create-post">
@@ -393,7 +389,6 @@
             <div id="mobile-wall-content"></div>
         </div>
 
-        <!-- ====== СТРАНИЦА: ДРУЗЬЯ ====== -->
         <div id="mob-friends" class="mobile-view-container">
             <div style="padding:10px; background:#fff; border-bottom:1px solid #eee;">
                 <h3 style="font-size:15px; color:#000;">Друзья</h3>
@@ -402,13 +397,11 @@
             <div id="mobile-friends-list"></div>
         </div>
 
-        <!-- ====== СТРАНИЦА: СООБЩЕНИЯ ====== -->
         <div id="mob-msg" class="mobile-view-container">
             <div style="padding:10px; background:#fff; border-bottom:1px solid #eee;"><h3 style="font-size:15px; color:#000;">Сообщения</h3></div>
             <div id="mobile-msg-list"></div>
         </div>
 
-        <!-- ====== НИЖНЕЕ ЧЁРНОЕ МЕНЮ (СТАРЫЙ ВК) ====== -->
         <nav class="mobile-bottom-nav" style="position: fixed; bottom: 0; left: 0; width: 100%; height: 44px; background: #1A1A1A; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #000; z-index: 999;">
             <button class="mobile-tab-btn" onclick="switchMobTab('news')" style="display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1; height:100%; color:#999; font-size:10px; background:transparent; border:none; cursor:pointer;">
                 <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor" style="width:24px; height:24px;"><path d="M22 3H2v16h20V3zM4 5h16v10H4V5zm0 12h16v2H4v-2z"/></svg>
@@ -527,6 +520,7 @@
                     <button onclick="closeEditProfile()" style="background:#ccc; color:#333; border:none; padding:8px 20px; border-radius:2px; cursor:pointer;">Отмена</button>
                     <input type="file" id="avatar-upload" accept="image/*" style="display:none;" onchange="uploadAvatar()">
                     <button onclick="document.getElementById('avatar-upload').click()" style="background:#5cb85c; color:white; border:none; padding:8px 20px; border-radius:2px; cursor:pointer;">🖼️ Сменить аву</button>
+                    <button onclick="resetAvatar()" style="background:#d9534f; color:white; border:none; padding:8px 20px; border-radius:2px; cursor:pointer;">🗑️ Сбросить аву</button>
                 </div>
             </div>
         </div>
@@ -534,20 +528,19 @@
 
     <script>
         // =============================================
-        // КОНФИГУРАЦИЯ FIREBASE
+        // КОНФИГУРАЦИЯ FIREBASE (БЕЗ STORAGE)
         // =============================================
         var firebaseConfig = {
             apiKey: "AIzaSyCIBVlQhliefITacCWgtHJlol0s3QWYcZU",
             authDomain: "vk11-9074e.firebaseapp.com",
             projectId: "vk11-9074e",
-            storageBucket: "vk11-9074e.firebasestorage.app",
             messagingSenderId: "24051218089",
             appId: "1:24051218089:web:1d6fd28d41d21f7a841bb8"
         };
         firebase.initializeApp(firebaseConfig);
         var auth = firebase.auth();
         var db = firebase.firestore();
-        var storage = firebase.storage();
+        // Storage больше не используется — фото хранятся в Firestore как Base64
 
         var currentUser = null;
         var currentChatPartnerId = null;
@@ -558,7 +551,7 @@
         var unsubscribeGifts = null;
         var isRegisterMode = false;
         var avatarCache = {};
-        var MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+        var MAX_IMAGE_SIZE = 200 * 1024; // 200 КБ для Base64
 
         function toggleAuthMode() {
             isRegisterMode = !isRegisterMode;
@@ -691,7 +684,7 @@
         }
 
         // =============================================
-        // ЗАГРУЗКА ПРОФИЛЯ (ДЕСКТОП И МОБИЛЬНЫЙ)
+        // ЗАГРУЗКА ПРОФИЛЯ
         // =============================================
         function loadUserProfile() {
             db.collection('users').doc(currentUser.uid).get()
@@ -709,7 +702,6 @@
                         mobHtml += '<button class="edit-btn" onclick="openEditProfile()" style="margin-top:5px;">⚙️ Редактировать</button>';
                         mobHtml += '</div></div>';
 
-                        // Таблица с основной информацией
                         var infoTable = '<table class="mobile-profile-info-table">';
                         if (data.gender) infoTable += '<tr><td>Пол:</td><td>' + escapeHtml(data.gender) + '</td></tr>';
                         if (data.birthday) infoTable += '<tr><td>День рождения:</td><td>' + escapeHtml(data.birthday) + '</td></tr>';
@@ -719,7 +711,6 @@
                         infoTable += '</table>';
                         mobHtml += infoTable;
 
-                        // Контактная информация
                         if (data.city || data.mobile || data.website) {
                             mobHtml += '<div class="mobile-info-section"><div class="mobile-info-section-title">Контактная информация</div><div class="mobile-info-section-content">';
                             if (data.city) mobHtml += '<div>Город: <b>' + escapeHtml(data.city) + '</b></div>';
@@ -728,7 +719,6 @@
                             mobHtml += '</div></div>';
                         }
 
-                        // Личная информация
                         if (data.activity || data.interests || data.music || data.films || data.books || data.quotes) {
                             mobHtml += '<div class="mobile-info-section"><div class="mobile-info-section-title">Личная информация</div><div class="mobile-info-section-content">';
                             if (data.activity) mobHtml += '<div><b>Деятельность:</b> ' + escapeHtml(data.activity) + '</div>';
@@ -740,14 +730,11 @@
                             mobHtml += '</div></div>';
                         }
 
-                        // Монеты
                         if (data.coins !== undefined) {
                             mobHtml += '<div class="mobile-info-section"><div class="mobile-info-section-title">Игровая валюта</div><div class="mobile-info-section-content">💰 <b>' + data.coins + ' монет</b></div></div>';
                         }
 
                         document.getElementById('mob-profile-render').innerHTML = mobHtml;
-                        document.getElementById('mob-profile-name') && (document.getElementById('mob-profile-name').innerText = data.name || currentUser.displayName);
-                        document.getElementById('mob-profile-avatar') && (document.getElementById('mob-profile-avatar').src = avatarUrl);
 
                         // === ДЕСКТОПНЫЙ ПРОФИЛЬ ===
                         renderDesktopProfile(data, avatarUrl);
@@ -757,18 +744,15 @@
 
         function renderDesktopProfile(data, avatarUrl) {
             var html = '<div class="vk-profile-container">';
-            // Левая колонка — фото
             html += '<div class="vk-profile-left">';
             html += '<img src="' + avatarUrl + '" class="vk-profile-photo" onerror="this.src=\'' + generateAvatar(currentUser.uid, data.name) + '\'">';
             html += '<div style="font-size:11px; color:#777; text-align:center;">Фотографий: 0</div>';
             html += '</div>';
-            // Правая колонка — инфо
             html += '<div class="vk-profile-right">';
             html += '<div class="vk-profile-name">' + escapeHtml(data.name || currentUser.displayName) + '</div>';
             html += '<div class="vk-profile-status">' + (data.status ? escapeHtml(data.status) : '...') + '</div>';
             html += '<div style="font-size:11px; color:#999; margin-bottom:10px;">Обновлено недавно</div>';
 
-            // Таблица с основной информацией
             html += '<table class="vk-profile-info-table">';
             if (data.gender) html += '<tr><td>Пол:</td><td>' + escapeHtml(data.gender) + '</td></tr>';
             if (data.birthday) html += '<tr><td>День рождения:</td><td>' + escapeHtml(data.birthday) + '</td></tr>';
@@ -777,7 +761,6 @@
             if (data.religion) html += '<tr><td>Религ. взгляды:</td><td>' + escapeHtml(data.religion) + '</td></tr>';
             html += '</table>';
 
-            // Контактная информация
             if (data.city || data.mobile || data.website) {
                 html += '<div class="vk-info-section"><div class="vk-info-section-title">Контактная информация</div><div class="vk-info-section-content">';
                 if (data.city) html += '<div><b>Город:</b> ' + escapeHtml(data.city) + '</div>';
@@ -786,7 +769,6 @@
                 html += '</div></div>';
             }
 
-            // Личная информация
             if (data.activity || data.interests || data.music || data.films || data.books || data.quotes) {
                 html += '<div class="vk-info-section"><div class="vk-info-section-title">Личная информация</div><div class="vk-info-section-content">';
                 if (data.activity) html += '<div><b>Деятельность:</b> ' + escapeHtml(data.activity) + '</div>';
@@ -808,7 +790,7 @@
         }
 
         // =============================================
-        // РЕДАКТИРОВАНИЕ ПРОФИЛЯ (МОДАЛЬНОЕ ОКНО)
+        // РЕДАКТИРОВАНИЕ ПРОФИЛЯ
         // =============================================
         function openEditProfile() {
             db.collection('users').doc(currentUser.uid).get().then(function(doc) {
@@ -868,20 +850,67 @@
                 .catch(function(e) { alert("Ошибка: " + e.message); });
         }
 
+        // =============================================
+        // ЗАГРУЗКА АВАТАРКИ В BASE64 (БЕЗ STORAGE)
+        // =============================================
         function uploadAvatar() {
             var file = document.getElementById('avatar-upload').files[0];
             if (!file) return;
-            if (file.size > MAX_IMAGE_SIZE) { alert('Файл больше 5 МБ!'); return; }
-            var storageRef = storage.ref('avatars/' + currentUser.uid);
-            storageRef.put(file).then(function() {
-                storageRef.getDownloadURL().then(function(url) {
-                    db.collection('users').doc(currentUser.uid).update({ photoURL: url });
+            
+            // Сжимаем фото через Canvas до 200x200
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var img = new Image();
+                img.onload = function() {
+                    var canvas = document.createElement('canvas');
+                    var maxSize = 200;
+                    var width = img.width;
+                    var height = img.height;
+                    
+                    // Сохраняем пропорции
+                    if (width > height) {
+                        if (width > maxSize) { height = Math.round(height * maxSize / width); width = maxSize; }
+                    } else {
+                        if (height > maxSize) { width = Math.round(width * maxSize / height); height = maxSize; }
+                    }
+                    
+                    canvas.width = width;
+                    canvas.height = height;
+                    var ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    // Сжимаем в JPEG с качеством 70%
+                    var base64 = canvas.toDataURL('image/jpeg', 0.7);
+                    
+                    // Проверяем размер (Firestore лимит — 1 МБ на документ)
+                    if (base64.length > 900 * 1024) {
+                        // Если всё ещё большое — сжимаем сильнее
+                        base64 = canvas.toDataURL('image/jpeg', 0.5);
+                    }
+                    
+                    db.collection('users').doc(currentUser.uid).update({ photoURL: base64 })
+                        .then(function() {
+                            delete avatarCache[currentUser.uid];
+                            loadUserProfile();
+                            alert("✅ Аватарка обновлена!");
+                        })
+                        .catch(function(err) { alert("Ошибка: " + err.message); });
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            document.getElementById('avatar-upload').value = '';
+        }
+
+        function resetAvatar() {
+            if (!confirm("Сбросить аватарку? Текущее фото будет удалено.")) return;
+            db.collection('users').doc(currentUser.uid).update({ photoURL: "" })
+                .then(function() {
                     delete avatarCache[currentUser.uid];
                     loadUserProfile();
-                    alert("✅ Аватарка обновлена!");
-                });
-            }).catch(function(e) { alert("❌ Ошибка: " + e.message); });
-            document.getElementById('avatar-upload').value = '';
+                    alert("✅ Аватарка сброшена.");
+                })
+                .catch(function(e) { alert("Ошибка: " + e.message); });
         }
 
         function escapeHtml(text) {
@@ -908,9 +937,8 @@
                 if (avatarCache[userId]) { resolve(avatarCache[userId]); return; }
                 db.collection('users').doc(userId).get()
                     .then(function(doc) {
-                        var url = (doc.exists && doc.data().photoURL) 
-                            ? doc.data().photoURL 
-                            : generateAvatar(userId, name || (doc.exists ? doc.data().name : '?'));
+                        var photoURL = doc.exists ? doc.data().photoURL : null;
+                        var url = photoURL || generateAvatar(userId, name || (doc.exists ? doc.data().name : '?'));
                         avatarCache[userId] = url;
                         resolve(url);
                     })
@@ -944,7 +972,6 @@
             var file = fileInput ? fileInput.files[0] : null;
             if (!text && !file) { alert("Напишите текст или выберите фото!"); return; }
             if (text.length > 2000) { alert("Слишком длинный пост!"); return; }
-            if (file && file.size > MAX_IMAGE_SIZE) { alert("Фото больше 5 МБ!"); return; }
             textEl.value = '';
             if(fileInput) fileInput.value = '';
             var btn = document.getElementById(device === 'desktop' ? 'desk-send-btn' : 'mob-send-btn');
@@ -959,17 +986,46 @@
             };
             
             if (file) {
-                var storageRef = storage.ref('post_images/' + Date.now() + '_' + currentUser.uid);
-                storageRef.put(file).then(function() {
-                    storageRef.getDownloadURL().then(function(imageURL) {
-                        postData.imageURL = imageURL;
-                        db.collection('posts').add(postData).then(function() { renderUI(device); });
-                    });
-                });
+                // Сжимаем фото поста через Canvas
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = new Image();
+                    img.onload = function() {
+                        var canvas = document.createElement('canvas');
+                        var maxSize = 600;
+                        var width = img.width;
+                        var height = img.height;
+                        if (width > height) {
+                            if (width > maxSize) { height = Math.round(height * maxSize / width); width = maxSize; }
+                        } else {
+                            if (height > maxSize) { width = Math.round(width * maxSize / height); height = maxSize; }
+                        }
+                        canvas.width = width;
+                        canvas.height = height;
+                        var ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        var base64 = canvas.toDataURL('image/jpeg', 0.6);
+                        
+                        // Firestore лимит 1 МБ. Если больше — сжимаем сильнее.
+                        if (base64.length > 900 * 1024) {
+                            base64 = canvas.toDataURL('image/jpeg', 0.4);
+                        }
+                        
+                        postData.imageURL = base64;
+                        db.collection('posts').add(postData).then(function() {
+                            renderUI(device);
+                            if(btn) { btn.innerText = original; btn.disabled = false; }
+                        });
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
             } else {
-                db.collection('posts').add(postData).then(function() { renderUI(device); });
+                db.collection('posts').add(postData).then(function() {
+                    renderUI(device);
+                    if(btn) { btn.innerText = original; btn.disabled = false; }
+                });
             }
-            if(btn) { btn.innerText = original; btn.disabled = false; }
         }
 
         function renderUI(device) {
