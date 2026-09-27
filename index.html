@@ -343,12 +343,21 @@
                     <div class="desktop-page-content"><p>Здесь будут настройки профиля.</p></div>
                 </div>
 
+                <!-- РАЗДЕЛ "МОИ ДРУЗЬЯ" — здесь будет меняться: список / профиль -->
                 <div id="desk-page-friends" style="display:none;">
-                    <div class="desktop-page-title">Мои Друзья</div>
-                    <div class="friends-search-box">
-                        <input type="text" id="desk-friends-search" placeholder="Поиск людей..." oninput="searchUsers('desktop')">
+                    <div class="desktop-page-title" id="desk-friends-title">Мои Друзья</div>
+                    <div id="desk-friends-list-view">
+                        <div class="friends-search-box">
+                            <input type="text" id="desk-friends-search" placeholder="Поиск людей..." oninput="searchUsers('desktop')">
+                        </div>
+                        <div class="desktop-page-content"><div id="desk-friends-list"></div></div>
                     </div>
-                    <div class="desktop-page-content"><div id="desk-friends-list"></div></div>
+                    <div id="desk-friends-profile-view" style="display:none;">
+                        <div class="desktop-page-content" id="desk-friends-profile"></div>
+                        <div class="desktop-page-content" style="border-top:1px solid #E4EAF0;">
+                            <div id="desk-friends-wall-content"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="desk-page-messages" style="display:none;">
@@ -390,12 +399,23 @@
             <div id="mobile-wall-content"></div>
         </div>
 
+        <!-- МОБИЛЬНЫЙ РАЗДЕЛ ДРУЗЬЯ — с переключением список/профиль -->
         <div id="mob-friends" class="mobile-view-container">
-            <div style="padding:10px; background:#fff; border-bottom:1px solid #eee;">
-                <h3 style="font-size:15px; color:#000;">Друзья</h3>
-                <input type="text" id="mob-search-input" placeholder="Поиск людей" style="width:100%; padding:6px; border:1px solid #ccc; margin-top:5px; border-radius:2px;" oninput="searchUsers('mobile')">
+            <div id="mob-friends-list-view">
+                <div style="padding:10px; background:#fff; border-bottom:1px solid #eee;">
+                    <h3 style="font-size:15px; color:#000;">Друзья</h3>
+                    <input type="text" id="mob-search-input" placeholder="Поиск людей" style="width:100%; padding:6px; border:1px solid #ccc; margin-top:5px; border-radius:2px;" oninput="searchUsers('mobile')">
+                </div>
+                <div id="mobile-friends-list"></div>
             </div>
-            <div id="mobile-friends-list"></div>
+            <div id="mob-friends-profile-view" style="display:none;">
+                <div style="padding:10px; background:#fff; border-bottom:1px solid #eee; display:flex; align-items:center;">
+                    <span onclick="closeUserProfileMobile()" style="cursor:pointer; font-size:20px; color:#5E83A9; margin-right:10px;">←</span>
+                    <span style="font-weight:bold; color:#2B587A;" id="mob-profile-title">Профиль</span>
+                </div>
+                <div id="mob-friends-profile"></div>
+                <div id="mob-friends-wall-content"></div>
+            </div>
         </div>
 
         <div id="mob-msg" class="mobile-view-container">
@@ -407,9 +427,6 @@
             <div style="padding:10px; background:#fff; border-bottom:1px solid #eee;"><h3 style="font-size:15px; color:#000;">Мои Фотографии</h3></div>
             <div id="mobile-photos-list" style="display:grid; grid-template-columns:repeat(2,1fr); gap:8px; padding:10px;"></div>
         </div>
-
-        <!-- КОНТЕЙНЕР ДЛЯ ЧУЖОГО ПРОФИЛЯ (мобильный) -->
-        <div id="mob-user-profile" class="mobile-view-container" style="min-height:calc(100vh - 80px);"></div>
 
         <nav style="position: fixed; bottom: 0; left: 0; width: 100%; height: 44px; background: #1A1A1A; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #000; z-index: 999;">
             <button onclick="switchMobTab('news')" style="display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1; height:100%; color:#999; font-size:10px; background:transparent; border:none; cursor:pointer;">
@@ -603,7 +620,12 @@
             if (target) target.classList.add('active');
             if (tab === 'news') renderMobileNews();
             else if (tab === 'wall') { loadUserProfile(); renderMobileWall(); }
-            else if (tab === 'friends') renderMobileFriends();
+            else if (tab === 'friends') {
+                // При заходе в друзья — показываем список
+                document.getElementById('mob-friends-list-view').style.display = 'block';
+                document.getElementById('mob-friends-profile-view').style.display = 'none';
+                renderMobileFriends();
+            }
             else if (tab === 'messages') renderMobileMessages();
         }
 
@@ -630,13 +652,17 @@
             var targetEl = document.getElementById('mob-' + tab);
             if (targetEl) targetEl.classList.add('active');
             if (tab === 'wall') { loadUserProfile(); renderMobileWall(); }
-            else if (tab === 'friends') renderMobileFriends();
+            else if (tab === 'friends') {
+                document.getElementById('mob-friends-list-view').style.display = 'block';
+                document.getElementById('mob-friends-profile-view').style.display = 'none';
+                renderMobileFriends();
+            }
             else if (tab === 'msg') renderMobileMessages();
             else if (tab === 'news') renderMobileNews();
         }
 
         // =============================================
-        // ПРОФИЛЬ (ПОЛНЫЙ, БЕЗ СОКРАЩЕНИЙ)
+        // ПРОФИЛЬ
         // =============================================
         function buildProfileHtml(data, avatarUrl, userId, isMe) {
             var nameHtml = escapeHtml(data.name || 'Пользователь');
@@ -652,7 +678,6 @@
             html += '<div class="vk-profile-status">' + (data.status ? escapeHtml(data.status) : '...') + '</div>';
             html += '<div style="font-size:11px; color:#999; margin-bottom:10px;">Обновлено недавно</div>';
 
-            // Основная таблица
             var hasMainInfo = data.gender || data.birthday || data.hometown || data.political || data.religion;
             if (hasMainInfo) {
                 html += '<table class="vk-profile-info-table">';
@@ -664,7 +689,6 @@
                 html += '</table>';
             }
 
-            // Контактная информация
             if (data.city || data.mobile || data.website) {
                 html += '<div class="vk-info-section"><div class="vk-info-section-title">Контактная информация</div><div class="vk-info-section-content">';
                 if (data.city) html += '<div><b>Город:</b> ' + escapeHtml(data.city) + '</div>';
@@ -673,7 +697,6 @@
                 html += '</div></div>';
             }
 
-            // Личная информация
             if (data.activity || data.interests || data.music || data.films || data.books || data.quotes) {
                 html += '<div class="vk-info-section"><div class="vk-info-section-title">Личная информация</div><div class="vk-info-section-content">';
                 if (data.activity) html += '<div><b>Деятельность:</b> ' + escapeHtml(data.activity) + '</div>';
@@ -685,17 +708,14 @@
                 html += '</div></div>';
             }
 
-            // Монеты
             if (isMe && data.coins !== undefined) {
                 html += '<div class="vk-info-section"><div class="vk-info-section-title">Игровая валюта</div><div class="vk-info-section-content">💰 <b>' + data.coins + ' монет</b></div></div>';
             }
 
-            // Кнопки
             html += '<div style="margin-top:10px;">';
             if (isMe) {
                 html += '<button class="edit-btn" onclick="openEditProfile()">⚙️ Редактировать</button>';
             } else {
-                html += '<button class="edit-btn" onclick="closeUserProfile()" style="background:#ccc; color:#333;">← Назад к друзьям</button>';
                 html += '<button class="edit-btn" onclick="openChat(\'' + userId + '\')" style="background:#5E83A9; color:white;">✉️ Написать сообщение</button>';
             }
             html += '</div>';
@@ -1219,7 +1239,7 @@
         }
 
         // =============================================
-        // ДРУЗЬЯ (клик → ПРОФИЛЬ)
+        // ДРУЗЬЯ (ДЕСКТОП) — открытие профиля ВНУТРИ раздела
         // =============================================
         function renderMobileFriends() {
             var container = document.getElementById('mobile-friends-list');
@@ -1231,7 +1251,6 @@
                     snap.forEach(function(doc) {
                         var f = doc.data();
                         var promise = getUserAvatar(f.friendId, f.friendName).then(function(avatar) {
-                            // Клик → ПРОФИЛЬ
                             html += '<div class="friend-item" onclick="openUserProfileMobile(\'' + f.friendId + '\')"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b></div></div></div>';
                         });
                         promises.push(promise);
@@ -1254,8 +1273,7 @@
                         var name = u.name || 'Без имени';
                         if (query && name.toLowerCase().indexOf(query) === -1) return;
                         var promise = getUserAvatar(doc.id, name).then(function(avatar) {
-                            // Клик → ПРОФИЛЬ
-                            html += '<div class="friend-item" onclick="openUserProfile(\'' + doc.id + '\')" style="cursor:pointer;"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(name) + '</b></div></div></div>';
+                            html += '<div class="friend-item" onclick="openUserProfileDesktop(\'' + doc.id + '\')" style="cursor:pointer;"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(name) + '</b></div></div></div>';
                         });
                         promises.push(promise);
                     });
@@ -1266,30 +1284,33 @@
                 });
         }
 
-        // =============================================
-        // ОТКРЫТИЕ ЧУЖОГО ПРОФИЛЯ (десктоп)
-        // =============================================
-        function openUserProfile(userId) {
-            if (userId === currentUser.uid) return;
+        // ОТКРЫТИЕ ПРОФИЛЯ ВНУТРИ РАЗДЕЛА "МОИ ДРУЗЬЯ" (десктоп)
+        function openUserProfileDesktop(userId) {
             db.collection('users').doc(userId).get()
                 .then(function(doc) {
                     if (!doc.exists) { alert("Пользователь не найден"); return; }
                     var data = doc.data();
                     var avatarUrl = data.photoURL || generateAvatar(userId, data.name);
                     
-                    // Скрываем форму создания поста
-                    document.getElementById('desk-wall-post-input-block').style.display = 'none';
+                    // Скрываем список друзей, показываем профиль
+                    document.getElementById('desk-friends-list-view').style.display = 'none';
+                    document.getElementById('desk-friends-profile-view').style.display = 'block';
+                    
                     // Меняем заголовок
-                    document.getElementById('desk-wall-title').innerText = 'Страница ' + (data.name || 'Пользователя');
-                    // Показываем профиль
-                    document.getElementById('desk-wall-profile').innerHTML = buildProfileHtml(data, avatarUrl, userId, false);
-                    // Загружаем его посты
-                    renderUserWallDesktop(userId);
+                    document.getElementById('desk-friends-title').innerText = 'Страница ' + (data.name || 'Пользователя');
+                    
+                    // Кнопка назад + сам профиль
+                    var profileHtml = '<button class="edit-btn" onclick="closeUserProfileDesktop()" style="background:#ccc; color:#333; margin-bottom:10px;">← Назад к друзьям</button>';
+                    profileHtml += buildProfileHtml(data, avatarUrl, userId, false);
+                    document.getElementById('desk-friends-profile').innerHTML = profileHtml;
+                    
+                    // Загружаем посты пользователя
+                    renderUserWallDesktopInFriends(userId);
                 });
         }
 
-        function renderUserWallDesktop(userId) {
-            var container = document.getElementById('desktop-wall-content');
+        function renderUserWallDesktopInFriends(userId) {
+            var container = document.getElementById('desk-friends-wall-content');
             container.innerHTML = '<div style="text-align:center;padding:20px;color:#777;">Загрузка постов...</div>';
             db.collection('posts').where('authorId', '==', userId).orderBy('createdAt', 'desc').limit(50).get()
                 .then(function(snap) {
@@ -1313,43 +1334,36 @@
                 });
         }
 
-        function closeUserProfile() {
-            // Возвращаемся в "Мои Друзья"
-            showDeskPage('friends');
+        function closeUserProfileDesktop() {
+            // Возвращаемся к списку друзей
+            document.getElementById('desk-friends-list-view').style.display = 'block';
+            document.getElementById('desk-friends-profile-view').style.display = 'none';
+            document.getElementById('desk-friends-title').innerText = 'Мои Друзья';
+            renderDesktopFriends('');
         }
 
-        // =============================================
-        // ОТКРЫТИЕ ЧУЖОГО ПРОФИЛЯ (мобильный)
-        // =============================================
+        // МОБИЛЬНЫЙ — открытие профиля внутри раздела "Друзья"
         function openUserProfileMobile(userId) {
             db.collection('users').doc(userId).get()
                 .then(function(doc) {
                     if (!doc.exists) { alert("Пользователь не найден"); return; }
                     var data = doc.data();
                     var avatarUrl = data.photoURL || generateAvatar(userId, data.name);
-                    var profileContainer = document.getElementById('mob-user-profile');
                     
-                    var html = '<div style="padding:10px; background:#fff; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">';
-                    html += '<span style="font-weight:bold; color:#2B587A;">' + escapeHtml(data.name || 'Профиль') + '</span>';
-                    html += '<span onclick="closeUserProfileMobile()" style="cursor:pointer; font-size:20px; color:#5E83A9;">←</span>';
-                    html += '</div>';
+                    // Скрываем список, показываем профиль
+                    document.getElementById('mob-friends-list-view').style.display = 'none';
+                    document.getElementById('mob-friends-profile-view').style.display = 'block';
+                    document.getElementById('mob-profile-title').innerText = data.name || 'Профиль';
                     
-                    html += buildMobileProfileHtml(data, avatarUrl, userId, false);
-                    html += '<div id="mob-user-wall-content" style="margin-top:10px;"></div>';
+                    document.getElementById('mob-friends-profile').innerHTML = buildMobileProfileHtml(data, avatarUrl, userId, false);
                     
-                    profileContainer.innerHTML = html;
-                    
-                    var containers = document.querySelectorAll('.mobile-view-container');
-                    for (var i = 0; i < containers.length; i++) containers[i].classList.remove('active');
-                    profileContainer.classList.add('active');
-                    
-                    renderUserWallMobile(userId);
+                    // Загружаем посты
+                    renderUserWallMobileInFriends(userId);
                 });
         }
 
-        function renderUserWallMobile(userId) {
-            var container = document.getElementById('mob-user-wall-content');
-            if (!container) return;
+        function renderUserWallMobileInFriends(userId) {
+            var container = document.getElementById('mob-friends-wall-content');
             container.innerHTML = '<div class="mobile-empty"><h3>Загрузка постов...</h3></div>';
             db.collection('posts').where('authorId', '==', userId).orderBy('createdAt', 'desc').limit(50).get()
                 .then(function(snap) {
@@ -1374,9 +1388,8 @@
         }
 
         function closeUserProfileMobile() {
-            var containers = document.querySelectorAll('.mobile-view-container');
-            for (var i = 0; i < containers.length; i++) containers[i].classList.remove('active');
-            document.getElementById('mob-friends').classList.add('active');
+            document.getElementById('mob-friends-list-view').style.display = 'block';
+            document.getElementById('mob-friends-profile-view').style.display = 'none';
             renderMobileFriends();
         }
 
@@ -1397,7 +1410,6 @@
                     snap.forEach(function(doc) {
                         var f = doc.data();
                         var promise = getUserAvatar(f.friendId, f.friendName).then(function(avatar) {
-                            // Клик → ЧАТ
                             html += '<div class="chat-item" onclick="openChat(\'' + f.friendId + '\')" style="cursor:pointer;padding:10px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #ddd;">';
                             html += '<img src="' + avatar + '" style="width:40px;height:40px;border-radius:50%;">';
                             html += '<div><b>' + escapeHtml(f.friendName || 'Друг') + '</b></div>';
@@ -1423,7 +1435,6 @@
                     snap.forEach(function(doc) {
                         var f = doc.data();
                         var promise = getUserAvatar(f.friendId, f.friendName).then(function(avatar) {
-                            // Клик → ЧАТ
                             html += '<div class="chat-item" onclick="openChat(\'' + f.friendId + '\')">';
                             html += '<div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b></div></div>';
                             html += '</div>';
@@ -1538,7 +1549,12 @@
             }
             else if (page === 'news') renderDesktopNews();
             else if (page === 'photos') renderDesktopPhotos();
-            else if (page === 'friends') renderDesktopFriends('');
+            else if (page === 'friends') {
+                document.getElementById('desk-friends-list-view').style.display = 'block';
+                document.getElementById('desk-friends-profile-view').style.display = 'none';
+                document.getElementById('desk-friends-title').innerText = 'Мои Друзья';
+                renderDesktopFriends('');
+            }
             else if (page === 'messages') renderDesktopMessages();
         }
 
