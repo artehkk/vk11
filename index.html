@@ -17,6 +17,24 @@
         ul { list-style: none; }
         #auth-error { color: red; font-size: 12px; margin-bottom: 10px; display: none; }
 
+        /* ====== ПЛАШКИ-СТАТУСЫ ====== */
+        .user-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 1px 6px;
+            border-radius: 8px;
+            margin-left: 5px;
+            color: #fff;
+            vertical-align: middle;
+            text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+        }
+        .badge-developer { background: #4A76A8; }
+        .badge-admin     { background: #d9534f; }
+        .badge-moder     { background: #5cb85c; }
+        .badge-ceo       { background: #f0ad4e; color: #4a3500; text-shadow: none; }
+        .badge-founder   { background: #8e44ad; }
+
         #auth-screen { display: flex; flex-direction: column; justify-content: flex-start; height: 100vh; background: #ffffff; }
         .auth-header-bar { background: #C9D1D8; height: 44px; display: flex; align-items: center; padding: 0 10px; border-bottom: 1px solid #b0b9c0; }
         .auth-header-bar svg { height: 24px; width: auto; fill: #fff; }
@@ -31,18 +49,7 @@
         .auth-signup-area button { width: 100%; background: #E5E9ED; color: #45688E; border: 1px solid #C5D0DB; padding: 8px; font-size: 14px; font-weight: bold; cursor: pointer; }
 
         .desktop-view { display: none; }
-        .desktop-header {
-            background: linear-gradient(to bottom, #6D98C6, #45739E);
-            height: 30px;
-            border-bottom: 1px solid #3B6082;
-            padding: 0 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-            font-size: 11px;
-            font-weight: bold;
-        }
+        .desktop-header { background: linear-gradient(to bottom, #6D98C6, #45739E); height: 30px; border-bottom: 1px solid #3B6082; padding: 0 15px; display: flex; justify-content: space-between; align-items: center; color: white; font-size: 11px; font-weight: bold; }
         .desktop-header .left { display: flex; align-items: center; gap: 10px; }
         .logo-svg { height: 18px; display: block; }
         .search-box { background: #fff; border-radius: 2px; padding: 1px 8px; height: 22px; display: flex; align-items: center; color: #777; }
@@ -137,7 +144,6 @@
         .friend-item:hover, .chat-item:hover { background: #f4f6f8; }
 
         .mobile-view { display: none; padding-bottom: 44px; background: #FFFFFF; min-height: 100vh; }
-        
         .mobile-top-tabs { background: linear-gradient(to bottom, #5E83A9, #3A6087); height: 36px; display: flex; align-items: stretch; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1E3A5F; }
         .mobile-top-tab { flex: 1; display: flex; align-items: center; justify-content: center; color: #C5D8EC; font-size: 12px; font-weight: bold; text-shadow: 0 1px 0 rgba(0,0,0,0.4); cursor: pointer; border-right: 1px solid #2A4B70; border-left: 1px solid #6F95B8; background: transparent; }
         .mobile-top-tab:first-child { border-left: none; }
@@ -212,7 +218,6 @@
 
     <div id="offline-banner">⚠️ Нет соединения с интернетом. Проверьте подключение.</div>
 
-    <!-- ЭКРАН ВХОДА -->
     <div id="auth-screen">
         <div class="auth-header-bar">
             <svg viewBox="0 0 24 24"><path d="M21.6 8.5c.3-.9.6-1.4-1.2-1.4h-2.9c-.9 0-1.3.5-1.5 1.2L14.5 13l-1.7-4.9c-.2-.6-.6-1-1.4-1H8.8c-.9 0-1.2.5-1.2.9 0 1.2 2.4 7.6 2.4 7.6s-1.6 2.3-1.8 2.5c-.2.2-.3.5-.3.8 0 .4.1.8.8.8h2.9v4.1c0 .5.2.7.8.7h2.5c.5 0 .8-.3.8-.8v-5.5c0-.8.4-1 1.2-1h1.4c1.2 0 1.4-.6 1.6-1.3l2.1-5.9z"/></svg>
@@ -232,24 +237,13 @@
         </div>
     </div>
 
-    <!-- ДЕСКТОП -->
     <div id="desktop-app" class="desktop-view">
         <div class="desktop-header">
             <div class="left">
                 <svg class="logo-svg" viewBox="0 0 400 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="bGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#d0dbe5;stop-opacity:1" />
-                        </linearGradient>
-                        <linearGradient id="textGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#b0c7da;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <rect x="0" y="10" width="24" height="28" rx="3" fill="url(#bGrad)" stroke="#6d7e8e" stroke-width="1"/>
+                    <rect x="0" y="10" width="24" height="28" rx="3" fill="#fff" stroke="#6d7e8e" stroke-width="1"/>
                     <text x="12" y="32" fill="#2B587A" font-family="Arial, sans-serif" font-weight="900" font-size="22" text-anchor="middle">B</text>
-                    <text x="32" y="33" fill="url(#textGrad)" font-family="Arial, sans-serif" font-weight="900" font-size="20" letter-spacing="0.5">КОНТАКТЕ</text>
+                    <text x="32" y="33" fill="#ffffff" font-family="Arial, sans-serif" font-weight="900" font-size="20" letter-spacing="0.5">КОНТАКТЕ</text>
                 </svg>
                 <div class="search-box">
                     <input type="text" placeholder="Поиск">
@@ -374,9 +368,7 @@
         </div>
     </div>
 
-    <!-- МОБИЛЬНЫЙ -->
     <div id="mobile-app" class="mobile-view">
-        
         <div class="mobile-top-tabs">
             <div class="mobile-top-tab active" onclick="switchMobTopTab('news', this)">Новости</div>
             <div class="mobile-top-tab" onclick="switchMobTopTab('wall', this)">Стена</div>
@@ -453,7 +445,6 @@
         </nav>
     </div>
 
-    <!-- ОКНО ЧАТА -->
     <div id="chat-interface">
         <div class="chat-header">
             <div class="back-btn" onclick="closeChat()">←</div>
@@ -466,7 +457,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА ДЛЯ ВИДЕО -->
     <div id="video-modal">
         <div class="modal-box">
             <div class="modal-header">
@@ -492,7 +482,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ ПРОФИЛЯ -->
     <div id="edit-profile-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
         <div style="background:#fff; width:90%; max-width:500px; max-height:90vh; overflow-y:auto; border:1px solid #C5D0DB; border-radius:2px;">
             <div style="background:linear-gradient(to bottom,#6D98C6,#45739E); color:white; padding:8px 15px; font-weight:bold; display:flex; justify-content:space-between; align-items:center;">
@@ -502,6 +491,7 @@
             <div style="padding:15px;">
                 <div style="margin-bottom:10px;"><label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Имя</label><input type="text" id="edit-name" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px;"></div>
                 <div style="margin-bottom:10px;"><label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Статус</label><input type="text" id="edit-status-text" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px;"></div>
+                <div style="margin-bottom:10px;"><label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Значок (developer / admin / moder / ceo / founder)</label><input type="text" id="edit-badge" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px;" placeholder="Оставь пустым, если нет"></div>
                 <div style="margin-bottom:10px;"><label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Пол</label><select id="edit-gender" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px;"><option value="">Не указан</option><option value="Мужской">Мужской</option><option value="Женский">Женский</option></select></div>
                 <div style="margin-bottom:10px;"><label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">День рождения</label><input type="text" id="edit-birthday" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px;"></div>
                 <div style="margin-bottom:10px;"><label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Родной город</label><input type="text" id="edit-hometown" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px;"></div>
@@ -528,9 +518,6 @@
     </div>
 
     <script>
-        // =============================================
-        // КОНФИГУРАЦИЯ FIREBASE
-        // =============================================
         var firebaseConfig = {
             apiKey: "AIzaSyCIBVlQhliefITacCWgtHJlol0s3QWYcZU",
             authDomain: "vk11-9074e.firebaseapp.com",
@@ -550,12 +537,43 @@
         var unsubscribeNews = null;
         var isRegisterMode = false;
         var avatarCache = {};
+        var badgeCache = {};
         var attachedVideoUrl = '';
         var attachedVideoTitle = '';
         var attachedVideoFor = '';
         var likesCache = {};
         var commentsCache = {};
         var openComments = {};
+
+        // === ПЛАШКИ ===
+        var BADGES = {
+            'developer': { text: 'Разработчик ВКонтакте', cls: 'badge-developer' },
+            'admin':     { text: 'Администратор',         cls: 'badge-admin' },
+            'moder':     { text: 'Модератор',             cls: 'badge-moder' },
+            'ceo':       { text: 'CEO вконтакте',         cls: 'badge-ceo' },
+            'founder':   { text: 'Основатель',            cls: 'badge-founder' }
+        };
+
+        function buildBadgeHtml(badgeCode) {
+            if (!badgeCode) return '';
+            var b = BADGES[badgeCode];
+            if (!b) return '';
+            return ' <span class="user-badge ' + b.cls + '">' + b.text + '</span>';
+        }
+
+        function getBadgeForUser(userId) {
+            return new Promise(function(resolve) {
+                if (!userId) { resolve(''); return; }
+                if (badgeCache[userId] !== undefined) { resolve(badgeCache[userId]); return; }
+                db.collection('users').doc(userId).get()
+                    .then(function(doc) {
+                        var b = doc.exists ? (doc.data().badge || '') : '';
+                        badgeCache[userId] = b;
+                        resolve(b);
+                    })
+                    .catch(function() { badgeCache[userId] = ''; resolve(''); });
+            });
+        }
 
         document.addEventListener('click', function(e) {
             var friendEl = e.target.closest('.friend-item');
@@ -606,6 +624,7 @@
                             gender: "", birthday: "", hometown: "",
                             political: "", religion: "", mobile: "", website: "",
                             activity: "", interests: "", music: "", films: "", books: "", quotes: "",
+                            badge: "",
                             createdAt: firebase.firestore.FieldValue.serverTimestamp()
                         });
                     })
@@ -648,6 +667,7 @@
             auth.signOut();
             currentUser = null;
             avatarCache = {};
+            badgeCache = {};
             location.reload();
         }
 
@@ -716,9 +736,6 @@
             else if (tab === 'news') renderMobileNews();
         }
 
-        // =============================================
-        // ЛАЙКИ
-        // =============================================
         function loadLikesForPosts(postIds, callback) {
             if (!postIds.length) { callback(); return; }
             var loaded = 0;
@@ -744,13 +761,8 @@
             var likeData = likesCache[postId] || { count: 0, users: [] };
             var userId = currentUser.uid;
             var idx = likeData.users.indexOf(userId);
-            if (idx === -1) {
-                likeData.users.push(userId);
-                likeData.count = likeData.users.length;
-            } else {
-                likeData.users.splice(idx, 1);
-                likeData.count = likeData.users.length;
-            }
+            if (idx === -1) { likeData.users.push(userId); likeData.count = likeData.users.length; }
+            else { likeData.users.splice(idx, 1); likeData.count = likeData.users.length; }
             likesCache[postId] = likeData;
             db.collection('likes').doc(postId).set({ count: likeData.count, users: likeData.users }).catch(function(e) { console.error('Like error:', e); });
             var btns = document.querySelectorAll('.post-action-btn[data-like-post="' + postId + '"]');
@@ -761,9 +773,6 @@
             });
         }
 
-        // =============================================
-        // КОММЕНТАРИИ (упрощённая версия без orderBy)
-        // =============================================
         function loadComments(postId, callback) {
             db.collection('comments').where('postId', '==', postId).get()
                 .then(function(snap) {
@@ -777,10 +786,7 @@
                     commentsCache[postId] = arr;
                     callback(arr);
                 })
-                .catch(function(e) {
-                    console.error('Comments load error:', e);
-                    callback([]);
-                });
+                .catch(function(e) { console.error('Comments load error:', e); callback([]); });
         }
 
         function toggleComments(postId) {
@@ -805,20 +811,21 @@
             var html = '';
             var promises = [];
             arr.forEach(function(c) {
-                var promise = getUserAvatar(c.data.authorId, c.data.authorName).then(function(avatar) {
+                var p1 = getUserAvatar(c.data.authorId, c.data.authorName);
+                var p2 = getBadgeForUser(c.data.authorId);
+                var promise = Promise.all([p1, p2]).then(function(res) {
+                    var avatar = res[0];
+                    var badgeHtml = buildBadgeHtml(res[1]);
                     var date = '';
                     try {
-                        if (c.data.createdAt && c.data.createdAt.toDate) {
-                            date = c.data.createdAt.toDate().toLocaleString('ru-RU');
-                        } else if (c.data.createdAt) {
-                            date = String(c.data.createdAt);
-                        }
+                        if (c.data.createdAt && c.data.createdAt.toDate) date = c.data.createdAt.toDate().toLocaleString('ru-RU');
+                        else if (c.data.createdAt) date = String(c.data.createdAt);
                     } catch (e) { date = ''; }
                     var deleteBtn = (c.data.authorId === currentUser.uid) ? '<span class="comment-delete" onclick="deleteComment(\'' + postId + '\', \'' + c.id + '\')">удалить</span>' : '';
                     html += '<div class="comment-item">';
                     html += '<img src="' + avatar + '">';
                     html += '<div class="comment-body">';
-                    html += '<span class="comment-author">' + escapeHtml(c.data.authorName || 'Аноним') + '</span>';
+                    html += '<span class="comment-author">' + escapeHtml(c.data.authorName || 'Аноним') + '</span>' + badgeHtml;
                     html += '<span class="comment-date">' + date + '</span>';
                     html += deleteBtn;
                     html += '<div class="comment-text">' + escapeHtml(c.data.text || '') + '</div>';
@@ -906,11 +913,9 @@
                 '</div></div>';
         }
 
-        // =============================================
-        // ПРОФИЛЬ
-        // =============================================
         function buildProfileHtml(data, avatarUrl, userId, isMe) {
             var nameHtml = escapeHtml(data.name || 'Пользователь');
+            var badgeHtml = buildBadgeHtml(data.badge);
             if (isMe) nameHtml += ' <span style="font-size:11px; color:#999; font-weight:normal;">(это вы)</span>';
             var html = '<div class="vk-profile-container">';
             html += '<div class="vk-profile-left">';
@@ -918,7 +923,7 @@
             if (isMe) html += '<div style="font-size:11px; color:#777; text-align:center;">Фотографий: <span id="photo-count">0</span></div>';
             html += '</div>';
             html += '<div class="vk-profile-right">';
-            html += '<div class="vk-profile-name">' + nameHtml + '</div>';
+            html += '<div class="vk-profile-name">' + nameHtml + badgeHtml + '</div>';
             html += '<div class="vk-profile-status">' + (data.status ? escapeHtml(data.status) : '...') + '</div>';
             html += '<div style="font-size:11px; color:#999; margin-bottom:10px;">Обновлено недавно</div>';
 
@@ -969,11 +974,12 @@
 
         function buildMobileProfileHtml(data, avatarUrl, userId, isMe) {
             var nameHtml = escapeHtml(data.name || 'Пользователь');
+            var badgeHtml = buildBadgeHtml(data.badge);
             if (isMe) nameHtml += ' <span style="font-size:11px; color:#999; font-weight:normal;">(это вы)</span>';
             var html = '<div class="mobile-profile-header">';
             html += '<img src="' + avatarUrl + '" class="mobile-profile-avatar" onerror="this.src=\'' + generateAvatar(userId, data.name) + '\'">';
             html += '<div style="flex:1;">';
-            html += '<div class="mobile-profile-name">' + nameHtml + '</div>';
+            html += '<div class="mobile-profile-name">' + nameHtml + badgeHtml + '</div>';
             if (data.status) html += '<div class="mobile-profile-status-text">' + escapeHtml(data.status) + '</div>';
             if (isMe) {
                 html += '<button class="edit-btn" onclick="openEditProfile()" style="margin-top:5px;">⚙️ Редактировать</button>';
@@ -1045,6 +1051,7 @@
                 var data = doc.data() || {};
                 document.getElementById('edit-name').value = data.name || '';
                 document.getElementById('edit-status-text').value = data.status || '';
+                document.getElementById('edit-badge').value = data.badge || '';
                 document.getElementById('edit-gender').value = data.gender || '';
                 document.getElementById('edit-birthday').value = data.birthday || '';
                 document.getElementById('edit-hometown').value = data.hometown || '';
@@ -1071,6 +1078,7 @@
             var updateData = {
                 name: name,
                 status: document.getElementById('edit-status-text').value.trim(),
+                badge: document.getElementById('edit-badge').value.trim(),
                 gender: document.getElementById('edit-gender').value,
                 birthday: document.getElementById('edit-birthday').value.trim(),
                 hometown: document.getElementById('edit-hometown').value.trim(),
@@ -1089,6 +1097,7 @@
             db.collection('users').doc(currentUser.uid).update(updateData)
                 .then(function() {
                     auth.currentUser.updateProfile({ displayName: name });
+                    badgeCache[currentUser.uid] = updateData.badge;
                     closeEditProfile();
                     loadUserProfile();
                     alert("✅ Профиль обновлён!");
@@ -1175,13 +1184,9 @@
                     var maxSize = 200;
                     var width = img.width;
                     var height = img.height;
-                    if (width > height) {
-                        if (width > maxSize) { height = Math.round(height * maxSize / width); width = maxSize; }
-                    } else {
-                        if (height > maxSize) { width = Math.round(width * maxSize / height); height = maxSize; }
-                    }
-                    canvas.width = width;
-                    canvas.height = height;
+                    if (width > height) { if (width > maxSize) { height = Math.round(height * maxSize / width); width = maxSize; } }
+                    else { if (height > maxSize) { width = Math.round(width * maxSize / height); height = maxSize; } }
+                    canvas.width = width; canvas.height = height;
                     var ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
                     var base64 = canvas.toDataURL('image/jpeg', 0.7);
@@ -1189,18 +1194,12 @@
                     db.collection('users').doc(currentUser.uid).update({ photoURL: base64 })
                         .then(function() {
                             return db.collection('photos').add({
-                                userId: currentUser.uid,
-                                userName: currentUser.displayName,
-                                imageURL: base64,
-                                source: 'avatar',
+                                userId: currentUser.uid, userName: currentUser.displayName,
+                                imageURL: base64, source: 'avatar',
                                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
                             });
                         })
-                        .then(function() {
-                            avatarCache = {};
-                            alert("✅ Аватарка обновлена!");
-                            loadUserProfile();
-                        })
+                        .then(function() { avatarCache = {}; alert("✅ Аватарка обновлена!"); loadUserProfile(); })
                         .catch(function(err) { alert("Ошибка: " + err.message); });
                 };
                 img.src = e.target.result;
@@ -1212,11 +1211,7 @@
         function resetAvatar() {
             if (!confirm("Сбросить аватарку?")) return;
             db.collection('users').doc(currentUser.uid).update({ photoURL: "" })
-                .then(function() {
-                    delete avatarCache[currentUser.uid];
-                    loadUserProfile();
-                    alert("✅ Аватарка сброшена.");
-                })
+                .then(function() { delete avatarCache[currentUser.uid]; loadUserProfile(); alert("✅ Аватарка сброшена."); })
                 .catch(function(e) { alert("Ошибка: " + e.message); });
         }
 
@@ -1225,10 +1220,7 @@
             container.innerHTML = '<div style="padding:20px;color:#777; grid-column: 1/-1;">Загрузка...</div>';
             db.collection('photos').where('userId', '==', currentUser.uid).orderBy('createdAt', 'desc').get()
                 .then(function(snap) {
-                    if (snap.empty) {
-                        container.innerHTML = '<div style="padding:20px;color:#777; grid-column: 1/-1;">У вас пока нет фотографий.</div>';
-                        return;
-                    }
+                    if (snap.empty) { container.innerHTML = '<div style="padding:20px;color:#777; grid-column: 1/-1;">У вас пока нет фотографий.</div>'; return; }
                     var html = '';
                     var getCurrentAvatar = db.collection('users').doc(currentUser.uid).get();
                     Promise.all([getCurrentAvatar, snap]).then(function(results) {
@@ -1241,11 +1233,8 @@
                             var isCurrent = (p.imageURL === currentPhotoURL);
                             var sourceLabel = p.source === 'avatar' ? '📷 Аватарка' : '🖼️ Из поста';
                             var actionsHtml = '';
-                            if (isCurrent) {
-                                actionsHtml = '<span class="current-badge">✔ Текущая ава</span>';
-                            } else {
-                                actionsHtml = '<button onclick="setAsAvatar(\'' + doc.id + '\')">Сделать авой</button>';
-                            }
+                            if (isCurrent) actionsHtml = '<span class="current-badge">✔ Текущая ава</span>';
+                            else actionsHtml = '<button onclick="setAsAvatar(\'' + doc.id + '\')">Сделать авой</button>';
                             html += '<div class="photo-item">';
                             html += '<img src="' + p.imageURL + '">';
                             html += '<div class="photo-source">' + sourceLabel + '</div>';
@@ -1255,9 +1244,7 @@
                         container.innerHTML = html;
                     });
                 })
-                .catch(function(e) {
-                    container.innerHTML = '<div style="padding:20px;color:#d9534f; grid-column: 1/-1;">Ошибка: ' + e.message + '</div>';
-                });
+                .catch(function(e) { container.innerHTML = '<div style="padding:20px;color:#d9534f; grid-column: 1/-1;">Ошибка: ' + e.message + '</div>'; });
         }
 
         function renderMobilePhotos() {
@@ -1265,10 +1252,7 @@
             container.innerHTML = '<div style="padding:20px;color:#777; grid-column: 1/-1; text-align:center;">Загрузка...</div>';
             db.collection('photos').where('userId', '==', currentUser.uid).orderBy('createdAt', 'desc').get()
                 .then(function(snap) {
-                    if (snap.empty) {
-                        container.innerHTML = '<div style="padding:20px;color:#777; grid-column: 1/-1; text-align:center;">У вас пока нет фотографий.</div>';
-                        return;
-                    }
+                    if (snap.empty) { container.innerHTML = '<div style="padding:20px;color:#777; grid-column: 1/-1; text-align:center;">У вас пока нет фотографий.</div>'; return; }
                     var html = '';
                     var getCurrentAvatar = db.collection('users').doc(currentUser.uid).get();
                     Promise.all([getCurrentAvatar, snap]).then(function(results) {
@@ -1280,11 +1264,8 @@
                             var isCurrent = (p.imageURL === currentPhotoURL);
                             var sourceLabel = p.source === 'avatar' ? '📷 Ава' : '🖼️ Пост';
                             var actionsHtml = '';
-                            if (isCurrent) {
-                                actionsHtml = '<span style="display:inline-block; background:#5cb85c; color:white; padding:2px 6px; border-radius:2px; font-size:10px;">✔ Текущая</span>';
-                            } else {
-                                actionsHtml = '<button onclick="setAsAvatar(\'' + doc.id + '\')" style="background:#5E83A9; color:white; border:none; padding:2px 6px; border-radius:2px; cursor:pointer; font-size:10px;">Сделать авой</button>';
-                            }
+                            if (isCurrent) actionsHtml = '<span style="display:inline-block; background:#5cb85c; color:white; padding:2px 6px; border-radius:2px; font-size:10px;">✔ Текущая</span>';
+                            else actionsHtml = '<button onclick="setAsAvatar(\'' + doc.id + '\')" style="background:#5E83A9; color:white; border:none; padding:2px 6px; border-radius:2px; cursor:pointer; font-size:10px;">Сделать авой</button>';
                             html += '<div style="background:#fff; border:1px solid #C5D0DB; padding:5px; text-align:center;">';
                             html += '<img src="' + p.imageURL + '" style="width:100%; height:120px; object-fit:cover; display:block;">';
                             html += '<div style="font-size:10px; color:#999; margin-top:3px;">' + sourceLabel + '</div>';
@@ -1294,9 +1275,7 @@
                         container.innerHTML = html;
                     });
                 })
-                .catch(function(e) {
-                    container.innerHTML = '<div style="padding:20px;color:#d9534f; grid-column: 1/-1; text-align:center;">Ошибка: ' + e.message + '</div>';
-                });
+                .catch(function(e) { container.innerHTML = '<div style="padding:20px;color:#d9534f; grid-column: 1/-1; text-align:center;">Ошибка: ' + e.message + '</div>'; });
         }
 
         function renderDesktopVideos() {
@@ -1304,10 +1283,7 @@
             container.innerHTML = '<div style="padding:20px;color:#777;">Загрузка...</div>';
             db.collection('videos').where('userId', '==', currentUser.uid).orderBy('createdAt', 'desc').get()
                 .then(function(snap) {
-                    if (snap.empty) {
-                        container.innerHTML = '<div style="padding:20px;color:#777;">У вас пока нет видеозаписей. Прикрепите видео к посту — оно появится здесь.</div>';
-                        return;
-                    }
+                    if (snap.empty) { container.innerHTML = '<div style="padding:20px;color:#777;">У вас пока нет видеозаписей.</div>'; return; }
                     var html = '';
                     snap.forEach(function(doc) {
                         var v = doc.data();
@@ -1315,27 +1291,17 @@
                         html += '<div class="video-item">';
                         html += '<div class="video-title">' + escapeHtml(v.title || 'Видео') + '</div>';
                         html += '<iframe src="' + v.videoUrl + '" allow="autoplay" allowfullscreen></iframe>';
-                        html += '<div class="video-meta">';
-                        html += '<span>' + date + '</span>';
-                        html += '<button onclick="deleteVideo(\'' + doc.id + '\')">🗑️ Удалить</button>';
-                        html += '</div>';
+                        html += '<div class="video-meta"><span>' + date + '</span><button onclick="deleteVideo(\'' + doc.id + '\')">🗑️ Удалить</button></div>';
                         html += '</div>';
                     });
                     container.innerHTML = html;
                 })
-                .catch(function(e) {
-                    container.innerHTML = '<div style="padding:20px;color:#d9534f;">Ошибка: ' + e.message + '</div>';
-                });
+                .catch(function(e) { container.innerHTML = '<div style="padding:20px;color:#d9534f;">Ошибка: ' + e.message + '</div>'; });
         }
 
         function deleteVideo(videoId) {
             if (!confirm("Удалить это видео?")) return;
-            db.collection('videos').doc(videoId).delete()
-                .then(function() {
-                    alert("✅ Видео удалено");
-                    renderDesktopVideos();
-                })
-                .catch(function(e) { alert("Ошибка: " + e.message); });
+            db.collection('videos').doc(videoId).delete().then(function() { alert("✅ Видео удалено"); renderDesktopVideos(); });
         }
 
         function setAsAvatar(photoDocId) {
@@ -1345,13 +1311,7 @@
                     if (!doc.exists) { alert("Фото не найдено"); return; }
                     return db.collection('users').doc(currentUser.uid).update({ photoURL: doc.data().imageURL });
                 })
-                .then(function() {
-                    avatarCache = {};
-                    alert("✅ Аватарка обновлена!");
-                    loadUserProfile();
-                    renderDesktopPhotos();
-                    renderMobilePhotos();
-                })
+                .then(function() { avatarCache = {}; alert("✅ Аватарка обновлена!"); loadUserProfile(); renderDesktopPhotos(); renderMobilePhotos(); })
                 .catch(function(e) { alert("Ошибка: " + e.message); });
         }
 
@@ -1363,10 +1323,7 @@
 
         function generateAvatar(userId, name) {
             if (!userId) userId = 'unknown';
-            var hash = userId.split('').reduce(function(a, b) {
-                a = ((a << 5) - a) + b.charCodeAt(0);
-                return a & a;
-            }, 0);
+            var hash = userId.split('').reduce(function(a, b) { a = ((a << 5) - a) + b.charCodeAt(0); return a & a; }, 0);
             var colors = ['5E83A9', '8A9CB5', 'A1B3C8', '74A0C4', '4B739B'];
             var color = colors[Math.abs(hash) % colors.length];
             var letter = (name || '?').charAt(0).toUpperCase();
@@ -1384,11 +1341,7 @@
                         avatarCache[userId] = url;
                         resolve(url);
                     })
-                    .catch(function() {
-                        var url = generateAvatar(userId, name || '?');
-                        avatarCache[userId] = url;
-                        resolve(url);
-                    });
+                    .catch(function() { var url = generateAvatar(userId, name || '?'); avatarCache[userId] = url; resolve(url); });
             });
         }
 
@@ -1420,10 +1373,8 @@
             var afterPostSave = function() {
                 if (hasVideo) {
                     return db.collection('videos').add({
-                        userId: currentUser.uid,
-                        userName: currentUser.displayName,
-                        videoUrl: videoUrlToSave,
-                        title: videoTitleToSave || 'Видео',
+                        userId: currentUser.uid, userName: currentUser.displayName,
+                        videoUrl: videoUrlToSave, title: videoTitleToSave || 'Видео',
                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
                     });
                 }
@@ -1436,15 +1387,10 @@
                     img.onload = function() {
                         var canvas = document.createElement('canvas');
                         var maxSize = 600;
-                        var width = img.width;
-                        var height = img.height;
-                        if (width > height) {
-                            if (width > maxSize) { height = Math.round(height * maxSize / width); width = maxSize; }
-                        } else {
-                            if (height > maxSize) { width = Math.round(width * maxSize / height); height = maxSize; }
-                        }
-                        canvas.width = width;
-                        canvas.height = height;
+                        var width = img.width; var height = img.height;
+                        if (width > height) { if (width > maxSize) { height = Math.round(height * maxSize / width); width = maxSize; } }
+                        else { if (height > maxSize) { width = Math.round(width * maxSize / height); height = maxSize; } }
+                        canvas.width = width; canvas.height = height;
                         var ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
                         var base64 = canvas.toDataURL('image/jpeg', 0.6);
@@ -1454,22 +1400,14 @@
                         db.collection('posts').add(postData)
                             .then(function() {
                                 return db.collection('photos').add({
-                                    userId: currentUser.uid,
-                                    userName: currentUser.displayName,
-                                    imageURL: base64,
-                                    source: 'post',
+                                    userId: currentUser.uid, userName: currentUser.displayName,
+                                    imageURL: base64, source: 'post',
                                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                                 });
                             })
                             .then(afterPostSave)
-                            .then(function() {
-                                renderUI(device);
-                                if(btn) { btn.innerText = original; btn.disabled = false; }
-                            })
-                            .catch(function(err) {
-                                alert("Ошибка: " + err.message);
-                                if(btn) { btn.innerText = original; btn.disabled = false; }
-                            });
+                            .then(function() { renderUI(device); if(btn) { btn.innerText = original; btn.disabled = false; } })
+                            .catch(function(err) { alert("Ошибка: " + err.message); if(btn) { btn.innerText = original; btn.disabled = false; } });
                     };
                     img.src = e.target.result;
                 };
@@ -1478,57 +1416,31 @@
                 if (hasVideo) { postData.videoUrl = videoUrlToSave; postData.videoTitle = videoTitleToSave; }
                 db.collection('posts').add(postData)
                     .then(afterPostSave)
-                    .then(function() {
-                        renderUI(device);
-                        if(btn) { btn.innerText = original; btn.disabled = false; }
-                    })
-                    .catch(function(err) {
-                        alert("Ошибка: " + err.message);
-                        if(btn) { btn.innerText = original; btn.disabled = false; }
-                    });
+                    .then(function() { renderUI(device); if(btn) { btn.innerText = original; btn.disabled = false; } })
+                    .catch(function(err) { alert("Ошибка: " + err.message); if(btn) { btn.innerText = original; btn.disabled = false; } });
             }
         }
 
         function renderUI(device) {
-            if (device === 'desktop') {
-                renderDesktopWall(); renderDesktopPhotos(); renderDesktopVideos();
-            } else {
-                renderMobileWall(); renderMobilePhotos();
-            }
+            if (device === 'desktop') { renderDesktopWall(); renderDesktopPhotos(); renderDesktopVideos(); }
+            else { renderMobileWall(); renderMobilePhotos(); }
         }
 
         function renderDesktopWall() {
             var container = document.getElementById('desktop-wall-content');
             db.collection('posts').where('authorId', '==', currentUser.uid).orderBy('createdAt', 'desc').limit(50).get()
                 .then(function(snap) {
-                    if (snap.empty) {
-                        container.innerHTML = '<div style="text-align:center;padding:20px;color:#777;">Здесь пока пусто</div>';
-                        return;
-                    }
-                    var posts = [];
-                    var postIds = [];
-                    snap.forEach(function(doc) {
-                        posts.push({ id: doc.id, data: doc.data() });
-                        postIds.push(doc.id);
-                    });
+                    if (snap.empty) { container.innerHTML = '<div style="text-align:center;padding:20px;color:#777;">Здесь пока пусто</div>'; return; }
+                    var posts = []; var postIds = [];
+                    snap.forEach(function(doc) { posts.push({ id: doc.id, data: doc.data() }); postIds.push(doc.id); });
                     loadLikesForPosts(postIds, function() {
-                        var commentsLoaded = 0;
-                        var commentsCount = {};
-                        if (!postIds.length) { commentsLoaded = postIds.length; }
+                        var commentsLoaded = 0; var commentsCount = {};
+                        if (!postIds.length) commentsLoaded = postIds.length;
                         postIds.forEach(function(pid) {
                             db.collection('comments').where('postId', '==', pid).get().then(function(csnap) {
-                                commentsCount[pid] = csnap.size;
-                                commentsLoaded++;
-                                if (commentsLoaded === postIds.length) {
-                                    renderDesktopWallHtml(posts, commentsCount);
-                                }
-                            }).catch(function() {
-                                commentsCount[pid] = 0;
-                                commentsLoaded++;
-                                if (commentsLoaded === postIds.length) {
-                                    renderDesktopWallHtml(posts, commentsCount);
-                                }
-                            });
+                                commentsCount[pid] = csnap.size; commentsLoaded++;
+                                if (commentsLoaded === postIds.length) renderDesktopWallHtml(posts, commentsCount);
+                            }).catch(function() { commentsCount[pid] = 0; commentsLoaded++; if (commentsLoaded === postIds.length) renderDesktopWallHtml(posts, commentsCount); });
                         });
                     });
                 });
@@ -1536,19 +1448,20 @@
 
         function renderDesktopWallHtml(posts, commentsCount) {
             var container = document.getElementById('desktop-wall-content');
-            var html = '';
-            var promises = [];
+            var html = ''; var promises = [];
             posts.forEach(function(item) {
-                var p = item.data;
-                var pid = item.id;
+                var p = item.data; var pid = item.id;
                 if (!p.authorId) return;
                 var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
                 var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
                 var videoHtml = p.videoUrl ? '<div class="video-embed"><iframe src="' + p.videoUrl + '" allow="autoplay" allowfullscreen style="width:100%; max-width:400px; height:250px; border:1px solid #ccc;"></iframe></div>' : '';
                 var repostHtml = p.repostedFrom ? '<div style="font-size:11px; color:#999; margin-bottom:3px;">🔄 Репост от ' + escapeHtml(p.repostedFrom) + '</div>' : '';
                 var cCount = commentsCount[pid] || 0;
-                var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                    html += '<div class="desktop-post"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span>' + repostHtml + '<div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + buildPostActions(pid, cCount) + buildCommentsBlock(pid) + '</div></div>';
+                var p1 = getUserAvatar(p.authorId, p.authorName);
+                var p2 = getBadgeForUser(p.authorId);
+                var promise = Promise.all([p1, p2]).then(function(res) {
+                    var avatar = res[0]; var badgeHtml = buildBadgeHtml(res[1]);
+                    html += '<div class="desktop-post"><img src="' + avatar + '" class="post-avatar" onerror="this.src=\'' + generateAvatar(p.authorId, p.authorName) + '\'"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span>' + badgeHtml + '<span class="date">' + date + '</span>' + repostHtml + '<div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + buildPostActions(pid, cCount) + buildCommentsBlock(pid) + '</div></div>';
                 });
                 promises.push(promise);
             });
@@ -1560,34 +1473,17 @@
             var container = document.getElementById('mobile-wall-content');
             unsubscribeWall = db.collection('posts').where('authorId', '==', currentUser.uid).orderBy('createdAt', 'desc').limit(50)
                 .onSnapshot(function(snapshot) {
-                    if (snapshot.empty) {
-                        container.innerHTML = '<div class="mobile-empty"><h3>Здесь пока пусто</h3></div>';
-                        return;
-                    }
-                    var posts = [];
-                    var postIds = [];
-                    snapshot.forEach(function(doc) {
-                        posts.push({ id: doc.id, data: doc.data() });
-                        postIds.push(doc.id);
-                    });
+                    if (snapshot.empty) { container.innerHTML = '<div class="mobile-empty"><h3>Здесь пока пусто</h3></div>'; return; }
+                    var posts = []; var postIds = [];
+                    snapshot.forEach(function(doc) { posts.push({ id: doc.id, data: doc.data() }); postIds.push(doc.id); });
                     loadLikesForPosts(postIds, function() {
-                        var commentsLoaded = 0;
-                        var commentsCount = {};
-                        if (!postIds.length) { commentsLoaded = postIds.length; }
+                        var commentsLoaded = 0; var commentsCount = {};
+                        if (!postIds.length) commentsLoaded = postIds.length;
                         postIds.forEach(function(pid) {
                             db.collection('comments').where('postId', '==', pid).get().then(function(csnap) {
-                                commentsCount[pid] = csnap.size;
-                                commentsLoaded++;
-                                if (commentsLoaded === postIds.length) {
-                                    renderMobileWallHtml(posts, commentsCount);
-                                }
-                            }).catch(function() {
-                                commentsCount[pid] = 0;
-                                commentsLoaded++;
-                                if (commentsLoaded === postIds.length) {
-                                    renderMobileWallHtml(posts, commentsCount);
-                                }
-                            });
+                                commentsCount[pid] = csnap.size; commentsLoaded++;
+                                if (commentsLoaded === postIds.length) renderMobileWallHtml(posts, commentsCount);
+                            }).catch(function() { commentsCount[pid] = 0; commentsLoaded++; if (commentsLoaded === postIds.length) renderMobileWallHtml(posts, commentsCount); });
                         });
                     });
                 });
@@ -1595,19 +1491,20 @@
 
         function renderMobileWallHtml(posts, commentsCount) {
             var container = document.getElementById('mobile-wall-content');
-            var html = '';
-            var promises = [];
+            var html = ''; var promises = [];
             posts.forEach(function(item) {
-                var p = item.data;
-                var pid = item.id;
+                var p = item.data; var pid = item.id;
                 if (!p.authorId) return;
                 var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
                 var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
                 var videoHtml = p.videoUrl ? '<div class="video-embed"><iframe src="' + p.videoUrl + '" allow="autoplay" allowfullscreen style="width:100%; height:200px; border:1px solid #ccc;"></iframe></div>' : '';
                 var repostHtml = p.repostedFrom ? '<div style="font-size:11px; color:#999; margin-bottom:3px;">🔄 Репост от ' + escapeHtml(p.repostedFrom) + '</div>' : '';
                 var cCount = commentsCount[pid] || 0;
-                var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                    html += '<div class="mobile-post"><div class="post-row"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span>' + repostHtml + '<div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + buildPostActions(pid, cCount) + buildCommentsBlock(pid) + '</div></div></div>';
+                var p1 = getUserAvatar(p.authorId, p.authorName);
+                var p2 = getBadgeForUser(p.authorId);
+                var promise = Promise.all([p1, p2]).then(function(res) {
+                    var avatar = res[0]; var badgeHtml = buildBadgeHtml(res[1]);
+                    html += '<div class="mobile-post"><div class="post-row"><img src="' + avatar + '" class="post-avatar" onerror="this.src=\'' + generateAvatar(p.authorId, p.authorName) + '\'"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span>' + badgeHtml + '<span class="date">' + date + '</span>' + repostHtml + '<div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + buildPostActions(pid, cCount) + buildCommentsBlock(pid) + '</div></div></div>';
                 });
                 promises.push(promise);
             });
@@ -1620,39 +1517,22 @@
             container.innerHTML = '<div class="mobile-empty"><h3>Загрузка...</h3></div>';
             db.collection('friends').where('userId', '==', currentUser.uid).get()
                 .then(function(snap) {
-                    var ids = [];
-                    snap.forEach(function(doc) { ids.push(doc.data().friendId); });
-                    if (!ids.length) {
-                        container.innerHTML = '<div class="mobile-empty"><h3>У вас пока нет друзей</h3></div>';
-                        return;
-                    }
+                    var ids = []; snap.forEach(function(doc) { ids.push(doc.data().friendId); });
+                    if (!ids.length) { container.innerHTML = '<div class="mobile-empty"><h3>У вас пока нет друзей</h3></div>'; return; }
                     var chunk = ids.slice(0, 10);
                     unsubscribeNews = db.collection('posts').where('authorId', 'in', chunk).orderBy('createdAt', 'desc').limit(50)
                         .onSnapshot(function(snapshot) {
-                            if (snapshot.empty) {
-                                container.innerHTML = '<div class="mobile-empty"><h3>У друзей пока нет постов</h3></div>';
-                                return;
-                            }
-                            var posts = [];
-                            var postIds = [];
-                            snapshot.forEach(function(doc) {
-                                posts.push({ id: doc.id, data: doc.data() });
-                                postIds.push(doc.id);
-                            });
+                            if (snapshot.empty) { container.innerHTML = '<div class="mobile-empty"><h3>У друзей пока нет постов</h3></div>'; return; }
+                            var posts = []; var postIds = [];
+                            snapshot.forEach(function(doc) { posts.push({ id: doc.id, data: doc.data() }); postIds.push(doc.id); });
                             loadLikesForPosts(postIds, function() {
-                                var commentsLoaded = 0;
-                                var commentsCount = {};
+                                var commentsLoaded = 0; var commentsCount = {};
                                 if (!postIds.length) commentsLoaded = postIds.length;
                                 postIds.forEach(function(pid) {
                                     db.collection('comments').where('postId', '==', pid).get().then(function(csnap) {
-                                        commentsCount[pid] = csnap.size;
-                                        commentsLoaded++;
+                                        commentsCount[pid] = csnap.size; commentsLoaded++;
                                         if (commentsLoaded === postIds.length) renderMobileNewsHtml(posts, commentsCount);
-                                    }).catch(function() {
-                                        commentsCount[pid] = 0;
-                                        commentsLoaded++;
-                                        if (commentsLoaded === postIds.length) renderMobileNewsHtml(posts, commentsCount);
-                                    });
+                                    }).catch(function() { commentsCount[pid] = 0; commentsLoaded++; if (commentsLoaded === postIds.length) renderMobileNewsHtml(posts, commentsCount); });
                                 });
                             });
                         });
@@ -1661,19 +1541,20 @@
 
         function renderMobileNewsHtml(posts, commentsCount) {
             var container = document.getElementById('mob-news');
-            var html = '';
-            var promises = [];
+            var html = ''; var promises = [];
             posts.forEach(function(item) {
-                var p = item.data;
-                var pid = item.id;
+                var p = item.data; var pid = item.id;
                 if (!p.authorId) return;
                 var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
                 var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
                 var videoHtml = p.videoUrl ? '<div class="video-embed"><iframe src="' + p.videoUrl + '" allow="autoplay" allowfullscreen style="width:100%; height:200px; border:1px solid #ccc;"></iframe></div>' : '';
                 var repostHtml = p.repostedFrom ? '<div style="font-size:11px; color:#999; margin-bottom:3px;">🔄 Репост от ' + escapeHtml(p.repostedFrom) + '</div>' : '';
                 var cCount = commentsCount[pid] || 0;
-                var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                    html += '<div class="mobile-post"><div class="post-row"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span>' + repostHtml + '<div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + buildPostActions(pid, cCount) + buildCommentsBlock(pid) + '</div></div></div>';
+                var p1 = getUserAvatar(p.authorId, p.authorName);
+                var p2 = getBadgeForUser(p.authorId);
+                var promise = Promise.all([p1, p2]).then(function(res) {
+                    var avatar = res[0]; var badgeHtml = buildBadgeHtml(res[1]);
+                    html += '<div class="mobile-post"><div class="post-row"><img src="' + avatar + '" class="post-avatar" onerror="this.src=\'' + generateAvatar(p.authorId, p.authorName) + '\'"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span>' + badgeHtml + '<span class="date">' + date + '</span>' + repostHtml + '<div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + buildPostActions(pid, cCount) + buildCommentsBlock(pid) + '</div></div></div>';
                 });
                 promises.push(promise);
             });
@@ -1685,21 +1566,18 @@
             db.collection('users').get()
                 .then(function(snap) {
                     if (snap.empty) { container.innerHTML = '<div class="mobile-empty"><h3>Пользователей нет</h3></div>'; return; }
-                    var html = '';
-                    var promises = [];
+                    var html = ''; var promises = [];
                     snap.forEach(function(doc) {
                         if (doc.id === currentUser.uid) return;
-                        var u = doc.data();
-                        var name = u.name || 'Без имени';
-                        var promise = getUserAvatar(doc.id, name).then(function(avatar) {
-                            html += '<div class="friend-item" data-user-id="' + doc.id + '"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(name) + '</b></div></div></div>';
+                        var u = doc.data(); var name = u.name || 'Без имени';
+                        var p1 = getUserAvatar(doc.id, name);
+                        var p2 = getBadgeForUser(doc.id);
+                        var promise = Promise.all([p1, p2]).then(function(res) {
+                            html += '<div class="friend-item" data-user-id="' + doc.id + '"><div class="friend-info"><img src="' + res[0] + '"><div><b>' + escapeHtml(name) + '</b>' + buildBadgeHtml(res[1]) + '</div></div></div>';
                         });
                         promises.push(promise);
                     });
-                    Promise.all(promises).then(function() {
-                        if (!html) container.innerHTML = '<div class="mobile-empty"><h3>Пользователей нет</h3></div>';
-                        else container.innerHTML = html;
-                    });
+                    Promise.all(promises).then(function() { if (!html) container.innerHTML = '<div class="mobile-empty"><h3>Пользователей нет</h3></div>'; else container.innerHTML = html; });
                 });
         }
 
@@ -1708,48 +1586,43 @@
             db.collection('users').get()
                 .then(function(snap) {
                     if (snap.empty) { container.innerHTML = '<div style="padding:20px;color:#777;">Пользователей пока нет</div>'; return; }
-                    var html = '';
-                    var promises = [];
+                    var html = ''; var promises = [];
                     var query = (searchQuery || '').toLowerCase().trim();
                     snap.forEach(function(doc) {
                         if (doc.id === currentUser.uid) return;
-                        var u = doc.data();
-                        var name = u.name || 'Без имени';
+                        var u = doc.data(); var name = u.name || 'Без имени';
                         if (query && name.toLowerCase().indexOf(query) === -1) return;
-                        var promise = getUserAvatar(doc.id, name).then(function(avatar) {
-                            html += '<div class="friend-item" data-user-id="' + doc.id + '"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(name) + '</b></div></div></div>';
+                        var p1 = getUserAvatar(doc.id, name);
+                        var p2 = getBadgeForUser(doc.id);
+                        var promise = Promise.all([p1, p2]).then(function(res) {
+                            html += '<div class="friend-item" data-user-id="' + doc.id + '"><div class="friend-info"><img src="' + res[0] + '"><div><b>' + escapeHtml(name) + '</b>' + buildBadgeHtml(res[1]) + '</div></div></div>';
                         });
                         promises.push(promise);
                     });
-                    Promise.all(promises).then(function() {
-                        if (!html) container.innerHTML = '<div style="padding:20px;color:#777;">Никого не найдено</div>';
-                        else container.innerHTML = html;
-                    });
+                    Promise.all(promises).then(function() { if (!html) container.innerHTML = '<div style="padding:20px;color:#777;">Никого не найдено</div>'; else container.innerHTML = html; });
                 });
         }
 
         function openUserProfileDesktop(userId) {
-            if (!userId) { alert('Ошибка: не передан ID пользователя'); return; }
+            if (!userId) return;
             var listView = document.getElementById('desk-friends-list-view');
             var profileView = document.getElementById('desk-friends-profile-view');
             var title = document.getElementById('desk-friends-title');
             var profileBox = document.getElementById('desk-friends-profile');
-            if (!listView || !profileView || !profileBox) { alert('Ошибка: не найдены элементы раздела друзей'); return; }
+            if (!listView || !profileView || !profileBox) return;
             profileBox.innerHTML = '<div style="padding:20px;color:#777;">Загрузка профиля...</div>';
             db.collection('users').doc(userId).get()
                 .then(function(doc) {
                     if (!doc.exists) { alert('Пользователь не найден в базе'); return; }
                     var data = doc.data();
                     var avatarUrl = data.photoURL || generateAvatar(userId, data.name);
-                    listView.style.display = 'none';
-                    profileView.style.display = 'block';
+                    listView.style.display = 'none'; profileView.style.display = 'block';
                     if (title) title.innerText = 'Страница ' + (data.name || 'Пользователя');
                     var profileHtml = '<button class="edit-btn" onclick="closeUserProfileDesktop()" style="background:#ccc; color:#333; margin-bottom:10px;">← Назад к друзьям</button>';
                     profileHtml += buildProfileHtml(data, avatarUrl, userId, false);
                     profileBox.innerHTML = profileHtml;
                     renderUserWallDesktopInFriends(userId);
-                })
-                .catch(function(e) { alert('Ошибка: ' + e.message); });
+                });
         }
 
         function renderUserWallDesktopInFriends(userId) {
@@ -1759,26 +1632,16 @@
             db.collection('posts').where('authorId', '==', userId).orderBy('createdAt', 'desc').limit(50).get()
                 .then(function(snap) {
                     if (snap.empty) { container.innerHTML = '<div style="text-align:center;padding:20px;color:#777;">У пользователя пока нет постов</div>'; return; }
-                    var posts = [];
-                    var postIds = [];
-                    snap.forEach(function(doc) {
-                        posts.push({ id: doc.id, data: doc.data() });
-                        postIds.push(doc.id);
-                    });
+                    var posts = []; var postIds = [];
+                    snap.forEach(function(doc) { posts.push({ id: doc.id, data: doc.data() }); postIds.push(doc.id); });
                     loadLikesForPosts(postIds, function() {
-                        var commentsLoaded = 0;
-                        var commentsCount = {};
+                        var commentsLoaded = 0; var commentsCount = {};
                         if (!postIds.length) commentsLoaded = postIds.length;
                         postIds.forEach(function(pid) {
                             db.collection('comments').where('postId', '==', pid).get().then(function(csnap) {
-                                commentsCount[pid] = csnap.size;
-                                commentsLoaded++;
+                                commentsCount[pid] = csnap.size; commentsLoaded++;
                                 if (commentsLoaded === postIds.length) renderUserWallDesktopHtml(posts, commentsCount);
-                            }).catch(function() {
-                                commentsCount[pid] = 0;
-                                commentsLoaded++;
-                                if (commentsLoaded === postIds.length) renderUserWallDesktopHtml(posts, commentsCount);
-                            });
+                            }).catch(function() { commentsCount[pid] = 0; commentsLoaded++; if (commentsLoaded === postIds.length) renderUserWallDesktopHtml(posts, commentsCount); });
                         });
                     });
                 });
@@ -1786,19 +1649,19 @@
 
         function renderUserWallDesktopHtml(posts, commentsCount) {
             var container = document.getElementById('desk-friends-wall-content');
-            var html = '';
-            var promises = [];
+            var html = ''; var promises = [];
             posts.forEach(function(item) {
-                var p = item.data;
-                var pid = item.id;
+                var p = item.data; var pid = item.id;
                 if (!p.authorId) return;
                 var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
                 var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
                 var videoHtml = p.videoUrl ? '<div class="video-embed"><iframe src="' + p.videoUrl + '" allow="autoplay" allowfullscreen style="width:100%; max-width:400px; height:250px; border:1px solid #ccc;"></iframe></div>' : '';
                 var repostHtml = p.repostedFrom ? '<div style="font-size:11px; color:#999; margin-bottom:3px;">🔄 Репост от ' + escapeHtml(p.repostedFrom) + '</div>' : '';
                 var cCount = commentsCount[pid] || 0;
-                var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                    html += '<div class="desktop-post"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span>' + repostHtml + '<div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + buildPostActions(pid, cCount) + buildCommentsBlock(pid) + '</div></div>';
+                var p1 = getUserAvatar(p.authorId, p.authorName);
+                var p2 = getBadgeForUser(p.authorId);
+                var promise = Promise.all([p1, p2]).then(function(res) {
+                    html += '<div class="desktop-post"><img src="' + res[0] + '" class="post-avatar" onerror="this.src=\'' + generateAvatar(p.authorId, p.authorName) + '\'"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span>' + buildBadgeHtml(res[1]) + '<span class="date">' + date + '</span>' + repostHtml + '<div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + buildPostActions(pid, cCount) + buildCommentsBlock(pid) + '</div></div>';
                 });
                 promises.push(promise);
             });
@@ -1813,7 +1676,7 @@
         }
 
         function openUserProfileMobile(userId) {
-            if (!userId) { alert('Ошибка: не передан ID'); return; }
+            if (!userId) return;
             db.collection('users').doc(userId).get()
                 .then(function(doc) {
                     if (!doc.exists) { alert("Пользователь не найден"); return; }
@@ -1834,26 +1697,16 @@
             db.collection('posts').where('authorId', '==', userId).orderBy('createdAt', 'desc').limit(50).get()
                 .then(function(snap) {
                     if (snap.empty) { container.innerHTML = '<div class="mobile-empty"><h3>Постов пока нет</h3></div>'; return; }
-                    var posts = [];
-                    var postIds = [];
-                    snap.forEach(function(doc) {
-                        posts.push({ id: doc.id, data: doc.data() });
-                        postIds.push(doc.id);
-                    });
+                    var posts = []; var postIds = [];
+                    snap.forEach(function(doc) { posts.push({ id: doc.id, data: doc.data() }); postIds.push(doc.id); });
                     loadLikesForPosts(postIds, function() {
-                        var commentsLoaded = 0;
-                        var commentsCount = {};
+                        var commentsLoaded = 0; var commentsCount = {};
                         if (!postIds.length) commentsLoaded = postIds.length;
                         postIds.forEach(function(pid) {
                             db.collection('comments').where('postId', '==', pid).get().then(function(csnap) {
-                                commentsCount[pid] = csnap.size;
-                                commentsLoaded++;
+                                commentsCount[pid] = csnap.size; commentsLoaded++;
                                 if (commentsLoaded === postIds.length) renderUserWallMobileHtml(posts, commentsCount);
-                            }).catch(function() {
-                                commentsCount[pid] = 0;
-                                commentsLoaded++;
-                                if (commentsLoaded === postIds.length) renderUserWallMobileHtml(posts, commentsCount);
-                            });
+                            }).catch(function() { commentsCount[pid] = 0; commentsLoaded++; if (commentsLoaded === postIds.length) renderUserWallMobileHtml(posts, commentsCount); });
                         });
                     });
                 });
@@ -1861,19 +1714,19 @@
 
         function renderUserWallMobileHtml(posts, commentsCount) {
             var container = document.getElementById('mob-friends-wall-content');
-            var html = '';
-            var promises = [];
+            var html = ''; var promises = [];
             posts.forEach(function(item) {
-                var p = item.data;
-                var pid = item.id;
+                var p = item.data; var pid = item.id;
                 if (!p.authorId) return;
                 var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
                 var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
                 var videoHtml = p.videoUrl ? '<div class="video-embed"><iframe src="' + p.videoUrl + '" allow="autoplay" allowfullscreen style="width:100%; height:200px; border:1px solid #ccc;"></iframe></div>' : '';
                 var repostHtml = p.repostedFrom ? '<div style="font-size:11px; color:#999; margin-bottom:3px;">🔄 Репост от ' + escapeHtml(p.repostedFrom) + '</div>' : '';
                 var cCount = commentsCount[pid] || 0;
-                var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                    html += '<div class="mobile-post"><div class="post-row"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span>' + repostHtml + '<div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + buildPostActions(pid, cCount) + buildCommentsBlock(pid) + '</div></div></div>';
+                var p1 = getUserAvatar(p.authorId, p.authorName);
+                var p2 = getBadgeForUser(p.authorId);
+                var promise = Promise.all([p1, p2]).then(function(res) {
+                    html += '<div class="mobile-post"><div class="post-row"><img src="' + res[0] + '" class="post-avatar" onerror="this.src=\'' + generateAvatar(p.authorId, p.authorName) + '\'"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span>' + buildBadgeHtml(res[1]) + '<span class="date">' + date + '</span>' + repostHtml + '<div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + buildPostActions(pid, cCount) + buildCommentsBlock(pid) + '</div></div></div>';
                 });
                 promises.push(promise);
             });
@@ -1897,15 +1750,15 @@
             db.collection('friends').where('userId', '==', currentUser.uid).get()
                 .then(function(snap) {
                     if (snap.empty) { container.innerHTML = '<div style="padding:20px;color:#777;">Нет друзей</div>'; return; }
-                    var html = '';
-                    var promises = [];
+                    var html = ''; var promises = [];
                     snap.forEach(function(doc) {
                         var f = doc.data();
-                        var promise = getUserAvatar(f.friendId, f.friendName).then(function(avatar) {
+                        var p1 = getUserAvatar(f.friendId, f.friendName);
+                        var p2 = getBadgeForUser(f.friendId);
+                        var promise = Promise.all([p1, p2]).then(function(res) {
                             html += '<div class="chat-item" data-user-id="' + f.friendId + '" style="padding:10px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #ddd;">';
-                            html += '<img src="' + avatar + '" style="width:40px;height:40px;border-radius:50%;">';
-                            html += '<div><b>' + escapeHtml(f.friendName || 'Друг') + '</b></div>';
-                            html += '</div>';
+                            html += '<img src="' + res[0] + '" style="width:40px;height:40px;border-radius:50%;">';
+                            html += '<div><b>' + escapeHtml(f.friendName || 'Друг') + '</b>' + buildBadgeHtml(res[1]) + '</div></div>';
                         });
                         promises.push(promise);
                     });
@@ -1919,14 +1772,13 @@
             db.collection('friends').where('userId', '==', currentUser.uid).get()
                 .then(function(snap) {
                     if (snap.empty) { container.innerHTML = '<div class="mobile-empty"><h3>Нет друзей</h3></div>'; return; }
-                    var html = '';
-                    var promises = [];
+                    var html = ''; var promises = [];
                     snap.forEach(function(doc) {
                         var f = doc.data();
-                        var promise = getUserAvatar(f.friendId, f.friendName).then(function(avatar) {
-                            html += '<div class="chat-item" data-user-id="' + f.friendId + '">';
-                            html += '<div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b></div></div>';
-                            html += '</div>';
+                        var p1 = getUserAvatar(f.friendId, f.friendName);
+                        var p2 = getBadgeForUser(f.friendId);
+                        var promise = Promise.all([p1, p2]).then(function(res) {
+                            html += '<div class="chat-item" data-user-id="' + f.friendId + '"><div class="friend-info"><img src="' + res[0] + '"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b>' + buildBadgeHtml(res[1]) + '</div></div></div>';
                         });
                         promises.push(promise);
                     });
@@ -1936,13 +1788,8 @@
 
         function searchUsers(device) {
             var query = '';
-            if (device === 'desktop') {
-                query = document.getElementById('desk-friends-search').value;
-                renderDesktopFriends(query);
-            } else {
-                query = document.getElementById('mob-search-input').value;
-                renderMobileFriendsSearch(query);
-            }
+            if (device === 'desktop') { query = document.getElementById('desk-friends-search').value; renderDesktopFriends(query); }
+            else { query = document.getElementById('mob-search-input').value; renderMobileFriendsSearch(query); }
         }
 
         function renderMobileFriendsSearch(query) {
@@ -1950,23 +1797,20 @@
             db.collection('users').get()
                 .then(function(snap) {
                     if (snap.empty) { container.innerHTML = '<div class="mobile-empty"><h3>Пользователей нет</h3></div>'; return; }
-                    var html = '';
-                    var promises = [];
+                    var html = ''; var promises = [];
                     var q = (query || '').toLowerCase().trim();
                     snap.forEach(function(doc) {
                         if (doc.id === currentUser.uid) return;
-                        var u = doc.data();
-                        var name = u.name || 'Без имени';
+                        var u = doc.data(); var name = u.name || 'Без имени';
                         if (q && name.toLowerCase().indexOf(q) === -1) return;
-                        var promise = getUserAvatar(doc.id, name).then(function(avatar) {
-                            html += '<div class="friend-item" data-user-id="' + doc.id + '"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(name) + '</b></div></div></div>';
+                        var p1 = getUserAvatar(doc.id, name);
+                        var p2 = getBadgeForUser(doc.id);
+                        var promise = Promise.all([p1, p2]).then(function(res) {
+                            html += '<div class="friend-item" data-user-id="' + doc.id + '"><div class="friend-info"><img src="' + res[0] + '"><div><b>' + escapeHtml(name) + '</b>' + buildBadgeHtml(res[1]) + '</div></div></div>';
                         });
                         promises.push(promise);
                     });
-                    Promise.all(promises).then(function() {
-                        if (!html) container.innerHTML = '<div class="mobile-empty"><h3>Никого не найдено</h3></div>';
-                        else container.innerHTML = html;
-                    });
+                    Promise.all(promises).then(function() { if (!html) container.innerHTML = '<div class="mobile-empty"><h3>Никого не найдено</h3></div>'; else container.innerHTML = html; });
                 });
         }
 
@@ -2026,10 +1870,7 @@
 
         function showDeskPage(page) {
             var pages = ['wall', 'news', 'music', 'photos', 'videos', 'groups', 'settings', 'friends', 'messages'];
-            for (var i = 0; i < pages.length; i++) {
-                var el = document.getElementById('desk-page-' + pages[i]);
-                if (el) el.style.display = 'none';
-            }
+            for (var i = 0; i < pages.length; i++) { var el = document.getElementById('desk-page-' + pages[i]); if (el) el.style.display = 'none'; }
             var pageEl = document.getElementById('desk-page-' + page);
             if (pageEl) pageEl.style.display = 'block';
             if (page === 'wall') {
@@ -2054,33 +1895,22 @@
             container.innerHTML = '<div style="padding:20px;color:#777;">Загрузка...</div>';
             db.collection('friends').where('userId', '==', currentUser.uid).get()
                 .then(function(snap) {
-                    var ids = [];
-                    snap.forEach(function(doc) { ids.push(doc.data().friendId); });
+                    var ids = []; snap.forEach(function(doc) { ids.push(doc.data().friendId); });
                     if (!ids.length) { container.innerHTML = '<div style="padding:20px;color:#777;">У вас пока нет друзей</div>'; return; }
                     var chunk = ids.slice(0, 10);
                     db.collection('posts').where('authorId', 'in', chunk).orderBy('createdAt', 'desc').limit(50)
                         .onSnapshot(function(snapshot) {
                             if (snapshot.empty) { container.innerHTML = '<div style="padding:20px;color:#777;">У друзей пока нет постов</div>'; return; }
-                            var posts = [];
-                            var postIds = [];
-                            snapshot.forEach(function(doc) {
-                                posts.push({ id: doc.id, data: doc.data() });
-                                postIds.push(doc.id);
-                            });
+                            var posts = []; var postIds = [];
+                            snapshot.forEach(function(doc) { posts.push({ id: doc.id, data: doc.data() }); postIds.push(doc.id); });
                             loadLikesForPosts(postIds, function() {
-                                var commentsLoaded = 0;
-                                var commentsCount = {};
+                                var commentsLoaded = 0; var commentsCount = {};
                                 if (!postIds.length) commentsLoaded = postIds.length;
                                 postIds.forEach(function(pid) {
                                     db.collection('comments').where('postId', '==', pid).get().then(function(csnap) {
-                                        commentsCount[pid] = csnap.size;
-                                        commentsLoaded++;
+                                        commentsCount[pid] = csnap.size; commentsLoaded++;
                                         if (commentsLoaded === postIds.length) renderDesktopNewsHtml(posts, commentsCount);
-                                    }).catch(function() {
-                                        commentsCount[pid] = 0;
-                                        commentsLoaded++;
-                                        if (commentsLoaded === postIds.length) renderDesktopNewsHtml(posts, commentsCount);
-                                    });
+                                    }).catch(function() { commentsCount[pid] = 0; commentsLoaded++; if (commentsLoaded === postIds.length) renderDesktopNewsHtml(posts, commentsCount); });
                                 });
                             });
                         });
@@ -2089,19 +1919,19 @@
 
         function renderDesktopNewsHtml(posts, commentsCount) {
             var container = document.getElementById('desk-news-content');
-            var html = '';
-            var promises = [];
+            var html = ''; var promises = [];
             posts.forEach(function(item) {
-                var p = item.data;
-                var pid = item.id;
+                var p = item.data; var pid = item.id;
                 if (!p.authorId) return;
                 var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
                 var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
                 var videoHtml = p.videoUrl ? '<div class="video-embed"><iframe src="' + p.videoUrl + '" allow="autoplay" allowfullscreen style="width:100%; max-width:400px; height:250px; border:1px solid #ccc;"></iframe></div>' : '';
                 var repostHtml = p.repostedFrom ? '<div style="font-size:11px; color:#999; margin-bottom:3px;">🔄 Репост от ' + escapeHtml(p.repostedFrom) + '</div>' : '';
                 var cCount = commentsCount[pid] || 0;
-                var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                    html += '<div class="desktop-post"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span>' + repostHtml + '<div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + buildPostActions(pid, cCount) + buildCommentsBlock(pid) + '</div></div>';
+                var p1 = getUserAvatar(p.authorId, p.authorName);
+                var p2 = getBadgeForUser(p.authorId);
+                var promise = Promise.all([p1, p2]).then(function(res) {
+                    html += '<div class="desktop-post"><img src="' + res[0] + '" class="post-avatar" onerror="this.src=\'' + generateAvatar(p.authorId, p.authorName) + '\'"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span>' + buildBadgeHtml(res[1]) + '<span class="date">' + date + '</span>' + repostHtml + '<div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + buildPostActions(pid, cCount) + buildCommentsBlock(pid) + '</div></div>';
                 });
                 promises.push(promise);
             });
