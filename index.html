@@ -48,8 +48,7 @@
         .desktop-header .left { display: flex; align-items: center; gap: 10px; }
         .logo-svg { height: 18px; display: block; }
         .search-box { background: #fff; border-radius: 2px; padding: 1px 8px; height: 22px; display: flex; align-items: center; color: #777; }
-        .search-box input { border: none; outline: none; font-size: 11px; width: 160px; background: transparent; }
-        .search-box span { font-size: 11px; margin-left: 5px; }
+        .search-box input { border: none; outline: none; font-size: 11px; width: 200px; background: transparent; }
         .desktop-header .nav-links { display: flex; gap: 15px; font-weight: normal; }
         .desktop-header .nav-links a { color: #E2EBF3; }
         .desktop-header .nav-links a:hover { color: white; }
@@ -196,6 +195,11 @@
 
         #offline-banner { display: none; background: #d9534f; color: white; text-align: center; padding: 5px; font-size: 12px; position: sticky; top: 36px; z-index: 101; }
 
+        /* ====== ПОИСК В ДРУЗЬЯХ ====== */
+        .friends-search-box { padding: 10px; background: #fff; border-bottom: 1px solid #E4EAF0; }
+        .friends-search-box input { width: 100%; padding: 6px 10px; border: 1px solid #C5D0DB; border-radius: 2px; font-size: 13px; outline: none; }
+        .friends-search-box input:focus { border-color: #5E83A9; }
+
         @media (min-width: 769px) { .desktop-view { display: block; } .mobile-view { display: none !important; } }
         @media (max-width: 768px) { .desktop-view { display: none !important; } .mobile-view { display: block; } }
     </style>
@@ -245,7 +249,6 @@
                 </svg>
                 <div class="search-box">
                     <input type="text" placeholder="Поиск">
-                    <span>28 ↓</span>
                 </div>
             </div>
             <div class="nav-links">
@@ -310,7 +313,7 @@
                 <div id="desk-page-music" style="display:none;">
                     <div class="desktop-page-title">Моя Музыка</div>
                     <div class="desktop-page-content">
-                        <div class="music-player" style="background:#f9f9f9; border:1px solid #eee; padding:15px; text-align:center;">
+                        <div style="background:#f9f9f9; border:1px solid #eee; padding:15px; text-align:center;">
                             <div>🎵 Сейчас играет: <b>Нет трека</b></div>
                         </div>
                     </div>
@@ -325,12 +328,12 @@
 
                 <div id="desk-page-videos" style="display:none;">
                     <div class="desktop-page-title">Мои Видеозаписи</div>
-                    <div class="desktop-page-content"><div id="desk-videos-list"></div></div>
+                    <div class="desktop-page-content"></div>
                 </div>
 
                 <div id="desk-page-groups" style="display:none;">
                     <div class="desktop-page-title">Мои Группы</div>
-                    <div class="desktop-page-content"><div id="desk-groups-list"></div></div>
+                    <div class="desktop-page-content"></div>
                 </div>
 
                 <div id="desk-page-settings" style="display:none;">
@@ -340,6 +343,9 @@
 
                 <div id="desk-page-friends" style="display:none;">
                     <div class="desktop-page-title">Мои Друзья</div>
+                    <div class="friends-search-box">
+                        <input type="text" id="desk-friends-search" placeholder="Поиск людей..." oninput="searchUsers('desktop')">
+                    </div>
                     <div class="desktop-page-content"><div id="desk-friends-list"></div></div>
                 </div>
 
@@ -385,6 +391,7 @@
         <div id="mob-friends" class="mobile-view-container">
             <div style="padding:10px; background:#fff; border-bottom:1px solid #eee;">
                 <h3 style="font-size:15px; color:#000;">Друзья</h3>
+                <input type="text" id="mob-search-input" placeholder="Поиск людей" style="width:100%; padding:6px; border:1px solid #ccc; margin-top:5px; border-radius:2px;" oninput="searchUsers('mobile')">
             </div>
             <div id="mobile-friends-list"></div>
         </div>
@@ -750,19 +757,13 @@
                 .catch(function(e) { alert("Ошибка: " + e.message); });
         }
 
-        // =============================================
-        // ПРЕВЬЮ ФОТО ПЕРЕД ОТПРАВКОЙ
-        // =============================================
         function previewPostImage(device) {
             var fileInput = document.getElementById(device === 'desktop' ? 'desk-post-image' : 'mob-post-image');
             var previewBox = document.getElementById(device === 'desktop' ? 'desk-post-preview' : 'mob-post-preview');
             var previewImg = document.getElementById(device === 'desktop' ? 'desk-preview-img' : 'mob-preview-img');
             
             var file = fileInput.files[0];
-            if (!file) {
-                previewBox.style.display = 'none';
-                return;
-            }
+            if (!file) { previewBox.style.display = 'none'; return; }
             
             var reader = new FileReader();
             reader.onload = function(e) {
@@ -779,9 +780,6 @@
             previewBox.style.display = 'none';
         }
 
-        // =============================================
-        // АВАТАРКА
-        // =============================================
         function uploadAvatar() {
             var file = document.getElementById('avatar-upload').files[0];
             if (!file) return;
@@ -840,9 +838,6 @@
                 .catch(function(e) { alert("Ошибка: " + e.message); });
         }
 
-        // =============================================
-        // МОИ ФОТОГРАФИИ
-        // =============================================
         function renderDesktopPhotos() {
             var container = document.getElementById('desk-photos-list');
             container.innerHTML = '<div style="padding:20px;color:#777; grid-column: 1/-1;">Загрузка...</div>';
@@ -988,9 +983,6 @@
             });
         }
 
-        // =============================================
-        // ПОСТЫ
-        // =============================================
         function createPost(device) {
             var textEl = document.getElementById(device === 'desktop' ? 'desk-post-text' : 'mob-post-text');
             var text = textEl.value.trim();
@@ -1196,21 +1188,81 @@
                 });
         }
 
-        function renderDesktopFriends() {
+        function renderDesktopFriends(searchQuery) {
             var container = document.getElementById('desk-friends-list');
-            db.collection('friends').where('userId', '==', currentUser.uid).get()
+            db.collection('users').get()
                 .then(function(snap) {
-                    if (snap.empty) { container.innerHTML = '<div style="padding:20px;color:#777;">У вас пока нет друзей</div>'; return; }
+                    if (snap.empty) { container.innerHTML = '<div style="padding:20px;color:#777;">Пользователей пока нет</div>'; return; }
                     var html = '';
                     var promises = [];
+                    var query = (searchQuery || '').toLowerCase().trim();
+                    
                     snap.forEach(function(doc) {
-                        var f = doc.data();
-                        var promise = getUserAvatar(f.friendId, f.friendName).then(function(avatar) {
-                            html += '<div class="friend-item" onclick="openChat(\'' + f.friendId + '\')" style="cursor:pointer;"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b></div></div></div>';
+                        if (doc.id === currentUser.uid) return; // Себя не показываем
+                        var u = doc.data();
+                        var name = u.name || 'Без имени';
+                        
+                        // Фильтр по поисковому запросу
+                        if (query && name.toLowerCase().indexOf(query) === -1) return;
+                        
+                        var promise = getUserAvatar(doc.id, name).then(function(avatar) {
+                            html += '<div class="friend-item" onclick="openChat(\'' + doc.id + '\')" style="cursor:pointer;"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(name) + '</b></div></div></div>';
                         });
                         promises.push(promise);
                     });
-                    Promise.all(promises).then(function() { container.innerHTML = html; });
+                    
+                    Promise.all(promises).then(function() {
+                        if (!html) {
+                            container.innerHTML = '<div style="padding:20px;color:#777;">Никого не найдено</div>';
+                        } else {
+                            container.innerHTML = html;
+                        }
+                    });
+                });
+        }
+
+        function searchUsers(device) {
+            var query = '';
+            if (device === 'desktop') {
+                query = document.getElementById('desk-friends-search').value;
+            } else {
+                query = document.getElementById('mob-search-input').value;
+            }
+            if (device === 'desktop') {
+                renderDesktopFriends(query);
+            } else {
+                // Мобильный поиск — фильтруем список друзей (не всех юзеров)
+                renderMobileFriendsSearch(query);
+            }
+        }
+
+        function renderMobileFriendsSearch(query) {
+            var container = document.getElementById('mobile-friends-list');
+            db.collection('friends').where('userId', '==', currentUser.uid).get()
+                .then(function(snap) {
+                    if (snap.empty) { container.innerHTML = '<div class="mobile-empty"><h3>Список друзей пуст</h3></div>'; return; }
+                    var html = '';
+                    var promises = [];
+                    var q = (query || '').toLowerCase().trim();
+                    
+                    snap.forEach(function(doc) {
+                        var f = doc.data();
+                        var name = f.friendName || 'Друг';
+                        if (q && name.toLowerCase().indexOf(q) === -1) return;
+                        
+                        var promise = getUserAvatar(f.friendId, name).then(function(avatar) {
+                            html += '<div class="friend-item" onclick="openChat(\'' + f.friendId + '\')"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(name) + '</b></div></div></div>';
+                        });
+                        promises.push(promise);
+                    });
+                    
+                    Promise.all(promises).then(function() {
+                        if (!html) {
+                            container.innerHTML = '<div class="mobile-empty"><h3>Никого не найдено</h3></div>';
+                        } else {
+                            container.innerHTML = html;
+                        }
+                    });
                 });
         }
 
@@ -1294,7 +1346,7 @@
             if (page === 'wall') { loadUserProfile(); renderDesktopWall(); }
             else if (page === 'news') renderDesktopNews();
             else if (page === 'photos') renderDesktopPhotos();
-            else if (page === 'friends') renderDesktopFriends();
+            else if (page === 'friends') renderDesktopFriends('');
             else if (page === 'messages') renderDesktopMessages();
         }
 
