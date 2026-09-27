@@ -17,7 +17,6 @@
         ul { list-style: none; }
         #auth-error { color: red; font-size: 12px; margin-bottom: 10px; display: none; }
 
-        /* ================= АВТОРИЗАЦИЯ ================= */
         #auth-screen { display: flex; flex-direction: column; justify-content: flex-start; height: 100vh; background: #ffffff; }
         .auth-header-bar { background: #C9D1D8; height: 44px; display: flex; align-items: center; padding: 0 10px; border-bottom: 1px solid #b0b9c0; }
         .auth-header-bar svg { height: 24px; width: auto; fill: #fff; }
@@ -31,20 +30,8 @@
         .auth-signup-area { margin-top: 15px; padding-top: 10px; border-top: 1px solid #E5E9ED; }
         .auth-signup-area button { width: 100%; background: #E5E9ED; color: #45688E; border: 1px solid #C5D0DB; padding: 8px; font-size: 14px; font-weight: bold; cursor: pointer; }
 
-        /* ================= ДЕСКТОП ================= */
         .desktop-view { display: none; }
-        .desktop-header {
-            background: linear-gradient(to bottom, #6D98C6, #45739E);
-            height: 30px;
-            border-bottom: 1px solid #3B6082;
-            padding: 0 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-            font-size: 11px;
-            font-weight: bold;
-        }
+        .desktop-header { background: linear-gradient(to bottom, #6D98C6, #45739E); height: 30px; border-bottom: 1px solid #3B6082; padding: 0 15px; display: flex; justify-content: space-between; align-items: center; color: white; font-size: 11px; font-weight: bold; }
         .desktop-header .left { display: flex; align-items: center; gap: 10px; }
         .logo-svg { height: 18px; display: block; }
         .search-box { background: #fff; border-radius: 2px; padding: 1px 8px; height: 22px; display: flex; align-items: center; color: #777; }
@@ -66,7 +53,6 @@
         .desktop-page-title { padding: 10px 15px; border-bottom: 1px solid #E4EAF0; font-size: 16px; font-weight: normal; color: #000; }
         .desktop-page-content { padding: 15px; }
 
-        /* ====== ПРОФИЛЬ ====== */
         .vk-profile-container { display: flex; gap: 15px; padding: 10px; }
         .vk-profile-left { width: 200px; flex-shrink: 0; }
         .vk-profile-photo { width: 200px; height: 250px; background: #f0f0f0; border: 1px solid #ccc; object-fit: cover; margin-bottom: 8px; }
@@ -83,7 +69,6 @@
         .vk-info-section-content { font-size: 12px; color: #333; line-height: 1.5; padding: 0 5px; }
         .vk-info-section-content b { color: #2B587A; }
 
-        /* ====== ФОТОГРАФИИ ====== */
         .photo-item { position: relative; border: 1px solid #C5D0DB; background: #f9f9f9; padding: 5px; text-align: center; }
         .photo-item img { width: 100%; height: 150px; object-fit: cover; display: block; cursor: pointer; }
         .photo-item .photo-actions { margin-top: 5px; font-size: 11px; color: #777; }
@@ -91,7 +76,6 @@
         .photo-item .photo-actions .current-badge { background: #5cb85c; color: white; padding: 2px 8px; border-radius: 2px; font-size: 11px; display: inline-block; }
         .photo-item .photo-source { font-size: 10px; color: #999; margin-top: 2px; }
 
-        /* ====== ПОСТЫ ====== */
         .desktop-post { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; gap: 10px; }
         .desktop-post img { width: 40px; height: 40px; border-radius: 2px; border: 1px solid #ddd; object-fit: cover; }
         .desktop-post .author { font-weight: bold; color: #2B587A; }
@@ -106,12 +90,10 @@
         .attach-btn:hover { background: #E1E7ED; }
         .btn-row button { background: #5E83A9; color: white; border: none; padding: 4px 15px; border-radius: 2px; cursor: pointer; font-size: 12px; }
 
-        /* ====== ПОИСК В ДРУЗЬЯХ ====== */
         .friends-search-box { padding: 10px; background: #fff; border-bottom: 1px solid #E4EAF0; }
         .friends-search-box input { width: 100%; padding: 6px 10px; border: 1px solid #C5D0DB; border-radius: 2px; font-size: 13px; outline: none; }
         .friends-search-box input:focus { border-color: #5E83A9; }
 
-        /* ================= МОБИЛЬНЫЙ ================= */
         .mobile-view { display: none; padding-bottom: 44px; background: #FFFFFF; min-height: 100vh; }
         
         .mobile-top-tabs {
@@ -208,7 +190,6 @@
 
     <div id="offline-banner">⚠️ Нет соединения с интернетом. Проверьте подключение.</div>
 
-    <!-- ЭКРАН ВХОДА -->
     <div id="auth-screen">
         <div class="auth-header-bar">
             <svg viewBox="0 0 24 24"><path d="M21.6 8.5c.3-.9.6-1.4-1.2-1.4h-2.9c-.9 0-1.3.5-1.5 1.2L14.5 13l-1.7-4.9c-.2-.6-.6-1-1.4-1H8.8c-.9 0-1.2.5-1.2.9 0 1.2 2.4 7.6 2.4 7.6s-1.6 2.3-1.8 2.5c-.2.2-.3.5-.3.8 0 .4.1.8.8.8h2.9v4.1c0 .5.2.7.8.7h2.5c.5 0 .8-.3.8-.8v-5.5c0-.8.4-1 1.2-1h1.4c1.2 0 1.4-.6 1.6-1.3l2.1-5.9z"/></svg>
@@ -228,7 +209,6 @@
         </div>
     </div>
 
-    <!-- ДЕСКТОП -->
     <div id="desktop-app" class="desktop-view">
         <div class="desktop-header">
             <div class="left">
@@ -357,7 +337,6 @@
         </div>
     </div>
 
-    <!-- МОБИЛЬНЫЙ -->
     <div id="mobile-app" class="mobile-view">
         
         <div class="mobile-top-tabs">
@@ -406,7 +385,6 @@
             <div id="mobile-photos-list" style="display:grid; grid-template-columns:repeat(2,1fr); gap:8px; padding:10px;"></div>
         </div>
 
-        <!-- КОНТЕЙНЕР ДЛЯ ЧУЖОГО ПРОФИЛЯ (мобильный) -->
         <div id="mob-user-profile" class="mobile-view-container" style="min-height:calc(100vh - 80px);"></div>
 
         <nav style="position: fixed; bottom: 0; left: 0; width: 100%; height: 44px; background: #1A1A1A; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #000; z-index: 999;">
@@ -428,7 +406,6 @@
         </nav>
     </div>
 
-    <!-- ОКНО ЧАТА -->
     <div id="chat-interface">
         <div class="chat-header">
             <div class="back-btn" onclick="closeChat()">←</div>
@@ -441,7 +418,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ ПРОФИЛЯ -->
     <div id="edit-profile-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
         <div style="background:#fff; width:90%; max-width:500px; max-height:90vh; overflow-y:auto; border:1px solid #C5D0DB; border-radius:2px;">
             <div style="background:linear-gradient(to bottom,#6D98C6,#45739E); color:white; padding:8px 15px; font-weight:bold; display:flex; justify-content:space-between; align-items:center;">
@@ -477,9 +453,6 @@
     </div>
 
     <script>
-        // =============================================
-        // КОНФИГУРАЦИЯ FIREBASE
-        // =============================================
         var firebaseConfig = {
             apiKey: "AIzaSyCIBVlQhliefITacCWgtHJlol0s3QWYcZU",
             authDomain: "vk11-9074e.firebaseapp.com",
@@ -1134,9 +1107,9 @@
                 });
         }
 
-        // =============================================
-        // ДРУЗЬЯ (клик → ПРОФИЛЬ)
-        // =============================================
+        // ============================================
+        // ДРУЗЬЯ — клик открывает ПРОФИЛЬ
+        // ============================================
         function renderMobileFriends() {
             var container = document.getElementById('mobile-friends-list');
             db.collection('friends').where('userId', '==', currentUser.uid).get()
@@ -1147,7 +1120,7 @@
                     snap.forEach(function(doc) {
                         var f = doc.data();
                         var promise = getUserAvatar(f.friendId, f.friendName).then(function(avatar) {
-                            // Клик — открыть ПРОФИЛЬ
+                            // КЛИК ОТКРЫВАЕТ ПРОФИЛЬ
                             html += '<div class="friend-item" onclick="openUserProfileMobile(\'' + f.friendId + '\')"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b></div></div></div>';
                         });
                         promises.push(promise);
@@ -1170,7 +1143,7 @@
                         var name = u.name || 'Без имени';
                         if (query && name.toLowerCase().indexOf(query) === -1) return;
                         var promise = getUserAvatar(doc.id, name).then(function(avatar) {
-                            // Клик — открыть ПРОФИЛЬ
+                            // КЛИК ОТКРЫВАЕТ ПРОФИЛЬ
                             html += '<div class="friend-item" onclick="openUserProfile(\'' + doc.id + '\')" style="cursor:pointer;"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(name) + '</b></div></div></div>';
                         });
                         promises.push(promise);
@@ -1182,9 +1155,6 @@
                 });
         }
 
-        // =============================================
-        // ОТКРЫТИЕ ЧУЖОГО ПРОФИЛЯ (десктоп)
-        // =============================================
         function openUserProfile(userId) {
             if (userId === currentUser.uid) { closeUserProfile(); return; }
             db.collection('users').doc(userId).get()
@@ -1193,7 +1163,6 @@
                     var data = doc.data();
                     var avatarUrl = data.photoURL || generateAvatar(userId, data.name);
                     
-                    // Скрываем форму создания поста
                     document.getElementById('desk-wall-post-input-block').style.display = 'none';
                     document.getElementById('desk-wall-title').innerText = 'Страница ' + (data.name || 'Пользователя');
                     
@@ -1256,9 +1225,6 @@
             renderDesktopWall();
         }
 
-        // =============================================
-        // ОТКРЫТИЕ ЧУЖОГО ПРОФИЛЯ (мобильный)
-        // =============================================
         function openUserProfileMobile(userId) {
             db.collection('users').doc(userId).get()
                 .then(function(doc) {
@@ -1331,6 +1297,9 @@
             renderMobileFriends();
         }
 
+        // ============================================
+        // СООБЩЕНИЯ — клик открывает ЧАТ
+        // ============================================
         function renderMobileMessages() {
             var container = document.getElementById('mobile-msg-list');
             db.collection('friends').where('userId', '==', currentUser.uid).get()
@@ -1341,7 +1310,7 @@
                     snap.forEach(function(doc) {
                         var f = doc.data();
                         var promise = getUserAvatar(f.friendId, f.friendName).then(function(avatar) {
-                            // Клик — открыть ЧАТ
+                            // КЛИК ОТКРЫВАЕТ ЧАТ
                             html += '<div class="chat-item" onclick="openChat(\'' + f.friendId + '\')"><div class="friend-info"><img src="' + avatar + '"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b></div></div></div>';
                         });
                         promises.push(promise);
@@ -1360,7 +1329,7 @@
                     snap.forEach(function(doc) {
                         var f = doc.data();
                         var promise = getUserAvatar(f.friendId, f.friendName).then(function(avatar) {
-                            // Клик — открыть ЧАТ
+                            // КЛИК ОТКРЫВАЕТ ЧАТ
                             html += '<div class="chat-item" onclick="openChat(\'' + f.friendId + '\')" style="cursor:pointer;padding:10px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #ddd;"><img src="' + avatar + '" style="width:40px;height:40px;border-radius:50%;"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b></div></div>';
                         });
                         promises.push(promise);
