@@ -66,7 +66,7 @@
         .desktop-page-title { padding: 10px 15px; border-bottom: 1px solid #E4EAF0; font-size: 16px; font-weight: normal; color: #000; }
         .desktop-page-content { padding: 15px; }
 
-        /* ====== ПРОФИЛЬ (ПОЛНЫЙ) ====== */
+        /* ====== ПРОФИЛЬ ====== */
         .vk-profile-container { display: flex; gap: 15px; padding: 10px; }
         .vk-profile-left { width: 200px; flex-shrink: 0; }
         .vk-profile-photo { width: 200px; height: 250px; background: #f0f0f0; border: 1px solid #ccc; object-fit: cover; margin-bottom: 8px; }
@@ -636,7 +636,7 @@
         }
 
         // =============================================
-        // ПРОФИЛЬ ПОЛНЫЙ
+        // ПРОФИЛЬ (ПОЛНЫЙ, БЕЗ СОКРАЩЕНИЙ)
         // =============================================
         function buildProfileHtml(data, avatarUrl, userId, isMe) {
             var nameHtml = escapeHtml(data.name || 'Пользователь');
@@ -653,20 +653,23 @@
             html += '<div style="font-size:11px; color:#999; margin-bottom:10px;">Обновлено недавно</div>';
 
             // Основная таблица
-            html += '<table class="vk-profile-info-table">';
-            if (data.gender) html += '<tr><td>Пол:</td><td>' + escapeHtml(data.gender) + '</td></tr>';
-            if (data.birthday) html += '<tr><td>День рождения:</td><td>' + escapeHtml(data.birthday) + '</td></tr>';
-            if (data.hometown) html += '<tr><td>Родной город:</td><td>' + escapeHtml(data.hometown) + '</td></tr>';
-            if (data.political) html += '<tr><td>Полит. взгляды:</td><td>' + escapeHtml(data.political) + '</td></tr>';
-            if (data.religion) html += '<tr><td>Религ. взгляды:</td><td>' + escapeHtml(data.religion) + '</td></tr>';
-            html += '</table>';
+            var hasMainInfo = data.gender || data.birthday || data.hometown || data.political || data.religion;
+            if (hasMainInfo) {
+                html += '<table class="vk-profile-info-table">';
+                if (data.gender) html += '<tr><td>Пол:</td><td>' + escapeHtml(data.gender) + '</td></tr>';
+                if (data.birthday) html += '<tr><td>День рождения:</td><td>' + escapeHtml(data.birthday) + '</td></tr>';
+                if (data.hometown) html += '<tr><td>Родной город:</td><td>' + escapeHtml(data.hometown) + '</td></tr>';
+                if (data.political) html += '<tr><td>Полит. взгляды:</td><td>' + escapeHtml(data.political) + '</td></tr>';
+                if (data.religion) html += '<tr><td>Религ. взгляды:</td><td>' + escapeHtml(data.religion) + '</td></tr>';
+                html += '</table>';
+            }
 
             // Контактная информация
             if (data.city || data.mobile || data.website) {
                 html += '<div class="vk-info-section"><div class="vk-info-section-title">Контактная информация</div><div class="vk-info-section-content">';
                 if (data.city) html += '<div><b>Город:</b> ' + escapeHtml(data.city) + '</div>';
                 if (data.mobile) html += '<div><b>Моб. телефон:</b> ' + escapeHtml(data.mobile) + '</div>';
-                if (data.website) html += '<div><b>Веб-сайт:</b> <a href="http://' + escapeHtml(data.website) + '" target="_blank">' + escapeHtml(data.website) + '</a></div>';
+                if (data.website) html += '<div><b>Веб-сайт:</b> ' + escapeHtml(data.website) + '</div>';
                 html += '</div></div>';
             }
 
@@ -683,7 +686,7 @@
             }
 
             // Монеты
-            if (data.coins !== undefined) {
+            if (isMe && data.coins !== undefined) {
                 html += '<div class="vk-info-section"><div class="vk-info-section-title">Игровая валюта</div><div class="vk-info-section-content">💰 <b>' + data.coins + ' монет</b></div></div>';
             }
 
@@ -692,7 +695,7 @@
             if (isMe) {
                 html += '<button class="edit-btn" onclick="openEditProfile()">⚙️ Редактировать</button>';
             } else {
-                html += '<button class="edit-btn" onclick="closeUserProfile()" style="background:#ccc; color:#333;">← Назад</button>';
+                html += '<button class="edit-btn" onclick="closeUserProfile()" style="background:#ccc; color:#333;">← Назад к друзьям</button>';
                 html += '<button class="edit-btn" onclick="openChat(\'' + userId + '\')" style="background:#5E83A9; color:white;">✉️ Написать сообщение</button>';
             }
             html += '</div>';
@@ -717,14 +720,17 @@
             }
             html += '</div></div>';
 
-            var infoTable = '<table class="mobile-profile-info-table">';
-            if (data.gender) infoTable += '<tr><td>Пол:</td><td>' + escapeHtml(data.gender) + '</td></tr>';
-            if (data.birthday) infoTable += '<tr><td>День рождения:</td><td>' + escapeHtml(data.birthday) + '</td></tr>';
-            if (data.hometown) infoTable += '<tr><td>Родной город:</td><td>' + escapeHtml(data.hometown) + '</td></tr>';
-            if (data.political) infoTable += '<tr><td>Полит. взгляды:</td><td>' + escapeHtml(data.political) + '</td></tr>';
-            if (data.religion) infoTable += '<tr><td>Религ. взгляды:</td><td>' + escapeHtml(data.religion) + '</td></tr>';
-            infoTable += '</table>';
-            html += infoTable;
+            var hasMainInfo = data.gender || data.birthday || data.hometown || data.political || data.religion;
+            if (hasMainInfo) {
+                var infoTable = '<table class="mobile-profile-info-table">';
+                if (data.gender) infoTable += '<tr><td>Пол:</td><td>' + escapeHtml(data.gender) + '</td></tr>';
+                if (data.birthday) infoTable += '<tr><td>День рождения:</td><td>' + escapeHtml(data.birthday) + '</td></tr>';
+                if (data.hometown) infoTable += '<tr><td>Родной город:</td><td>' + escapeHtml(data.hometown) + '</td></tr>';
+                if (data.political) infoTable += '<tr><td>Полит. взгляды:</td><td>' + escapeHtml(data.political) + '</td></tr>';
+                if (data.religion) infoTable += '<tr><td>Религ. взгляды:</td><td>' + escapeHtml(data.religion) + '</td></tr>';
+                infoTable += '</table>';
+                html += infoTable;
+            }
 
             if (data.city || data.mobile || data.website) {
                 html += '<div class="mobile-info-section"><div class="mobile-info-section-title">Контактная информация</div><div class="mobile-info-section-content">';
@@ -745,7 +751,7 @@
                 html += '</div></div>';
             }
 
-            if (data.coins !== undefined) {
+            if (isMe && data.coins !== undefined) {
                 html += '<div class="mobile-info-section"><div class="mobile-info-section-title">Игровая валюта</div><div class="mobile-info-section-content">💰 <b>' + data.coins + ' монет</b></div></div>';
             }
 
@@ -830,7 +836,7 @@
         }
 
         // =============================================
-        // ЗАГРУЗКА ФОТО И АВАТАРОК
+        // ФОТО И АВАТАРКИ
         // =============================================
         function previewPostImage(device) {
             var fileInput = document.getElementById(device === 'desktop' ? 'desk-post-image' : 'mob-post-image');
@@ -1264,17 +1270,20 @@
         // ОТКРЫТИЕ ЧУЖОГО ПРОФИЛЯ (десктоп)
         // =============================================
         function openUserProfile(userId) {
-            if (userId === currentUser.uid) { closeUserProfile(); return; }
+            if (userId === currentUser.uid) return;
             db.collection('users').doc(userId).get()
                 .then(function(doc) {
                     if (!doc.exists) { alert("Пользователь не найден"); return; }
                     var data = doc.data();
                     var avatarUrl = data.photoURL || generateAvatar(userId, data.name);
                     
+                    // Скрываем форму создания поста
                     document.getElementById('desk-wall-post-input-block').style.display = 'none';
+                    // Меняем заголовок
                     document.getElementById('desk-wall-title').innerText = 'Страница ' + (data.name || 'Пользователя');
-                    
+                    // Показываем профиль
                     document.getElementById('desk-wall-profile').innerHTML = buildProfileHtml(data, avatarUrl, userId, false);
+                    // Загружаем его посты
                     renderUserWallDesktop(userId);
                 });
         }
@@ -1305,10 +1314,8 @@
         }
 
         function closeUserProfile() {
-            document.getElementById('desk-wall-post-input-block').style.display = 'block';
-            document.getElementById('desk-wall-title').innerText = 'Моя Страница';
-            loadUserProfile();
-            renderDesktopWall();
+            // Возвращаемся в "Мои Друзья"
+            showDeskPage('friends');
         }
 
         // =============================================
