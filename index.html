@@ -88,46 +88,13 @@
         .photo-item .photo-actions .current-badge { background: #5cb85c; color: white; padding: 2px 8px; border-radius: 2px; font-size: 11px; display: inline-block; }
         .photo-item .photo-source { font-size: 10px; color: #999; margin-top: 2px; }
 
-        .video-item {
-            border: 1px solid #C5D0DB;
-            background: #f9f9f9;
-            padding: 10px;
-            margin-bottom: 15px;
-        }
-        .video-item iframe {
-            width: 100%;
-            height: 350px;
-            border: 1px solid #ccc;
-            display: block;
-        }
-        .video-item .video-meta {
-            margin-top: 8px;
-            font-size: 12px;
-            color: #777;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 5px;
-        }
-        .video-item .video-meta button {
-            background: #d9534f;
-            color: white;
-            border: none;
-            padding: 3px 10px;
-            border-radius: 2px;
-            cursor: pointer;
-            font-size: 11px;
-        }
-        .video-item .video-title {
-            font-weight: bold;
-            color: #2B587A;
-            font-size: 13px;
-            margin-bottom: 5px;
-        }
+        .video-item { border: 1px solid #C5D0DB; background: #f9f9f9; padding: 10px; margin-bottom: 15px; }
+        .video-item iframe { width: 100%; height: 350px; border: 1px solid #ccc; display: block; }
+        .video-item .video-meta { margin-top: 8px; font-size: 12px; color: #777; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 5px; }
+        .video-item .video-meta button { background: #d9534f; color: white; border: none; padding: 3px 10px; border-radius: 2px; cursor: pointer; font-size: 11px; }
+        .video-item .video-title { font-weight: bold; color: #2B587A; font-size: 13px; margin-bottom: 5px; }
         .video-embed { margin-top: 8px; }
 
-        /* ====== ПОСТЫ ====== */
         .desktop-post { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; gap: 10px; }
         .desktop-post img.post-avatar { width: 40px; height: 40px; border-radius: 2px; border: 1px solid #ddd; object-fit: cover; }
         .desktop-post .author { font-weight: bold; color: #2B587A; }
@@ -137,88 +104,24 @@
         .post-image-container { margin-top: 8px; width: 100%; max-width: 300px; border-radius: 2px; overflow: hidden; border: 1px solid #eee; }
         .post-image-container img { width: 100%; height: auto; display: block; object-fit: cover; }
 
-        /* ====== КНОПКИ ПОСТА (ЛАЙК / РЕПОСТ / КОММЕНТ) ====== */
-        .post-actions {
-            margin-top: 8px;
-            display: flex;
-            gap: 15px;
-            font-size: 12px;
-            color: #777;
-            align-items: center;
-        }
-        .post-action-btn {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            color: #777;
-            font-size: 12px;
-            padding: 2px 4px;
-            border-radius: 2px;
-            display: flex;
-            align-items: center;
-            gap: 3px;
-            font-family: inherit;
-        }
+        .post-actions { margin-top: 8px; display: flex; gap: 15px; font-size: 12px; color: #777; align-items: center; }
+        .post-action-btn { background: transparent; border: none; cursor: pointer; color: #777; font-size: 12px; padding: 2px 4px; border-radius: 2px; display: flex; align-items: center; gap: 3px; font-family: inherit; }
         .post-action-btn:hover { color: #2B587A; background: #E1E7ED; }
         .post-action-btn.liked { color: #d9534f; font-weight: bold; }
 
-        /* Комментарии */
-        .comments-block {
-            margin-top: 10px;
-            padding: 8px;
-            background: #F9F9F9;
-            border: 1px solid #E5E9ED;
-            border-radius: 2px;
-            display: none;
-        }
+        .comments-block { margin-top: 10px; padding: 8px; background: #F9F9F9; border: 1px solid #E5E9ED; border-radius: 2px; display: none; }
         .comments-block.open { display: block; }
-        .comment-item {
-            display: flex;
-            gap: 8px;
-            padding: 6px 0;
-            border-bottom: 1px solid #E5E9ED;
-        }
+        .comment-item { display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px solid #E5E9ED; }
         .comment-item:last-child { border-bottom: none; }
-        .comment-item img {
-            width: 30px;
-            height: 30px;
-            border-radius: 2px;
-            border: 1px solid #ddd;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
+        .comment-item img { width: 30px; height: 30px; border-radius: 2px; border: 1px solid #ddd; object-fit: cover; flex-shrink: 0; }
         .comment-body { flex: 1; min-width: 0; }
         .comment-author { font-weight: bold; color: #2B587A; font-size: 12px; }
         .comment-date { color: #999; font-size: 10px; margin-left: 5px; }
         .comment-text { font-size: 12px; color: #333; margin-top: 2px; line-height: 1.3; word-wrap: break-word; }
-        .comment-delete {
-            color: #d9534f;
-            font-size: 10px;
-            cursor: pointer;
-            margin-left: 8px;
-        }
-        .comment-input-row {
-            display: flex;
-            gap: 6px;
-            margin-top: 8px;
-        }
-        .comment-input-row input {
-            flex: 1;
-            padding: 5px 8px;
-            border: 1px solid #ccc;
-            border-radius: 2px;
-            font-size: 12px;
-            font-family: inherit;
-        }
-        .comment-input-row button {
-            background: #5E83A9;
-            color: white;
-            border: none;
-            padding: 5px 12px;
-            border-radius: 2px;
-            font-size: 12px;
-            cursor: pointer;
-        }
+        .comment-delete { color: #d9534f; font-size: 10px; cursor: pointer; margin-left: 8px; }
+        .comment-input-row { display: flex; gap: 6px; margin-top: 8px; }
+        .comment-input-row input { flex: 1; padding: 5px 8px; border: 1px solid #ccc; border-radius: 2px; font-size: 12px; font-family: inherit; }
+        .comment-input-row button { background: #5E83A9; color: white; border: none; padding: 5px 12px; border-radius: 2px; font-size: 12px; cursor: pointer; }
 
         .desktop-post-input { background: #f9f9f9; border: 1px solid #eee; padding: 10px; margin-bottom: 10px; }
         .desktop-post-input textarea { width: 100%; border: 1px solid #ccc; padding: 5px; border-radius: 2px; font-family: inherit; resize: vertical; min-height: 40px; font-size: 13px; }
@@ -235,37 +138,11 @@
 
         .mobile-view { display: none; padding-bottom: 44px; background: #FFFFFF; min-height: 100vh; }
         
-        .mobile-top-tabs {
-            background: linear-gradient(to bottom, #5E83A9, #3A6087);
-            height: 36px;
-            display: flex;
-            align-items: stretch;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid #1E3A5F;
-        }
-        .mobile-top-tab {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #C5D8EC;
-            font-size: 12px;
-            font-weight: bold;
-            text-shadow: 0 1px 0 rgba(0,0,0,0.4);
-            cursor: pointer;
-            border-right: 1px solid #2A4B70;
-            border-left: 1px solid #6F95B8;
-            background: transparent;
-        }
+        .mobile-top-tabs { background: linear-gradient(to bottom, #5E83A9, #3A6087); height: 36px; display: flex; align-items: stretch; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1E3A5F; }
+        .mobile-top-tab { flex: 1; display: flex; align-items: center; justify-content: center; color: #C5D8EC; font-size: 12px; font-weight: bold; text-shadow: 0 1px 0 rgba(0,0,0,0.4); cursor: pointer; border-right: 1px solid #2A4B70; border-left: 1px solid #6F95B8; background: transparent; }
         .mobile-top-tab:first-child { border-left: none; }
         .mobile-top-tab:last-child { border-right: none; }
-        .mobile-top-tab.active {
-            background: linear-gradient(to bottom, #4A6E94, #2C4A6B);
-            color: #FFFFFF;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
-        }
+        .mobile-top-tab.active { background: linear-gradient(to bottom, #4A6E94, #2C4A6B); color: #FFFFFF; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
 
         .mobile-view-container { display: none; background: #f2f2f2; min-height: calc(100vh - 80px); }
         .mobile-view-container.active { display: block; }
@@ -290,15 +167,8 @@
         .mobile-create-post textarea { flex: 1; min-width: 150px; border: 1px solid #ccc; border-radius: 2px; padding: 5px; height: 40px; resize: none; max-height: 150px; font-family: inherit; font-size: 14px; background: #F9F9F9; }
         .mobile-create-post button { background: #5E83A9; color: white; border: 1px solid #3A6087; padding: 0 15px; border-radius: 2px; font-size: 14px; font-weight: bold; cursor: pointer; height: 40px; }
 
-        .mobile-post {
-            background: #fff;
-            padding: 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .mobile-post .post-row {
-            display: flex;
-            gap: 8px;
-        }
+        .mobile-post { background: #fff; padding: 8px; border-bottom: 1px solid #e0e0e0; }
+        .mobile-post .post-row { display: flex; gap: 8px; }
         .mobile-post img.post-avatar { width: 40px; height: 40px; border-radius: 2px !important; border: 1px solid #ddd; object-fit: cover; flex-shrink: 0; }
         .mobile-post .post-body { flex: 1; min-width: 0; }
         .mobile-post .author { font-weight: bold; color: #2B587A; font-size: 13px; }
@@ -324,67 +194,15 @@
 
         #offline-banner { display: none; background: #d9534f; color: white; text-align: center; padding: 5px; font-size: 12px; position: sticky; top: 36px; z-index: 101; }
 
-        #video-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-        }
-        #video-modal .modal-box {
-            background: #fff;
-            width: 90%;
-            max-width: 500px;
-            border: 1px solid #C5D0DB;
-            border-radius: 2px;
-        }
-        #video-modal .modal-header {
-            background: linear-gradient(to bottom, #6D98C6, #45739E);
-            color: white;
-            padding: 10px 15px;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        #video-modal .modal-body {
-            padding: 15px;
-        }
-        #video-modal .modal-body input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 2px;
-            font-size: 13px;
-            margin-bottom: 10px;
-        }
-        #video-modal .modal-body label {
-            display: block;
-            font-size: 12px;
-            color: #777;
-            margin-bottom: 5px;
-        }
-        #video-modal .modal-body .hint {
-            font-size: 11px;
-            color: #999;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-        #video-modal .modal-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-        }
-        #video-modal .modal-buttons button {
-            padding: 6px 15px;
-            border-radius: 2px;
-            cursor: pointer;
-            font-size: 13px;
-            border: none;
-        }
+        #video-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center; }
+        #video-modal .modal-box { background: #fff; width: 90%; max-width: 500px; border: 1px solid #C5D0DB; border-radius: 2px; }
+        #video-modal .modal-header { background: linear-gradient(to bottom, #6D98C6, #45739E); color: white; padding: 10px 15px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+        #video-modal .modal-body { padding: 15px; }
+        #video-modal .modal-body input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 2px; font-size: 13px; margin-bottom: 10px; }
+        #video-modal .modal-body label { display: block; font-size: 12px; color: #777; margin-bottom: 5px; }
+        #video-modal .modal-body .hint { font-size: 11px; color: #999; margin-bottom: 10px; line-height: 1.4; }
+        #video-modal .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; }
+        #video-modal .modal-buttons button { padding: 6px 15px; border-radius: 2px; cursor: pointer; font-size: 13px; border: none; }
 
         @media (min-width: 769px) { .desktop-view { display: block; } .mobile-view { display: none !important; } }
         @media (max-width: 768px) { .desktop-view { display: none !important; } .mobile-view { display: block; } }
@@ -735,10 +553,9 @@
         var attachedVideoUrl = '';
         var attachedVideoTitle = '';
         var attachedVideoFor = '';
-        // Храним лайки и открытые комментарии в памяти, чтобы не перезагружать при каждом чихе
-        var likesCache = {};      // postId -> {count, userLiked}
-        var commentsCache = {};   // postId -> массив комментариев
-        var openComments = {};    // postId -> true/false
+        var likesCache = {};
+        var commentsCache = {};
+        var openComments = {};
 
         document.addEventListener('click', function(e) {
             var friendEl = e.target.closest('.friend-item');
@@ -909,10 +726,7 @@
                 db.collection('likes').doc(pid).get().then(function(doc) {
                     if (doc.exists) {
                         var d = doc.data();
-                        likesCache[pid] = {
-                            count: d.count || 0,
-                            users: d.users || []
-                        };
+                        likesCache[pid] = { count: d.count || 0, users: d.users || [] };
                     } else {
                         likesCache[pid] = { count: 0, users: [] };
                     }
@@ -938,12 +752,7 @@
                 likeData.count = likeData.users.length;
             }
             likesCache[postId] = likeData;
-            db.collection('likes').doc(postId).set({
-                count: likeData.count,
-                users: likeData.users
-            }).catch(function(e) { console.error('Like error:', e); });
-            
-            // Обновляем все кнопки лайка для этого поста на странице
+            db.collection('likes').doc(postId).set({ count: likeData.count, users: likeData.users }).catch(function(e) { console.error('Like error:', e); });
             var btns = document.querySelectorAll('.post-action-btn[data-like-post="' + postId + '"]');
             btns.forEach(function(btn) {
                 var isLiked = likeData.users.indexOf(currentUser.uid) !== -1;
@@ -953,20 +762,23 @@
         }
 
         // =============================================
-        // КОММЕНТАРИИ
+        // КОММЕНТАРИИ (упрощённая версия без orderBy)
         // =============================================
         function loadComments(postId, callback) {
-            db.collection('comments').where('postId', '==', postId).orderBy('createdAt', 'asc').get()
+            db.collection('comments').where('postId', '==', postId).get()
                 .then(function(snap) {
                     var arr = [];
-                    snap.forEach(function(doc) {
-                        arr.push({ id: doc.id, data: doc.data() });
+                    snap.forEach(function(doc) { arr.push({ id: doc.id, data: doc.data() }); });
+                    arr.sort(function(a, b) {
+                        var ta = a.data.createdAt && a.data.createdAt.toDate ? a.data.createdAt.toDate().getTime() : 0;
+                        var tb = b.data.createdAt && b.data.createdAt.toDate ? b.data.createdAt.toDate().getTime() : 0;
+                        return ta - tb;
                     });
                     commentsCache[postId] = arr;
                     callback(arr);
                 })
                 .catch(function(e) {
-                    console.error('Comments error:', e);
+                    console.error('Comments load error:', e);
                     callback([]);
                 });
         }
@@ -977,9 +789,7 @@
             if (!block) return;
             if (openComments[postId]) {
                 block.classList.add('open');
-                loadComments(postId, function(arr) {
-                    renderCommentsList(postId, arr);
-                });
+                loadComments(postId, function(arr) { renderCommentsList(postId, arr); });
             } else {
                 block.classList.remove('open');
             }
@@ -996,15 +806,22 @@
             var promises = [];
             arr.forEach(function(c) {
                 var promise = getUserAvatar(c.data.authorId, c.data.authorName).then(function(avatar) {
-                    var date = c.data.createdAt ? c.data.createdAt.toDate().toLocaleString('ru-RU') : '';
+                    var date = '';
+                    try {
+                        if (c.data.createdAt && c.data.createdAt.toDate) {
+                            date = c.data.createdAt.toDate().toLocaleString('ru-RU');
+                        } else if (c.data.createdAt) {
+                            date = String(c.data.createdAt);
+                        }
+                    } catch (e) { date = ''; }
                     var deleteBtn = (c.data.authorId === currentUser.uid) ? '<span class="comment-delete" onclick="deleteComment(\'' + postId + '\', \'' + c.id + '\')">удалить</span>' : '';
                     html += '<div class="comment-item">';
                     html += '<img src="' + avatar + '">';
                     html += '<div class="comment-body">';
-                    html += '<span class="comment-author">' + escapeHtml(c.data.authorName) + '</span>';
+                    html += '<span class="comment-author">' + escapeHtml(c.data.authorName || 'Аноним') + '</span>';
                     html += '<span class="comment-date">' + date + '</span>';
                     html += deleteBtn;
-                    html += '<div class="comment-text">' + escapeHtml(c.data.text) + '</div>';
+                    html += '<div class="comment-text">' + escapeHtml(c.data.text || '') + '</div>';
                     html += '</div></div>';
                 });
                 promises.push(promise);
@@ -1027,7 +844,6 @@
             }).then(function() {
                 loadComments(postId, function(arr) {
                     renderCommentsList(postId, arr);
-                    // Обновляем счётчик
                     var btn = document.querySelector('.post-action-btn[data-comment-post="' + postId + '"]');
                     if (btn) btn.innerHTML = '💬 ' + arr.length;
                 });
@@ -1045,9 +861,6 @@
             });
         }
 
-        // =============================================
-        // РЕПОСТ
-        // =============================================
         function repost(postId) {
             db.collection('posts').doc(postId).get().then(function(doc) {
                 if (!doc.exists) { alert('Пост не найден'); return; }
@@ -1064,7 +877,6 @@
                 if (p.imageURL) repostData.imageURL = p.imageURL;
                 if (p.videoUrl) repostData.videoUrl = p.videoUrl;
                 if (p.videoTitle) repostData.videoTitle = p.videoTitle;
-                
                 db.collection('posts').add(repostData).then(function() {
                     alert('✅ Репост опубликован на вашей стене!');
                     if (window.innerWidth <= 768) renderMobileWall();
@@ -1073,15 +885,11 @@
             });
         }
 
-        // =============================================
-        // ФУНКЦИЯ ПОСТРОЕНИЯ КНОПОК ПОСТА
-        // =============================================
         function buildPostActions(postId, commentsCount) {
             var likeData = likesCache[postId] || { count: 0, users: [] };
             var isLiked = likeData.users.indexOf(currentUser.uid) !== -1;
             var likedClass = isLiked ? ' liked' : '';
             var cCount = commentsCount || 0;
-            
             return '<div class="post-actions">' +
                 '<button class="post-action-btn' + likedClass + '" data-like-post="' + postId + '" onclick="toggleLike(\'' + postId + '\')">❤️ ' + likeData.count + '</button>' +
                 '<button class="post-action-btn" onclick="repost(\'' + postId + '\')">🔄 Репост</button>' +
@@ -1104,7 +912,6 @@
         function buildProfileHtml(data, avatarUrl, userId, isMe) {
             var nameHtml = escapeHtml(data.name || 'Пользователь');
             if (isMe) nameHtml += ' <span style="font-size:11px; color:#999; font-weight:normal;">(это вы)</span>';
-            
             var html = '<div class="vk-profile-container">';
             html += '<div class="vk-profile-left">';
             html += '<img src="' + avatarUrl + '" class="vk-profile-photo" onerror="this.src=\'' + generateAvatar(userId, data.name) + '\'">';
@@ -1156,7 +963,6 @@
                 html += '<button class="edit-btn" onclick="openChat(\'' + userId + '\')" style="background:#5E83A9; color:white;">✉️ Написать сообщение</button>';
             }
             html += '</div>';
-
             html += '</div></div>';
             return html;
         }
@@ -1164,7 +970,6 @@
         function buildMobileProfileHtml(data, avatarUrl, userId, isMe) {
             var nameHtml = escapeHtml(data.name || 'Пользователь');
             if (isMe) nameHtml += ' <span style="font-size:11px; color:#999; font-weight:normal;">(это вы)</span>';
-            
             var html = '<div class="mobile-profile-header">';
             html += '<img src="' + avatarUrl + '" class="mobile-profile-avatar" onerror="this.src=\'' + generateAvatar(userId, data.name) + '\'">';
             html += '<div style="flex:1;">';
@@ -1211,7 +1016,6 @@
             if (isMe && data.coins !== undefined) {
                 html += '<div class="mobile-info-section"><div class="mobile-info-section-title">Игровая валюта</div><div class="mobile-info-section-content">💰 <b>' + data.coins + ' монет</b></div></div>';
             }
-
             return html;
         }
 
@@ -1292,9 +1096,6 @@
                 .catch(function(e) { alert("Ошибка: " + e.message); });
         }
 
-        // =============================================
-        // ВИДЕО
-        // =============================================
         function openVideoModal(device) {
             attachedVideoFor = device;
             document.getElementById('video-link-input').value = '';
@@ -1302,16 +1103,11 @@
             document.getElementById('video-modal').style.display = 'flex';
         }
 
-        function closeVideoModal() {
-            document.getElementById('video-modal').style.display = 'none';
-        }
+        function closeVideoModal() { document.getElementById('video-modal').style.display = 'none'; }
 
         function extractGoogleDriveId(url) {
             if (!url) return null;
-            var patterns = [
-                /\/file\/d\/([a-zA-Z0-9_-]+)/,
-                /[?&]id=([a-zA-Z0-9_-]+)/
-            ];
+            var patterns = [/\/file\/d\/([a-zA-Z0-9_-]+)/, /[?&]id=([a-zA-Z0-9_-]+)/];
             for (var i = 0; i < patterns.length; i++) {
                 var match = url.match(patterns[i]);
                 if (match && match[1]) return match[1];
@@ -1323,16 +1119,10 @@
             var link = document.getElementById('video-link-input').value.trim();
             var title = document.getElementById('video-title-input').value.trim();
             if (!link) { alert("Вставь ссылку на видео!"); return; }
-            
             var videoId = extractGoogleDriveId(link);
-            if (!videoId) {
-                alert("Не удалось распознать ссылку Google Диска. Убедись, что ссылка вида https://drive.google.com/file/d/XXXXXX/view");
-                return;
-            }
-            
+            if (!videoId) { alert("Не удалось распознать ссылку Google Диска."); return; }
             attachedVideoUrl = 'https://drive.google.com/file/d/' + videoId + '/preview';
             attachedVideoTitle = title || 'Видео';
-            
             var previewBox = document.getElementById(attachedVideoFor === 'desktop' ? 'desk-post-preview' : 'mob-post-preview');
             if (previewBox) {
                 var fileInput = document.getElementById(attachedVideoFor === 'desktop' ? 'desk-post-image' : 'mob-post-image');
@@ -1340,7 +1130,6 @@
                 previewBox.innerHTML = '<div style="padding:8px; background:#E5E9ED; border:1px solid #C5D0DB; border-radius:2px; font-size:12px; color:#2B587A;">🎬 ' + escapeHtml(attachedVideoTitle) + ' <span style="cursor:pointer; color:#d9534f; font-weight:bold; margin-left:10px;" onclick="removeVideo()">×</span></div>';
                 previewBox.style.display = 'block';
             }
-            
             closeVideoModal();
         }
 
@@ -1353,15 +1142,12 @@
 
         function previewPostImage(device) {
             if (attachedVideoUrl) { removeVideo(); }
-            
             var fileInput = document.getElementById(device === 'desktop' ? 'desk-post-image' : 'mob-post-image');
             var previewBox = document.getElementById(device === 'desktop' ? 'desk-post-preview' : 'mob-post-preview');
             var file = fileInput.files[0];
             if (!file) { previewBox.style.display = 'none'; return; }
-            
             previewBox.innerHTML = '<img id="' + (device === 'desktop' ? 'desk-preview-img' : 'mob-preview-img') + '" style="max-width:200px; max-height:150px; border:1px solid #ccc; border-radius:2px;">' +
                 '<span onclick="removePostImage(\'' + device + '\')" style="position:absolute; top:-8px; left:190px; background:#d9534f; color:white; width:20px; height:20px; border-radius:50%; text-align:center; line-height:20px; cursor:pointer; font-weight:bold;">×</span>';
-            
             var newImg = document.getElementById(device === 'desktop' ? 'desk-preview-img' : 'mob-preview-img');
             var reader = new FileReader();
             reader.onload = function(e) {
@@ -1612,31 +1398,25 @@
             var fileInput = document.getElementById(device === 'desktop' ? 'desk-post-image' : 'mob-post-image');
             var file = fileInput ? fileInput.files[0] : null;
             var hasVideo = !!attachedVideoUrl;
-            
             if (!text && !file && !hasVideo) { alert("Напишите текст, выберите фото или прикрепите видео!"); return; }
             if (text.length > 2000) { alert("Слишком длинный пост!"); return; }
-            
             textEl.value = '';
             if(fileInput) fileInput.value = '';
             var previewBox = document.getElementById(device === 'desktop' ? 'desk-post-preview' : 'mob-post-preview');
             if (previewBox) previewBox.style.display = 'none';
-            
             var videoUrlToSave = attachedVideoUrl;
             var videoTitleToSave = attachedVideoTitle;
             attachedVideoUrl = '';
             attachedVideoTitle = '';
-            
             var btn = document.getElementById(device === 'desktop' ? 'desk-send-btn' : 'mob-send-btn');
             var original = btn ? btn.innerText : '';
             if(btn) { btn.innerText = '...'; btn.disabled = true; }
-            
             var postData = {
                 authorName: currentUser.displayName,
-                authorId: currentUser.uid, 
+                authorId: currentUser.uid,
                 text: text,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             };
-            
             var afterPostSave = function() {
                 if (hasVideo) {
                     return db.collection('videos').add({
@@ -1649,7 +1429,6 @@
                 }
                 return Promise.resolve();
             };
-            
             if (file) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
@@ -1672,7 +1451,6 @@
                         if (base64.length > 900 * 1024) { base64 = canvas.toDataURL('image/jpeg', 0.4); }
                         postData.imageURL = base64;
                         if (hasVideo) { postData.videoUrl = videoUrlToSave; postData.videoTitle = videoTitleToSave; }
-                        
                         db.collection('posts').add(postData)
                             .then(function() {
                                 return db.collection('photos').add({
@@ -1733,10 +1511,7 @@
                         posts.push({ id: doc.id, data: doc.data() });
                         postIds.push(doc.id);
                     });
-                    
-                    // Сначала грузим лайки
                     loadLikesForPosts(postIds, function() {
-                        // Потом грузим комментарии для каждого поста
                         var commentsLoaded = 0;
                         var commentsCount = {};
                         if (!postIds.length) { commentsLoaded = postIds.length; }
@@ -1795,7 +1570,6 @@
                         posts.push({ id: doc.id, data: doc.data() });
                         postIds.push(doc.id);
                     });
-                    
                     loadLikesForPosts(postIds, function() {
                         var commentsLoaded = 0;
                         var commentsCount = {};
@@ -1922,9 +1696,9 @@
                         });
                         promises.push(promise);
                     });
-                    Promise.all(promises).then(function() { 
+                    Promise.all(promises).then(function() {
                         if (!html) container.innerHTML = '<div class="mobile-empty"><h3>Пользователей нет</h3></div>';
-                        else container.innerHTML = html; 
+                        else container.innerHTML = html;
                     });
                 });
         }
@@ -2258,10 +2032,10 @@
             }
             var pageEl = document.getElementById('desk-page-' + page);
             if (pageEl) pageEl.style.display = 'block';
-            if (page === 'wall') { 
+            if (page === 'wall') {
                 document.getElementById('desk-wall-post-input-block').style.display = 'block';
                 document.getElementById('desk-wall-title').innerText = 'Моя Страница';
-                loadUserProfile(); renderDesktopWall(); 
+                loadUserProfile(); renderDesktopWall();
             }
             else if (page === 'news') renderDesktopNews();
             else if (page === 'photos') renderDesktopPhotos();
