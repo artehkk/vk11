@@ -68,16 +68,25 @@
         .desktop-page-title { padding: 10px 15px; border-bottom: 1px solid #E4EAF0; font-size: 16px; font-weight: normal; color: #000; }
         .desktop-page-content { padding: 15px; }
 
-        .section-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
-        .section-item { background: #f9f9f9; border: 1px solid #eee; padding: 10px; text-align: center; border-radius: 2px; cursor: pointer; }
-        .section-item:hover { background: #f0f0f0; }
-        .section-item img { width: 100%; height: 120px; object-fit: cover; border-radius: 2px; margin-bottom: 5px; }
-        .section-item .title { font-weight: bold; color: #2B587A; }
-        .section-item .desc { font-size: 11px; color: #777; }
-        .music-player { background: #f9f9f9; border: 1px solid #eee; padding: 15px; text-align: center; margin-bottom: 15px; }
-        .music-player .controls { display: flex; justify-content: center; gap: 15px; margin-top: 10px; }
-        .music-player .controls button { background: #5E83A9; color: white; border: none; padding: 5px 15px; border-radius: 2px; cursor: pointer; }
+        /* ====== ПРОФИЛЬ В СТИЛЕ СТАРОГО ВК ====== */
+        .vk-profile-container { display: flex; gap: 15px; padding: 10px; }
+        .vk-profile-left { width: 200px; flex-shrink: 0; }
+        .vk-profile-photo { width: 200px; height: 250px; background: #f0f0f0; border: 1px solid #ccc; object-fit: cover; margin-bottom: 8px; }
+        .vk-profile-right { flex: 1; }
+        .vk-profile-name { font-size: 18px; font-weight: bold; color: #2B587A; margin-bottom: 2px; }
+        .vk-profile-status { font-size: 12px; color: #777; margin-bottom: 10px; }
+        .vk-profile-info-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 15px; }
+        .vk-profile-info-table td { padding: 3px 0; vertical-align: top; }
+        .vk-profile-info-table td:first-child { width: 120px; color: #777; }
+        .vk-profile-info-table td:last-child { color: #2B587A; }
+        .vk-profile-info-table td:last-child a { color: #2B587A; }
 
+        .vk-info-section { margin-bottom: 15px; }
+        .vk-info-section-title { background: #E5E9ED; padding: 5px 10px; font-weight: bold; font-size: 12px; color: #2B587A; margin-bottom: 8px; border: 1px solid #C5D0DB; }
+        .vk-info-section-content { font-size: 12px; color: #333; line-height: 1.5; padding: 0 5px; }
+        .vk-info-section-content b { color: #2B587A; }
+
+        /* ====== ПОСТЫ ====== */
         .desktop-post { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; gap: 10px; }
         .desktop-post img { width: 40px; height: 40px; border-radius: 2px; border: 1px solid #ddd; object-fit: cover; }
         .desktop-post .author { font-weight: bold; color: #2B587A; }
@@ -94,7 +103,6 @@
         /* ================= МОБИЛЬНЫЙ (СТИЛЬ СТАРОГО ВК) ================= */
         .mobile-view { display: none; padding-bottom: 44px; background: #FFFFFF; min-height: 100vh; }
         
-        /* Верхняя синяя панель с вкладками */
         .mobile-top-tabs {
             background: linear-gradient(to bottom, #5E83A9, #3A6087);
             height: 36px;
@@ -128,14 +136,23 @@
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        /* Контент мобильный */
         .mobile-view-container { display: none; background: #f2f2f2; min-height: calc(100vh - 80px); }
         .mobile-view-container.active { display: block; }
         .mobile-empty { padding: 40px 20px; text-align: center; color: #666; }
 
-        .mobile-profile-header { background: #fff; padding: 15px; border-bottom: 1px solid #ddd; display: flex; gap: 15px; align-items: center; }
-        .mobile-profile-avatar { width: 80px; height: 80px; border-radius: 2px !important; border: 1px solid #ddd; object-fit: cover; }
-        .mobile-profile-name { font-size: 18px; font-weight: bold; color: #000; }
+        /* Мобильный профиль в стиле старого ВК */
+        .mobile-profile-header { background: #fff; padding: 15px; border-bottom: 1px solid #ddd; display: flex; gap: 15px; align-items: flex-start; }
+        .mobile-profile-avatar { width: 100px; height: 120px; border-radius: 2px !important; border: 1px solid #ccc; object-fit: cover; flex-shrink: 0; }
+        .mobile-profile-name { font-size: 16px; font-weight: bold; color: #2B587A; }
+        .mobile-profile-status-text { font-size: 12px; color: #777; margin-top: 2px; }
+        .mobile-profile-info-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 8px; }
+        .mobile-profile-info-table td { padding: 2px 0; vertical-align: top; }
+        .mobile-profile-info-table td:first-child { width: 100px; color: #777; }
+        .mobile-profile-info-table td:last-child { color: #2B587A; }
+
+        .mobile-info-section { background: #fff; margin: 10px 0; border: 1px solid #ddd; }
+        .mobile-info-section-title { background: #E5E9ED; padding: 5px 10px; font-weight: bold; font-size: 12px; color: #2B587A; border-bottom: 1px solid #C5D0DB; }
+        .mobile-info-section-content { padding: 8px 10px; font-size: 12px; color: #333; line-height: 1.5; }
 
         .mobile-create-post { background: #fff; padding: 10px; border-bottom: 1px solid #eee; display: flex; gap: 8px; align-items: center; }
         .mobile-create-post textarea { flex: 1; border: 1px solid #ccc; border-radius: 2px; padding: 5px; height: 40px; resize: none; max-height: 150px; font-family: inherit; font-size: 14px; background: #F9F9F9; }
@@ -143,7 +160,6 @@
         .mobile-create-post .file-label input { display: none; }
         .mobile-create-post button { background: #5E83A9; color: white; border: 1px solid #3A6087; padding: 0 15px; border-radius: 2px; font-size: 14px; font-weight: bold; cursor: pointer; height: 40px; }
 
-        /* Посты мобильные */
         .mobile-post {
             background: #fff;
             padding: 8px;
@@ -157,13 +173,11 @@
         .mobile-post .date { color: #999; font-size: 11px; margin-left: 5px; }
         .mobile-post .text { margin-top: 3px; line-height: 1.3; color: #333; font-size: 13px; }
 
-        /* Друзья и чаты */
         .friend-item, .chat-item { background: #fff; border-bottom: 1px solid #eee; padding: 12px 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
         .friend-item:hover, .chat-item:hover { background: #f4f6f8; }
         .friend-info { display: flex; gap: 10px; align-items: center; }
         .friend-info img { width: 45px; height: 45px; border-radius: 2px !important; border: 1px solid #ddd; object-fit: cover; }
 
-        /* Окно чата */
         #chat-interface { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #F2F2F2; z-index: 9999; flex-direction: column; }
         .chat-header { background: #5E83A9; color: white; padding: 12px; display: flex; align-items: center; gap: 15px; min-height: 44px; }
         .chat-header .back-btn { font-size: 20px; cursor: pointer; }
@@ -174,13 +188,12 @@
         .chat-input-area input { flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 2px; font-size: 14px; }
         .chat-input-area button { background: #5E83A9; color: white; border: none; padding: 0 20px; border-radius: 2px; font-weight: bold; cursor: pointer; }
 
-        /* Редактирование профиля */
         .edit-btn { background: #e0e0e0; color: #333; border: none; padding: 4px 12px; border-radius: 2px; font-size: 12px; cursor: pointer; margin-left: 10px; }
         .edit-btn:hover { background: #ccc; }
         .profile-info-block { margin-top: 5px; font-size: 13px; color: #333; display: flex; flex-direction: column; gap: 2px; padding: 0 15px 10px; }
         .profile-info-block span { color: #777; font-weight: normal; }
         .edit-form { background: #F9F9F9; padding: 10px; border: 1px solid #ddd; border-radius: 2px; margin: 10px; display: none; flex-direction: column; gap: 8px; }
-        .edit-form input, .edit-form textarea { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 2px; font-family: inherit; font-size: 13px; }
+        .edit-form input, .edit-form textarea, .edit-form select { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 2px; font-family: inherit; font-size: 13px; }
         .edit-form button { background: #5E83A9; color: white; border: none; padding: 6px 15px; border-radius: 2px; cursor: pointer; }
         .edit-form button:hover { background: #4A739E; }
         .delete-wall-btn { background: #d9534f; color: white; border: none; padding: 8px 15px; border-radius: 2px; cursor: pointer; margin-top: 15px; font-weight: bold; }
@@ -273,8 +286,11 @@
 
             <div class="desktop-content" id="desktop-main">
                 <div id="desk-page-wall">
-                    <div class="desktop-page-title">Моя Страница</div>
-                    <div class="desktop-page-content">
+                    <div class="desktop-page-title" id="desk-wall-title">Моя Страница</div>
+                    <div class="desktop-page-content" id="desk-wall-profile">
+                        <!-- Профиль в стиле старого ВК -->
+                    </div>
+                    <div class="desktop-page-content" style="border-top:1px solid #E4EAF0;">
                         <div class="desktop-post-input">
                             <textarea id="desk-post-text" placeholder="Что у вас нового?"></textarea>
                             <div class="btn-row">
@@ -365,28 +381,7 @@
 
         <!-- ====== СТРАНИЦА: СТЕНА (ПРОФИЛЬ) ====== -->
         <div id="mob-wall" class="mobile-view-container">
-            <div class="mobile-profile-header">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='40' fill='%235E83A9'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='30' font-weight='bold'%3E?%3C/text%3E%3C/svg%3E" id="mob-profile-avatar" class="mobile-profile-avatar">
-                <div>
-                    <div class="mobile-profile-name" id="mob-profile-name">Пользователь</div>
-                    <button class="edit-btn" onclick="toggleEditProfile()">⚙️ Редактировать</button>
-                </div>
-            </div>
-            <div class="edit-form" id="mob-edit-form">
-                <input type="text" id="edit-city" placeholder="Город">
-                <input type="text" id="edit-status" placeholder="Семейное положение">
-                <textarea id="edit-about" placeholder="О себе" rows="3"></textarea>
-                <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                    <button onclick="saveProfile()">💾 Сохранить</button>
-                    <button onclick="toggleEditProfile()" style="background:#ccc; color:#333;">Отмена</button>
-                    <input type="file" id="avatar-upload" accept="image/*" style="display:none;" onchange="uploadAvatar()">
-                    <button onclick="document.getElementById('avatar-upload').click()" style="background:#5cb85c;">🖼️ Сменить аву</button>
-                    <button class="delete-wall-btn" onclick="deleteWall()">🗑️ Очистить стену</button>
-                </div>
-            </div>
-
-            <div id="mob-profile-info" class="profile-info-block"></div>
-
+            <div id="mob-profile-render"></div>
             <div class="mobile-create-post">
                 <textarea id="mob-post-text" placeholder="Что у вас нового?"></textarea>
                 <label class="file-label">
@@ -451,6 +446,92 @@
         </div>
     </div>
 
+    <!-- МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ ПРОФИЛЯ -->
+    <div id="edit-profile-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+        <div style="background:#fff; width:90%; max-width:500px; max-height:90vh; overflow-y:auto; border:1px solid #C5D0DB; border-radius:2px;">
+            <div style="background:linear-gradient(to bottom,#6D98C6,#45739E); color:white; padding:8px 15px; font-weight:bold; display:flex; justify-content:space-between; align-items:center;">
+                <span>Редактировать профиль</span>
+                <span onclick="closeEditProfile()" style="cursor:pointer; font-size:18px;">×</span>
+            </div>
+            <div style="padding:15px;">
+                <div style="margin-bottom:10px;">
+                    <label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Имя</label>
+                    <input type="text" id="edit-name" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px;">
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Статус</label>
+                    <input type="text" id="edit-status-text" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px;" placeholder="Например: ...">
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Пол</label>
+                    <select id="edit-gender" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px;">
+                        <option value="">Не указан</option>
+                        <option value="Мужской">Мужской</option>
+                        <option value="Женский">Женский</option>
+                    </select>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">День рождения</label>
+                    <input type="text" id="edit-birthday" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px;" placeholder="Например: 10 октября 1984 г.">
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Родной город</label>
+                    <input type="text" id="edit-hometown" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px;">
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Полит. взгляды</label>
+                    <input type="text" id="edit-political" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px;">
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Религ. взгляды</label>
+                    <input type="text" id="edit-religion" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px;">
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Город</label>
+                    <input type="text" id="edit-city" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px;">
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Моб. телефон</label>
+                    <input type="text" id="edit-mobile" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px;">
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Веб-сайт</label>
+                    <input type="text" id="edit-website" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px;">
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Деятельность</label>
+                    <input type="text" id="edit-activity" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px;">
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Интересы</label>
+                    <textarea id="edit-interests" rows="2" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px; font-family:inherit;"></textarea>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Любимая музыка</label>
+                    <textarea id="edit-music" rows="2" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px; font-family:inherit;"></textarea>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Любимые фильмы</label>
+                    <textarea id="edit-films" rows="2" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px; font-family:inherit;"></textarea>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Любимые книги</label>
+                    <textarea id="edit-books" rows="2" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px; font-family:inherit;"></textarea>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label style="display:block; font-size:12px; color:#777; margin-bottom:3px;">Любимые цитаты</label>
+                    <textarea id="edit-quotes" rows="2" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:2px; font-family:inherit;"></textarea>
+                </div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:15px;">
+                    <button onclick="saveProfileFull()" style="background:#5E83A9; color:white; border:none; padding:8px 20px; border-radius:2px; cursor:pointer; font-weight:bold;">💾 Сохранить</button>
+                    <button onclick="closeEditProfile()" style="background:#ccc; color:#333; border:none; padding:8px 20px; border-radius:2px; cursor:pointer;">Отмена</button>
+                    <input type="file" id="avatar-upload" accept="image/*" style="display:none;" onchange="uploadAvatar()">
+                    <button onclick="document.getElementById('avatar-upload').click()" style="background:#5cb85c; color:white; border:none; padding:8px 20px; border-radius:2px; cursor:pointer;">🖼️ Сменить аву</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // =============================================
         // КОНФИГУРАЦИЯ FIREBASE
@@ -495,18 +576,9 @@
             var name = document.getElementById('auth-name').value.trim();
             var pass = document.getElementById('auth-pass').value.trim();
             document.getElementById('auth-error').style.display = 'none';
-            if (!name || !pass) {
-                showAuthError("Заполните все поля!");
-                return;
-            }
-            if (pass.length < 6) {
-                showAuthError("Пароль должен быть минимум 6 символов!");
-                return;
-            }
-            if (name.length < 2) {
-                showAuthError("Имя должно быть минимум 2 символа!");
-                return;
-            }
+            if (!name || !pass) { showAuthError("Заполните все поля!"); return; }
+            if (pass.length < 6) { showAuthError("Пароль должен быть минимум 6 символов!"); return; }
+            if (name.length < 2) { showAuthError("Имя должно быть минимум 2 символа!"); return; }
 
             if (isRegisterMode) {
                 var email = name + "_" + Date.now() + "@vkclone.local";
@@ -514,22 +586,19 @@
                     .then(function(cred) {
                         cred.user.updateProfile({ displayName: name });
                         db.collection('users').doc(cred.user.uid).set({
-                            name: name,
-                            email: email,
-                            city: "",
-                            status: "",
-                            about: "",
-                            photoURL: "",
-                            coins: 100,
+                            name: name, email: email,
+                            city: "", status: "", about: "",
+                            photoURL: "", coins: 100,
+                            gender: "", birthday: "", hometown: "",
+                            political: "", religion: "", mobile: "", website: "",
+                            activity: "", interests: "", music: "", films: "", books: "", quotes: "",
                             createdAt: firebase.firestore.FieldValue.serverTimestamp()
                         });
                         alert("Аккаунт создан!");
                         currentUser = auth.currentUser;
                         enterApp();
                     })
-                    .catch(function(e) {
-                        showAuthError("Ошибка: " + e.message);
-                    });
+                    .catch(function(e) { showAuthError("Ошибка: " + e.message); });
             } else {
                 db.collection('users').where('name', '==', name).get()
                     .then(function(snap) {
@@ -538,16 +607,10 @@
                             var foundEmail = userData.email;
                             if (foundEmail) {
                                 auth.signInWithEmailAndPassword(foundEmail, pass)
-                                    .then(function(cred) {
-                                        currentUser = auth.currentUser;
-                                        enterApp();
-                                    })
+                                    .then(function(cred) { currentUser = auth.currentUser; enterApp(); })
                                     .catch(function(e) {
-                                        if (e.code === 'auth/wrong-password') {
-                                            showAuthError("Неверный пароль!");
-                                        } else {
-                                            showAuthError("Ошибка: " + e.message);
-                                        }
+                                        if (e.code === 'auth/wrong-password') showAuthError("Неверный пароль!");
+                                        else showAuthError("Ошибка: " + e.message);
                                     });
                                 return;
                             }
@@ -581,7 +644,6 @@
                 document.getElementById('desktop-app').style.display = 'none';
                 document.getElementById('mobile-app').style.display = 'block';
                 loadUserProfile();
-                // По умолчанию открываем вкладку "Новости"
                 switchMobTopTab('news', document.querySelector('.mobile-top-tab.active'));
             } else {
                 document.getElementById('desktop-app').style.display = 'block';
@@ -590,36 +652,25 @@
             }
         }
 
-        // ====== ПЕРЕКЛЮЧЕНИЕ ВЕРХНИХ ВКЛАДОК (НОВОСТИ / СТЕНА / ДРУЗЬЯ / ДИАЛОГИ) ======
         function switchMobTopTab(tab, btn) {
-            // Убираем active у всех вкладок
             var tabs = document.querySelectorAll('.mobile-top-tab');
             for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
             if (btn) btn.classList.add('active');
-
-            // Скрываем все контейнеры
             var containers = document.querySelectorAll('.mobile-view-container');
             for (var i = 0; i < containers.length; i++) containers[i].classList.remove('active');
-
-            // Показываем нужный
             var target = document.getElementById('mob-' + tab);
             if (target) target.classList.add('active');
-
-            // Подгружаем данные
             if (tab === 'news') renderMobileNews();
             else if (tab === 'wall') { loadUserProfile(); renderMobileWall(); }
             else if (tab === 'friends') renderMobileFriends();
             else if (tab === 'messages') renderMobileMessages();
         }
 
-        // ====== ПЕРЕКЛЮЧЕНИЕ НИЖНЕГО МЕНЮ ======
         function switchMobTab(tab) {
             if (unsubscribeChat) unsubscribeChat();
             if (unsubscribeWall) unsubscribeWall();
             if (unsubscribeNews) unsubscribeNews();
             if (unsubscribeGifts) unsubscribeGifts();
-
-            // Меняем верхние вкладки тоже
             var topTabMap = { 'news': 'news', 'wall': 'wall', 'friends': 'friends', 'msg': 'messages', 'gifts': 'wall' };
             var topTabName = topTabMap[tab] || 'wall';
             var tabs = document.querySelectorAll('.mobile-top-tab');
@@ -629,13 +680,9 @@
                     tabs[i].classList.add('active');
                 }
             }
-
-            // Скрываем все
             var containers = document.querySelectorAll('.mobile-view-container');
             for (var i = 0; i < containers.length; i++) containers[i].classList.remove('active');
-            // Показываем нужный
             document.getElementById('mob-' + tab).classList.add('active');
-
             if (tab === 'wall') { loadUserProfile(); renderMobileWall(); }
             else if (tab === 'friends') renderMobileFriends();
             else if (tab === 'msg') renderMobileMessages();
@@ -643,25 +690,198 @@
             else if (tab === 'gifts') renderMobileGifts();
         }
 
+        // =============================================
+        // ЗАГРУЗКА ПРОФИЛЯ (ДЕСКТОП И МОБИЛЬНЫЙ)
+        // =============================================
         function loadUserProfile() {
             db.collection('users').doc(currentUser.uid).get()
                 .then(function(doc) {
                     if (doc.exists) {
                         var data = doc.data();
-                        document.getElementById('mob-profile-name').innerText = data.name || currentUser.displayName;
-                        var avatarUrl = data.photoURL;
-                        if (!avatarUrl) {
-                            avatarUrl = generateAvatar(currentUser.uid, data.name);
+                        var avatarUrl = data.photoURL || generateAvatar(currentUser.uid, data.name);
+                        
+                        // === МОБИЛЬНЫЙ ПРОФИЛЬ ===
+                        var mobHtml = '<div class="mobile-profile-header">';
+                        mobHtml += '<img src="' + avatarUrl + '" class="mobile-profile-avatar" onerror="this.src=\'' + generateAvatar(currentUser.uid, data.name) + '\'">';
+                        mobHtml += '<div style="flex:1;">';
+                        mobHtml += '<div class="mobile-profile-name">' + escapeHtml(data.name || currentUser.displayName) + '</div>';
+                        if (data.status) mobHtml += '<div class="mobile-profile-status-text">' + escapeHtml(data.status) + '</div>';
+                        mobHtml += '<button class="edit-btn" onclick="openEditProfile()" style="margin-top:5px;">⚙️ Редактировать</button>';
+                        mobHtml += '</div></div>';
+
+                        // Таблица с основной информацией
+                        var infoTable = '<table class="mobile-profile-info-table">';
+                        if (data.gender) infoTable += '<tr><td>Пол:</td><td>' + escapeHtml(data.gender) + '</td></tr>';
+                        if (data.birthday) infoTable += '<tr><td>День рождения:</td><td>' + escapeHtml(data.birthday) + '</td></tr>';
+                        if (data.hometown) infoTable += '<tr><td>Родной город:</td><td>' + escapeHtml(data.hometown) + '</td></tr>';
+                        if (data.political) infoTable += '<tr><td>Полит. взгляды:</td><td>' + escapeHtml(data.political) + '</td></tr>';
+                        if (data.religion) infoTable += '<tr><td>Религ. взгляды:</td><td>' + escapeHtml(data.religion) + '</td></tr>';
+                        infoTable += '</table>';
+                        mobHtml += infoTable;
+
+                        // Контактная информация
+                        if (data.city || data.mobile || data.website) {
+                            mobHtml += '<div class="mobile-info-section"><div class="mobile-info-section-title">Контактная информация</div><div class="mobile-info-section-content">';
+                            if (data.city) mobHtml += '<div>Город: <b>' + escapeHtml(data.city) + '</b></div>';
+                            if (data.mobile) mobHtml += '<div>Моб. телефон: <b>' + escapeHtml(data.mobile) + '</b></div>';
+                            if (data.website) mobHtml += '<div>Веб-сайт: <b>' + escapeHtml(data.website) + '</b></div>';
+                            mobHtml += '</div></div>';
                         }
-                        document.getElementById('mob-profile-avatar').src = avatarUrl;
-                        var infoHtml = '';
-                        if (data.city) infoHtml += "<div>📍 <span>" + escapeHtml(data.city) + "</span></div>";
-                        if (data.status) infoHtml += "<div>💍 <span>" + escapeHtml(data.status) + "</span></div>";
-                        if (data.about) infoHtml += "<div>📝 <span>" + escapeHtml(data.about) + "</span></div>";
-                        if (data.coins !== undefined) infoHtml += "<div>💰 <span>" + data.coins + " монет</span></div>";
-                        document.getElementById('mob-profile-info').innerHTML = infoHtml;
+
+                        // Личная информация
+                        if (data.activity || data.interests || data.music || data.films || data.books || data.quotes) {
+                            mobHtml += '<div class="mobile-info-section"><div class="mobile-info-section-title">Личная информация</div><div class="mobile-info-section-content">';
+                            if (data.activity) mobHtml += '<div><b>Деятельность:</b> ' + escapeHtml(data.activity) + '</div>';
+                            if (data.interests) mobHtml += '<div><b>Интересы:</b> ' + escapeHtml(data.interests) + '</div>';
+                            if (data.music) mobHtml += '<div><b>Любимая музыка:</b> ' + escapeHtml(data.music) + '</div>';
+                            if (data.films) mobHtml += '<div><b>Любимые фильмы:</b> ' + escapeHtml(data.films) + '</div>';
+                            if (data.books) mobHtml += '<div><b>Любимые книги:</b> ' + escapeHtml(data.books) + '</div>';
+                            if (data.quotes) mobHtml += '<div><b>Любимые цитаты:</b> ' + escapeHtml(data.quotes) + '</div>';
+                            mobHtml += '</div></div>';
+                        }
+
+                        // Монеты
+                        if (data.coins !== undefined) {
+                            mobHtml += '<div class="mobile-info-section"><div class="mobile-info-section-title">Игровая валюта</div><div class="mobile-info-section-content">💰 <b>' + data.coins + ' монет</b></div></div>';
+                        }
+
+                        document.getElementById('mob-profile-render').innerHTML = mobHtml;
+                        document.getElementById('mob-profile-name') && (document.getElementById('mob-profile-name').innerText = data.name || currentUser.displayName);
+                        document.getElementById('mob-profile-avatar') && (document.getElementById('mob-profile-avatar').src = avatarUrl);
+
+                        // === ДЕСКТОПНЫЙ ПРОФИЛЬ ===
+                        renderDesktopProfile(data, avatarUrl);
                     }
                 });
+        }
+
+        function renderDesktopProfile(data, avatarUrl) {
+            var html = '<div class="vk-profile-container">';
+            // Левая колонка — фото
+            html += '<div class="vk-profile-left">';
+            html += '<img src="' + avatarUrl + '" class="vk-profile-photo" onerror="this.src=\'' + generateAvatar(currentUser.uid, data.name) + '\'">';
+            html += '<div style="font-size:11px; color:#777; text-align:center;">Фотографий: 0</div>';
+            html += '</div>';
+            // Правая колонка — инфо
+            html += '<div class="vk-profile-right">';
+            html += '<div class="vk-profile-name">' + escapeHtml(data.name || currentUser.displayName) + '</div>';
+            html += '<div class="vk-profile-status">' + (data.status ? escapeHtml(data.status) : '...') + '</div>';
+            html += '<div style="font-size:11px; color:#999; margin-bottom:10px;">Обновлено недавно</div>';
+
+            // Таблица с основной информацией
+            html += '<table class="vk-profile-info-table">';
+            if (data.gender) html += '<tr><td>Пол:</td><td>' + escapeHtml(data.gender) + '</td></tr>';
+            if (data.birthday) html += '<tr><td>День рождения:</td><td>' + escapeHtml(data.birthday) + '</td></tr>';
+            if (data.hometown) html += '<tr><td>Родной город:</td><td>' + escapeHtml(data.hometown) + '</td></tr>';
+            if (data.political) html += '<tr><td>Полит. взгляды:</td><td>' + escapeHtml(data.political) + '</td></tr>';
+            if (data.religion) html += '<tr><td>Религ. взгляды:</td><td>' + escapeHtml(data.religion) + '</td></tr>';
+            html += '</table>';
+
+            // Контактная информация
+            if (data.city || data.mobile || data.website) {
+                html += '<div class="vk-info-section"><div class="vk-info-section-title">Контактная информация</div><div class="vk-info-section-content">';
+                if (data.city) html += '<div><b>Город:</b> ' + escapeHtml(data.city) + '</div>';
+                if (data.mobile) html += '<div><b>Моб. телефон:</b> ' + escapeHtml(data.mobile) + '</div>';
+                if (data.website) html += '<div><b>Веб-сайт:</b> <a href="' + escapeHtml(data.website) + '" target="_blank">' + escapeHtml(data.website) + '</a></div>';
+                html += '</div></div>';
+            }
+
+            // Личная информация
+            if (data.activity || data.interests || data.music || data.films || data.books || data.quotes) {
+                html += '<div class="vk-info-section"><div class="vk-info-section-title">Личная информация</div><div class="vk-info-section-content">';
+                if (data.activity) html += '<div><b>Деятельность:</b> ' + escapeHtml(data.activity) + '</div>';
+                if (data.interests) html += '<div><b>Интересы:</b> ' + escapeHtml(data.interests) + '</div>';
+                if (data.music) html += '<div><b>Любимая музыка:</b> ' + escapeHtml(data.music) + '</div>';
+                if (data.films) html += '<div><b>Любимые фильмы:</b> ' + escapeHtml(data.films) + '</div>';
+                if (data.books) html += '<div><b>Любимые книги:</b> ' + escapeHtml(data.books) + '</div>';
+                if (data.quotes) html += '<div><b>Любимые цитаты:</b> ' + escapeHtml(data.quotes) + '</div>';
+                html += '</div></div>';
+            }
+
+            if (data.coins !== undefined) {
+                html += '<div class="vk-info-section"><div class="vk-info-section-title">Игровая валюта</div><div class="vk-info-section-content">💰 <b>' + data.coins + ' монет</b></div></div>';
+            }
+
+            html += '<button class="edit-btn" onclick="openEditProfile()">⚙️ Редактировать</button>';
+            html += '</div></div>';
+            document.getElementById('desk-wall-profile').innerHTML = html;
+        }
+
+        // =============================================
+        // РЕДАКТИРОВАНИЕ ПРОФИЛЯ (МОДАЛЬНОЕ ОКНО)
+        // =============================================
+        function openEditProfile() {
+            db.collection('users').doc(currentUser.uid).get().then(function(doc) {
+                var data = doc.data() || {};
+                document.getElementById('edit-name').value = data.name || '';
+                document.getElementById('edit-status-text').value = data.status || '';
+                document.getElementById('edit-gender').value = data.gender || '';
+                document.getElementById('edit-birthday').value = data.birthday || '';
+                document.getElementById('edit-hometown').value = data.hometown || '';
+                document.getElementById('edit-political').value = data.political || '';
+                document.getElementById('edit-religion').value = data.religion || '';
+                document.getElementById('edit-city').value = data.city || '';
+                document.getElementById('edit-mobile').value = data.mobile || '';
+                document.getElementById('edit-website').value = data.website || '';
+                document.getElementById('edit-activity').value = data.activity || '';
+                document.getElementById('edit-interests').value = data.interests || '';
+                document.getElementById('edit-music').value = data.music || '';
+                document.getElementById('edit-films').value = data.films || '';
+                document.getElementById('edit-books').value = data.books || '';
+                document.getElementById('edit-quotes').value = data.quotes || '';
+                document.getElementById('edit-profile-modal').style.display = 'flex';
+            });
+        }
+
+        function closeEditProfile() {
+            document.getElementById('edit-profile-modal').style.display = 'none';
+        }
+
+        function saveProfileFull() {
+            var name = document.getElementById('edit-name').value.trim();
+            if (!name || name.length < 2) { alert("Имя должно быть минимум 2 символа"); return; }
+            var updateData = {
+                name: name,
+                status: document.getElementById('edit-status-text').value.trim(),
+                gender: document.getElementById('edit-gender').value,
+                birthday: document.getElementById('edit-birthday').value.trim(),
+                hometown: document.getElementById('edit-hometown').value.trim(),
+                political: document.getElementById('edit-political').value.trim(),
+                religion: document.getElementById('edit-religion').value.trim(),
+                city: document.getElementById('edit-city').value.trim(),
+                mobile: document.getElementById('edit-mobile').value.trim(),
+                website: document.getElementById('edit-website').value.trim(),
+                activity: document.getElementById('edit-activity').value.trim(),
+                interests: document.getElementById('edit-interests').value.trim(),
+                music: document.getElementById('edit-music').value.trim(),
+                films: document.getElementById('edit-films').value.trim(),
+                books: document.getElementById('edit-books').value.trim(),
+                quotes: document.getElementById('edit-quotes').value.trim()
+            };
+            db.collection('users').doc(currentUser.uid).update(updateData)
+                .then(function() {
+                    auth.currentUser.updateProfile({ displayName: name });
+                    closeEditProfile();
+                    loadUserProfile();
+                    alert("✅ Профиль обновлён!");
+                })
+                .catch(function(e) { alert("Ошибка: " + e.message); });
+        }
+
+        function uploadAvatar() {
+            var file = document.getElementById('avatar-upload').files[0];
+            if (!file) return;
+            if (file.size > MAX_IMAGE_SIZE) { alert('Файл больше 5 МБ!'); return; }
+            var storageRef = storage.ref('avatars/' + currentUser.uid);
+            storageRef.put(file).then(function() {
+                storageRef.getDownloadURL().then(function(url) {
+                    db.collection('users').doc(currentUser.uid).update({ photoURL: url });
+                    delete avatarCache[currentUser.uid];
+                    loadUserProfile();
+                    alert("✅ Аватарка обновлена!");
+                });
+            }).catch(function(e) { alert("❌ Ошибка: " + e.message); });
+            document.getElementById('avatar-upload').value = '';
         }
 
         function escapeHtml(text) {
@@ -671,6 +891,7 @@
         }
 
         function generateAvatar(userId, name) {
+            if (!userId) userId = 'unknown';
             var hash = userId.split('').reduce(function(a, b) {
                 a = ((a << 5) - a) + b.charCodeAt(0);
                 return a & a;
@@ -683,14 +904,8 @@
 
         function getUserAvatar(userId, name) {
             return new Promise(function(resolve) {
-                if (!userId) {
-                    resolve(generateAvatar('unknown', name || '?'));
-                    return;
-                }
-                if (avatarCache[userId]) {
-                    resolve(avatarCache[userId]);
-                    return;
-                }
+                if (!userId) { resolve(generateAvatar('unknown', name || '?')); return; }
+                if (avatarCache[userId]) { resolve(avatarCache[userId]); return; }
                 db.collection('users').doc(userId).get()
                     .then(function(doc) {
                         var url = (doc.exists && doc.data().photoURL) 
@@ -707,54 +922,9 @@
             });
         }
 
-        function uploadAvatar() {
-            var file = document.getElementById('avatar-upload').files[0];
-            if (!file) return;
-            if (file.size > MAX_IMAGE_SIZE) {
-                alert('Файл больше 5 МБ!');
-                return;
-            }
-            var btn = document.querySelector('[onclick="document.getElementById(\'avatar-upload\').click()"]');
-            var originalText = btn.innerText;
-            btn.innerText = '⏳ Загрузка...';
-            btn.disabled = true;
-            var storageRef = storage.ref('avatars/' + currentUser.uid);
-            storageRef.put(file).then(function() {
-                storageRef.getDownloadURL().then(function(url) {
-                    db.collection('users').doc(currentUser.uid).update({ photoURL: url });
-                    delete avatarCache[currentUser.uid];
-                    document.getElementById('mob-profile-avatar').src = url + '?t=' + Date.now();
-                    alert("✅ Аватарка обновлена!");
-                });
-            }).catch(function(e) {
-                alert("❌ Ошибка загрузки: " + e.message);
-            });
-            btn.innerText = originalText;
-            btn.disabled = false;
-            document.getElementById('avatar-upload').value = '';
-        }
-
-        function toggleEditProfile() {
-            var form = document.getElementById('mob-edit-form');
-            form.style.display = form.style.display === 'none' ? 'flex' : 'none';
-        }
-
-        function saveProfile() {
-            var city = document.getElementById('edit-city').value.trim();
-            var status = document.getElementById('edit-status').value.trim();
-            var about = document.getElementById('edit-about').value.trim();
-            var name = document.getElementById('mob-profile-name').innerText.trim();
-            if (!name || name.length < 2) {
-                alert("Имя должно быть минимум 2 символа");
-                return;
-            }
-            db.collection('users').doc(currentUser.uid).update({ city: city, status: status, about: about, name: name });
-            auth.currentUser.updateProfile({ displayName: name });
-            toggleEditProfile();
-            loadUserProfile();
-            alert("Профиль обновлён!");
-        }
-
+        // =============================================
+        // ПОСТЫ
+        // =============================================
         function deleteWall() {
             if (!confirm("Очистить стену?")) return;
             db.collection('posts').where('authorId', '==', currentUser.uid).get()
@@ -772,26 +942,14 @@
             var text = textEl.value.trim();
             var fileInput = document.getElementById(device === 'desktop' ? 'desk-post-image' : 'mob-post-image');
             var file = fileInput ? fileInput.files[0] : null;
-            if (!text && !file) {
-                alert("Напишите текст или выберите фото!");
-                return;
-            }
-            if (text.length > 2000) {
-                alert("Слишком длинный пост!");
-                return;
-            }
-            if (file && file.size > MAX_IMAGE_SIZE) {
-                alert("Фото больше 5 МБ!");
-                return;
-            }
+            if (!text && !file) { alert("Напишите текст или выберите фото!"); return; }
+            if (text.length > 2000) { alert("Слишком длинный пост!"); return; }
+            if (file && file.size > MAX_IMAGE_SIZE) { alert("Фото больше 5 МБ!"); return; }
             textEl.value = '';
             if(fileInput) fileInput.value = '';
             var btn = document.getElementById(device === 'desktop' ? 'desk-send-btn' : 'mob-send-btn');
             var original = btn ? btn.innerText : '';
-            if(btn) {
-                btn.innerText = '...';
-                btn.disabled = true;
-            }
+            if(btn) { btn.innerText = '...'; btn.disabled = true; }
             
             var postData = {
                 authorName: currentUser.displayName,
@@ -805,20 +963,13 @@
                 storageRef.put(file).then(function() {
                     storageRef.getDownloadURL().then(function(imageURL) {
                         postData.imageURL = imageURL;
-                        db.collection('posts').add(postData).then(function() {
-                            renderUI(device);
-                        });
+                        db.collection('posts').add(postData).then(function() { renderUI(device); });
                     });
                 });
             } else {
-                db.collection('posts').add(postData).then(function() {
-                    renderUI(device);
-                });
+                db.collection('posts').add(postData).then(function() { renderUI(device); });
             }
-            if(btn) {
-                btn.innerText = original;
-                btn.disabled = false;
-            }
+            if(btn) { btn.innerText = original; btn.disabled = false; }
         }
 
         function renderUI(device) {
@@ -849,9 +1000,7 @@
                         });
                         promises.push(promise);
                     });
-                    Promise.all(promises).then(function() {
-                        container.innerHTML = html;
-                    });
+                    Promise.all(promises).then(function() { container.innerHTML = html; });
                 });
         }
 
@@ -867,10 +1016,7 @@
                         return;
                     }
                     var chunk = ids.slice(0, 10);
-                    db.collection('posts')
-                        .where('authorId', 'in', chunk)
-                        .orderBy('createdAt', 'desc')
-                        .limit(50)
+                    db.collection('posts').where('authorId', 'in', chunk).orderBy('createdAt', 'desc').limit(50)
                         .onSnapshot(function(snapshot) {
                             if (snapshot.empty) {
                                 container.innerHTML = '<div style="padding:20px;color:#777;">У друзей пока нет постов</div>';
@@ -888,9 +1034,7 @@
                                 });
                                 promises.push(promise);
                             });
-                            Promise.all(promises).then(function() {
-                                container.innerHTML = html;
-                            });
+                            Promise.all(promises).then(function() { container.innerHTML = html; });
                         });
                 });
         }
@@ -919,9 +1063,7 @@
                 { id: 4, url: "https://i.pravatar.cc/300?u=4", name: "Город" }
             ];
             var html = '';
-            photos.forEach(function(p) {
-                html += '<div class="section-item"><img src="' + p.url + '"><div class="title">' + p.name + '</div></div>';
-            });
+            photos.forEach(function(p) { html += '<div class="section-item"><img src="' + p.url + '"><div class="title">' + p.name + '</div></div>'; });
             container.innerHTML = html;
         }
 
@@ -933,9 +1075,7 @@
                 { id: 3, url: "https://i.pravatar.cc/300?u=v3", name: "Клип 3" }
             ];
             var html = '';
-            videos.forEach(function(v) {
-                html += '<div class="section-item"><img src="' + v.url + '"><div class="title">' + v.name + '</div></div>';
-            });
+            videos.forEach(function(v) { html += '<div class="section-item"><img src="' + v.url + '"><div class="title">' + v.name + '</div></div>'; });
             container.innerHTML = html;
         }
 
@@ -947,19 +1087,14 @@
                 { id: 3, name: "Фанаты Flash", avatar: "https://i.pravatar.cc/150?u=g3" }
             ];
             var html = '';
-            groups.forEach(function(g) {
-                html += '<div class="section-item"><img src="' + g.avatar + '"><div class="title">' + g.name + '</div></div>';
-            });
+            groups.forEach(function(g) { html += '<div class="section-item"><img src="' + g.avatar + '"><div class="title">' + g.name + '</div></div>'; });
             container.innerHTML = html;
         }
 
         function renderMobileWall() {
             if (unsubscribeWall) { unsubscribeWall(); unsubscribeWall = null; }
             var container = document.getElementById('mobile-wall-content');
-            unsubscribeWall = db.collection('posts')
-                .where('authorId', '==', currentUser.uid)
-                .orderBy('createdAt', 'desc')
-                .limit(50)
+            unsubscribeWall = db.collection('posts').where('authorId', '==', currentUser.uid).orderBy('createdAt', 'desc').limit(50)
                 .onSnapshot(function(snapshot) {
                     if (snapshot.empty) {
                         container.innerHTML = '<div class="mobile-empty"><h3>Здесь пока пусто</h3></div>';
@@ -971,15 +1106,13 @@
                         var p = doc.data();
                         if (!p.authorId) return;
                         var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
-                        var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '" alt="Фото поста"></div>' : '';
+                        var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
                         var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
                             html += '<div class="mobile-post"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div>';
                         });
                         promises.push(promise);
                     });
-                    Promise.all(promises).then(function() {
-                        container.innerHTML = html;
-                    });
+                    Promise.all(promises).then(function() { container.innerHTML = html; });
                 });
         }
 
@@ -996,10 +1129,7 @@
                         return;
                     }
                     var chunk = ids.slice(0, 10);
-                    unsubscribeNews = db.collection('posts')
-                        .where('authorId', 'in', chunk)
-                        .orderBy('createdAt', 'desc')
-                        .limit(50)
+                    unsubscribeNews = db.collection('posts').where('authorId', 'in', chunk).orderBy('createdAt', 'desc').limit(50)
                         .onSnapshot(function(snapshot) {
                             if (snapshot.empty) {
                                 container.innerHTML = '<div class="mobile-empty"><h3>У друзей пока нет постов</h3></div>';
@@ -1017,9 +1147,7 @@
                                 });
                                 promises.push(promise);
                             });
-                            Promise.all(promises).then(function() {
-                                container.innerHTML = html;
-                            });
+                            Promise.all(promises).then(function() { container.innerHTML = html; });
                         });
                 });
         }
@@ -1028,7 +1156,6 @@
             if (unsubscribeGifts) unsubscribeGifts();
             var container = document.getElementById('mob-gifts-content');
             if (!container) {
-                // Если контейнера нет — создадим временно
                 var temp = document.createElement('div');
                 temp.id = 'mob-gifts-content';
                 document.getElementById('mob-wall').appendChild(temp);
@@ -1262,11 +1389,8 @@
             input.value = '';
             var chatId = [currentUser.uid, currentChatPartnerId].sort().join('_');
             db.collection('messages').add({
-                chatId: chatId,
-                fromId: currentUser.uid,
-                toId: currentChatPartnerId,
-                text: text,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                chatId: chatId, fromId: currentUser.uid, toId: currentChatPartnerId,
+                text: text, createdAt: firebase.firestore.FieldValue.serverTimestamp()
             }).catch(function(e) { alert("Ошибка"); });
         }
 
@@ -1276,7 +1400,7 @@
                 document.getElementById('desk-page-' + pages[i]).style.display = 'none';
             }
             document.getElementById('desk-page-' + page).style.display = 'block';
-            if (page === 'wall') renderDesktopWall();
+            if (page === 'wall') { loadUserProfile(); renderDesktopWall(); }
             else if (page === 'news') renderDesktopNews();
             else if (page === 'music') renderDesktopMusic();
             else if (page === 'photos') renderDesktopPhotos();
