@@ -346,7 +346,7 @@
                     <div class="desktop-page-content"><p>Здесь будут настройки профиля.</p></div>
                 </div>
 
-                <!-- РАЗДЕЛ "МОИ ДРУЗЬЯ" — переключение список/профиль -->
+                <!-- РАЗДЕЛ "МОИ ДРУЗЬЯ" -->
                 <div id="desk-page-friends" style="display:none;">
                     <div class="desktop-page-title" id="desk-friends-title">Мои Друзья</div>
                     <div id="desk-friends-list-view">
@@ -522,31 +522,21 @@
         var isRegisterMode = false;
         var avatarCache = {};
 
-        // =============================================
-        // ГЛОБАЛЬНЫЙ ОБРАБОТЧИК КЛИКОВ ПО ДРУЗЬЯМ
-        // Работает через data-атрибут, а не onclick
-        // =============================================
+        // ГЛОБАЛЬНЫЙ ОБРАБОТЧИК КЛИКОВ
         document.addEventListener('click', function(e) {
             var friendEl = e.target.closest('.friend-item');
             if (friendEl) {
                 var userId = friendEl.getAttribute('data-user-id');
                 if (userId) {
-                    // Определяем, мобильный или десктоп
                     var isMobile = window.innerWidth <= 768;
-                    if (isMobile) {
-                        openUserProfileMobile(userId);
-                    } else {
-                        openUserProfileDesktop(userId);
-                    }
+                    if (isMobile) openUserProfileMobile(userId);
+                    else openUserProfileDesktop(userId);
                 }
             }
-            
             var chatEl = e.target.closest('.chat-item');
             if (chatEl) {
                 var userId2 = chatEl.getAttribute('data-user-id');
-                if (userId2) {
-                    openChat(userId2);
-                }
+                if (userId2) openChat(userId2);
             }
         });
 
@@ -562,6 +552,9 @@
             }
         }
 
+        // =============================================
+        // ИСПРАВЛЕННЫЙ handleAuth — email берётся из Firestore
+        // =============================================
         function handleAuth() {
             var name = document.getElementById('auth-name').value.trim();
             var pass = document.getElementById('auth-pass').value.trim();
@@ -571,11 +564,12 @@
             if (name.length < 2) { showAuthError("Имя должно быть минимум 2 символа!"); return; }
 
             if (isRegisterMode) {
+                // РЕГИСТРАЦИЯ — создаём новый email с уникальными цифрами
                 var email = name + "_" + Date.now() + "@vkclone.local";
                 auth.createUserWithEmailAndPassword(email, pass)
                     .then(function(cred) {
                         cred.user.updateProfile({ displayName: name });
-                        db.collection('users').doc(cred.user.uid).set({
+                        return db.collection('users').doc(cred.user.uid).set({
                             name: name, email: email,
                             city: "", status: "", about: "",
                             photoURL: "", coins: 100,
@@ -584,28 +578,45 @@
                             activity: "", interests: "", music: "", films: "", books: "", quotes: "",
                             createdAt: firebase.firestore.FieldValue.serverTimestamp()
                         });
+                    })
+                    .then(function() {
                         alert("Аккаунт создан!");
                         currentUser = auth.currentUser;
                         enterApp();
                     })
                     .catch(function(e) { showAuthError("Ошибка: " + e.message); });
             } else {
+                // ВХОД — ищем пользователя в Firestore по имени, берём ЕГО email из базы
                 db.collection('users').where('name', '==', name).get()
                     .then(function(snap) {
-                        if (!snap.empty) {
-                            var userData = snap.docs[0].data();
-                            var foundEmail = userData.email;
-                            if (foundEmail) {
-                                auth.signInWithEmailAndPassword(foundEmail, pass)
-                                    .then(function(cred) { currentUser = auth.currentUser; enterApp(); })
-                                    .catch(function(e) {
-                                        if (e.code === 'auth/wrong-password') showAuthError("Неверный пароль!");
-                                        else showAuthError("Ошибка: " + e.message);
-                                    });
-                                return;
-                            }
+                        if (snap.empty) {
+                            showAuthError("Пользователь не найден.");
+                            return;
                         }
-                        showAuthError("Пользователь не найден.");
+                        var userData = snap.docs[0].data();
+                        var foundEmail = userData.email;
+                        if (!foundEmail) {
+                            showAuthError("У пользователя нет email в базе.");
+                            return;
+                        }
+                        // ВАЖНО: используем email ИЗ БАЗЫ, а не генерируем новый
+                        auth.signInWithEmailAndPassword(foundEmail, pass)
+                            .then(function(cred) {
+                                currentUser = auth.currentUser;
+                                enterApp();
+                            })
+                            .catch(function(e) {
+                                if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
+                                    showAuthError("Неверный пароль!");
+                                } else if (e.code === 'auth/user-not-found') {
+                                    showAuthError("Пользователь не найден в Firebase Auth.");
+                                } else {
+                                    showAuthError("Ошибка: " + e.message);
+                                }
+                            });
+                    })
+                    .catch(function(e) {
+                        showAuthError("Ошибка Firestore: " + e.message);
                     });
             }
         }
@@ -691,9 +702,6 @@
             else if (tab === 'news') renderMobileNews();
         }
 
-        // =============================================
-        // ПРОФИЛЬ
-        // =============================================
         function buildProfileHtml(data, avatarUrl, userId, isMe) {
             var nameHtml = escapeHtml(data.name || 'Пользователь');
             if (isMe) nameHtml += ' <span style="font-size:11px; color:#999; font-weight:normal;">(это вы)</span>';
@@ -885,9 +893,6 @@
                 .catch(function(e) { alert("Ошибка: " + e.message); });
         }
 
-        // =============================================
-        // ФОТО И АВАТАРКИ
-        // =============================================
         function previewPostImage(device) {
             var fileInput = document.getElementById(device === 'desktop' ? 'desk-post-image' : 'mob-post-image');
             var previewBox = document.getElementById(device === 'desktop' ? 'desk-post-preview' : 'mob-post-preview');
@@ -965,9 +970,6 @@
                 .catch(function(e) { alert("Ошибка: " + e.message); });
         }
 
-        // =============================================
-        // ФОТОГРАФИИ
-        // =============================================
         function renderDesktopPhotos() {
             var container = document.getElementById('desk-photos-list');
             container.innerHTML = '<div style="padding:20px;color:#777; grid-column: 1/-1;">Загрузка...</div>';
@@ -1101,9 +1103,6 @@
             });
         }
 
-        // =============================================
-        // ПОСТЫ
-        // =============================================
         function createPost(device) {
             var textEl = document.getElementById(device === 'desktop' ? 'desk-post-text' : 'mob-post-text');
             var text = textEl.value.trim();
@@ -1268,9 +1267,6 @@
                 });
         }
 
-        // =============================================
-        // ДРУЗЬЯ
-        // =============================================
         function renderMobileFriends() {
             var container = document.getElementById('mobile-friends-list');
             db.collection('users').get()
@@ -1319,7 +1315,6 @@
                 });
         }
 
-        // ОТКРЫТИЕ ПРОФИЛЯ В РАЗДЕЛЕ "ДРУЗЬЯ" (десктоп)
         function openUserProfileDesktop(userId) {
             if (!userId) { alert('Ошибка: не передан ID пользователя'); return; }
             var listView = document.getElementById('desk-friends-list-view');
@@ -1374,7 +1369,6 @@
             renderDesktopFriends('');
         }
 
-        // МОБИЛЬНЫЙ — открытие профиля внутри раздела "Друзья"
         function openUserProfileMobile(userId) {
             if (!userId) { alert('Ошибка: не передан ID'); return; }
             db.collection('users').doc(userId).get()
@@ -1419,15 +1413,11 @@
             renderMobileFriends();
         }
 
-        // Навешиваем обработчик на кнопку "Назад" в мобильном
         document.addEventListener('DOMContentLoaded', function() {
             var backBtn = document.getElementById('mob-back-btn');
             if (backBtn) backBtn.addEventListener('click', closeUserProfileMobile);
         });
 
-        // =============================================
-        // СООБЩЕНИЯ
-        // =============================================
         function renderDesktopMessages() {
             var container = document.getElementById('desk-msg-list');
             container.innerHTML = '<div style="padding:20px;color:#777;">Загрузка...</div>';
@@ -1507,9 +1497,6 @@
                 });
         }
 
-        // =============================================
-        // ЧАТ
-        // =============================================
         function openChat(friendId) {
             if (!friendId) return;
             document.getElementById('chat-messages-box').innerHTML = '<div style="padding:10px;color:#777;text-align:center;">Загрузка чата...</div>';
