@@ -90,6 +90,47 @@
         .photo-item .photo-actions .current-badge { background: #5cb85c; color: white; padding: 2px 8px; border-radius: 2px; font-size: 11px; display: inline-block; }
         .photo-item .photo-source { font-size: 10px; color: #999; margin-top: 2px; }
 
+        /* ====== ВИДЕО ====== */
+        .video-item {
+            border: 1px solid #C5D0DB;
+            background: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+        .video-item iframe {
+            width: 100%;
+            height: 350px;
+            border: 1px solid #ccc;
+            display: block;
+        }
+        .video-item .video-meta {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #777;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .video-item .video-meta button {
+            background: #d9534f;
+            color: white;
+            border: none;
+            padding: 3px 10px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+        .video-item .video-title {
+            font-weight: bold;
+            color: #2B587A;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+        .video-embed { margin-top: 8px; }
+
+        /* ====== ПОСТЫ ====== */
         .desktop-post { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; gap: 10px; }
         .desktop-post img { width: 40px; height: 40px; border-radius: 2px; border: 1px solid #ddd; object-fit: cover; }
         .desktop-post .author { font-weight: bold; color: #2B587A; }
@@ -201,6 +242,69 @@
 
         #offline-banner { display: none; background: #d9534f; color: white; text-align: center; padding: 5px; font-size: 12px; position: sticky; top: 36px; z-index: 101; }
 
+        /* Модалка для ввода ссылки на видео */
+        #video-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        #video-modal .modal-box {
+            background: #fff;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid #C5D0DB;
+            border-radius: 2px;
+        }
+        #video-modal .modal-header {
+            background: linear-gradient(to bottom, #6D98C6, #45739E);
+            color: white;
+            padding: 10px 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #video-modal .modal-body {
+            padding: 15px;
+        }
+        #video-modal .modal-body input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+        #video-modal .modal-body label {
+            display: block;
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 5px;
+        }
+        #video-modal .modal-body .hint {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        #video-modal .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        #video-modal .modal-buttons button {
+            padding: 6px 15px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 13px;
+            border: none;
+        }
+
         @media (min-width: 769px) { .desktop-view { display: block; } .mobile-view { display: none !important; } }
         @media (max-width: 768px) { .desktop-view { display: none !important; } .mobile-view { display: block; } }
     </style>
@@ -295,10 +399,13 @@
                                 <span onclick="removePostImage('desktop')" style="position:absolute; top:-8px; left:190px; background:#d9534f; color:white; width:20px; height:20px; border-radius:50%; text-align:center; line-height:20px; cursor:pointer; font-weight:bold;">×</span>
                             </div>
                             <div class="btn-row" style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
-                                <label class="attach-btn" title="Прикрепить фото">
-                                    📎
-                                    <input type="file" id="desk-post-image" accept="image/*" style="display:none;" onchange="previewPostImage('desktop')">
-                                </label>
+                                <div>
+                                    <label class="attach-btn" title="Прикрепить фото">
+                                        📎
+                                        <input type="file" id="desk-post-image" accept="image/*" style="display:none;" onchange="previewPostImage('desktop')">
+                                    </label>
+                                    <span class="attach-btn" title="Прикрепить видео" onclick="openVideoModal('desktop')">🎬</span>
+                                </div>
                                 <button onclick="createPost('desktop')" id="desk-send-btn">Отправить</button>
                             </div>
                         </div>
@@ -327,9 +434,12 @@
                     </div>
                 </div>
 
+                <!-- ===== МОИ ВИДЕОЗАПИСИ (десктоп) ===== -->
                 <div id="desk-page-videos" style="display:none;">
                     <div class="desktop-page-title">Мои Видеозаписи</div>
-                    <div class="desktop-page-content"></div>
+                    <div class="desktop-page-content">
+                        <div id="desk-videos-list"></div>
+                    </div>
                 </div>
 
                 <div id="desk-page-groups" style="display:none;">
@@ -388,6 +498,7 @@
                     📎
                     <input type="file" id="mob-post-image" accept="image/*" style="display:none;" onchange="previewPostImage('mobile')">
                 </label>
+                <span class="attach-btn" title="Прикрепить видео" style="padding:0 8px;" onclick="openVideoModal('mobile')">🎬</span>
                 <button onclick="createPost('mobile')" id="mob-send-btn">Отпр.</button>
                 <div id="mob-post-preview" style="display:none; width:100%; margin-top:8px; position:relative;">
                     <img id="mob-preview-img" style="max-width:150px; max-height:150px; border:1px solid #ccc; border-radius:2px;">
@@ -457,6 +568,32 @@
         </div>
     </div>
 
+    <!-- МОДАЛКА ДЛЯ ВИДЕО -->
+    <div id="video-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <span>🎬 Прикрепить видео</span>
+                <span onclick="closeVideoModal()" style="cursor:pointer; font-size:18px;">×</span>
+            </div>
+            <div class="modal-body">
+                <label>Ссылка на видео с Google Диска:</label>
+                <input type="text" id="video-link-input" placeholder="https://drive.google.com/file/d/.../view">
+                <div class="hint">
+                    <b>Как получить ссылку:</b><br>
+                    1. Загрузи видео на Google Диск<br>
+                    2. Правой кнопкой → «Поделиться» → «Все, у кого есть ссылка»<br>
+                    3. Скопируй ссылку и вставь сюда
+                </div>
+                <label>Название видео (необязательно):</label>
+                <input type="text" id="video-title-input" placeholder="Например: Моё первое видео">
+                <div class="modal-buttons">
+                    <button onclick="closeVideoModal()" style="background:#ccc; color:#333;">Отмена</button>
+                    <button onclick="attachVideo()" style="background:#5E83A9; color:white;">Прикрепить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ ПРОФИЛЯ -->
     <div id="edit-profile-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
         <div style="background:#fff; width:90%; max-width:500px; max-height:90vh; overflow-y:auto; border:1px solid #C5D0DB; border-radius:2px;">
@@ -515,6 +652,9 @@
         var unsubscribeNews = null;
         var isRegisterMode = false;
         var avatarCache = {};
+        var attachedVideoUrl = '';
+        var attachedVideoTitle = '';
+        var attachedVideoFor = '';
 
         document.addEventListener('click', function(e) {
             var friendEl = e.target.closest('.friend-item');
@@ -545,9 +685,6 @@
             }
         }
 
-        // =============================================
-        // ИСПРАВЛЕНО: email при входе берётся ТОЛЬКО из Firestore
-        // =============================================
         function handleAuth() {
             var name = document.getElementById('auth-name').value.trim();
             var pass = document.getElementById('auth-pass').value.trim();
@@ -557,7 +694,6 @@
             if (name.length < 2) { showAuthError("Имя должно быть минимум 2 символа!"); return; }
 
             if (isRegisterMode) {
-                // РЕГИСТРАЦИЯ — генерируем новый уникальный email
                 var newEmail = name + "_" + Date.now() + "@vkclone.local";
                 auth.createUserWithEmailAndPassword(newEmail, pass)
                     .then(function(cred) {
@@ -579,40 +715,22 @@
                     })
                     .catch(function(e) { showAuthError("Ошибка: " + e.message); });
             } else {
-                // ВХОД — ищем пользователя по имени в Firestore и берём ЕГО email
                 db.collection('users').where('name', '==', name).get()
                     .then(function(snap) {
-                        if (snap.empty) {
-                            showAuthError("Пользователь не найден.");
-                            return;
-                        }
+                        if (snap.empty) { showAuthError("Пользователь не найден."); return; }
                         var userData = snap.docs[0].data();
                         var realEmail = userData.email;
-                        if (!realEmail) {
-                            showAuthError("У пользователя нет email в базе.");
-                            return;
-                        }
-                        // ВАЖНО: используем ТОЧНЫЙ email из Firestore
+                        if (!realEmail) { showAuthError("У пользователя нет email в базе."); return; }
                         auth.signInWithEmailAndPassword(realEmail, pass)
-                            .then(function(cred) {
-                                currentUser = auth.currentUser;
-                                enterApp();
-                            })
+                            .then(function(cred) { currentUser = auth.currentUser; enterApp(); })
                             .catch(function(e) {
-                                if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
-                                    showAuthError("Неверный пароль!");
-                                } else if (e.code === 'auth/user-not-found') {
-                                    showAuthError("Пользователь не найден в Firebase Auth.");
-                                } else if (e.code === 'auth/too-many-requests') {
-                                    showAuthError("Слишком много попыток. Подожди 15 минут.");
-                                } else {
-                                    showAuthError("Ошибка: " + e.message);
-                                }
+                                if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') showAuthError("Неверный пароль!");
+                                else if (e.code === 'auth/user-not-found') showAuthError("Пользователь не найден в Firebase Auth.");
+                                else if (e.code === 'auth/too-many-requests') showAuthError("Слишком много попыток. Подожди 15 минут.");
+                                else showAuthError("Ошибка: " + e.message);
                             });
                     })
-                    .catch(function(e) {
-                        showAuthError("Ошибка Firestore: " + e.message);
-                    });
+                    .catch(function(e) { showAuthError("Ошибка Firestore: " + e.message); });
             }
         }
 
@@ -888,15 +1006,89 @@
                 .catch(function(e) { alert("Ошибка: " + e.message); });
         }
 
+        // =============================================
+        // ВИДЕО
+        // =============================================
+        function openVideoModal(device) {
+            attachedVideoFor = device;
+            document.getElementById('video-link-input').value = '';
+            document.getElementById('video-title-input').value = '';
+            document.getElementById('video-modal').style.display = 'flex';
+        }
+
+        function closeVideoModal() {
+            document.getElementById('video-modal').style.display = 'none';
+        }
+
+        // Извлекаем ID из ссылки Google Диска
+        function extractGoogleDriveId(url) {
+            if (!url) return null;
+            // Форматы: /file/d/ID/view, /file/d/ID, ?id=ID, /open?id=ID
+            var patterns = [
+                /\/file\/d\/([a-zA-Z0-9_-]+)/,
+                /[?&]id=([a-zA-Z0-9_-]+)/
+            ];
+            for (var i = 0; i < patterns.length; i++) {
+                var match = url.match(patterns[i]);
+                if (match && match[1]) return match[1];
+            }
+            return null;
+        }
+
+        function attachVideo() {
+            var link = document.getElementById('video-link-input').value.trim();
+            var title = document.getElementById('video-title-input').value.trim();
+            if (!link) { alert("Вставь ссылку на видео!"); return; }
+            
+            var videoId = extractGoogleDriveId(link);
+            if (!videoId) {
+                alert("Не удалось распознать ссылку Google Диска. Убедись, что ссылка вида https://drive.google.com/file/d/XXXXXX/view");
+                return;
+            }
+            
+            attachedVideoUrl = 'https://drive.google.com/file/d/' + videoId + '/preview';
+            attachedVideoTitle = title || 'Видео';
+            
+            // Показываем превью
+            var previewBox = document.getElementById(attachedVideoFor === 'desktop' ? 'desk-post-preview' : 'mob-post-preview');
+            var previewImg = document.getElementById(attachedVideoFor === 'desktop' ? 'desk-preview-img' : 'mob-preview-img');
+            if (previewBox && previewImg) {
+                // Убираем превью фото, если есть
+                var fileInput = document.getElementById(attachedVideoFor === 'desktop' ? 'desk-post-image' : 'mob-post-image');
+                if (fileInput) fileInput.value = '';
+                // Показываем надпись про видео
+                previewBox.innerHTML = '<div style="padding:8px; background:#E5E9ED; border:1px solid #C5D0DB; border-radius:2px; font-size:12px; color:#2B587A;">🎬 ' + escapeHtml(attachedVideoTitle) + ' <span style="cursor:pointer; color:#d9534f; font-weight:bold; margin-left:10px;" onclick="removeVideo()">×</span></div>';
+                previewBox.style.display = 'block';
+            }
+            
+            closeVideoModal();
+        }
+
+        function removeVideo() {
+            attachedVideoUrl = '';
+            attachedVideoTitle = '';
+            var previewBox = document.getElementById(attachedVideoFor === 'desktop' ? 'desk-post-preview' : 'mob-post-preview');
+            if (previewBox) previewBox.style.display = 'none';
+        }
+
         function previewPostImage(device) {
+            // Если есть видео — убираем его
+            if (attachedVideoUrl) { removeVideo(); }
+            
             var fileInput = document.getElementById(device === 'desktop' ? 'desk-post-image' : 'mob-post-image');
             var previewBox = document.getElementById(device === 'desktop' ? 'desk-post-preview' : 'mob-post-preview');
             var previewImg = document.getElementById(device === 'desktop' ? 'desk-preview-img' : 'mob-preview-img');
             var file = fileInput.files[0];
             if (!file) { previewBox.style.display = 'none'; return; }
+            
+            // Восстанавливаем img внутри previewBox, если там было сообщение о видео
+            previewBox.innerHTML = '<img id="' + (device === 'desktop' ? 'desk-preview-img' : 'mob-preview-img') + '" style="max-width:200px; max-height:150px; border:1px solid #ccc; border-radius:2px;">' +
+                '<span onclick="removePostImage(\'' + device + '\')" style="position:absolute; top:-8px; left:190px; background:#d9534f; color:white; width:20px; height:20px; border-radius:50%; text-align:center; line-height:20px; cursor:pointer; font-weight:bold;">×</span>';
+            
+            var newImg = document.getElementById(device === 'desktop' ? 'desk-preview-img' : 'mob-preview-img');
             var reader = new FileReader();
             reader.onload = function(e) {
-                previewImg.src = e.target.result;
+                newImg.src = e.target.result;
                 previewBox.style.display = 'block';
             };
             reader.readAsDataURL(file);
@@ -905,8 +1097,8 @@
         function removePostImage(device) {
             var fileInput = document.getElementById(device === 'desktop' ? 'desk-post-image' : 'mob-post-image');
             var previewBox = document.getElementById(device === 'desktop' ? 'desk-post-preview' : 'mob-post-preview');
-            fileInput.value = '';
-            previewBox.style.display = 'none';
+            if (fileInput) fileInput.value = '';
+            if (previewBox) previewBox.style.display = 'none';
         }
 
         function uploadAvatar() {
@@ -1044,6 +1236,48 @@
                 });
         }
 
+        // =============================================
+        // ВИДЕОЗАПИСИ (десктоп)
+        // =============================================
+        function renderDesktopVideos() {
+            var container = document.getElementById('desk-videos-list');
+            container.innerHTML = '<div style="padding:20px;color:#777;">Загрузка...</div>';
+            db.collection('videos').where('userId', '==', currentUser.uid).orderBy('createdAt', 'desc').get()
+                .then(function(snap) {
+                    if (snap.empty) {
+                        container.innerHTML = '<div style="padding:20px;color:#777;">У вас пока нет видеозаписей. Прикрепите видео к посту — оно появится здесь.</div>';
+                        return;
+                    }
+                    var html = '';
+                    snap.forEach(function(doc) {
+                        var v = doc.data();
+                        var date = v.createdAt ? v.createdAt.toDate().toLocaleString('ru-RU') : '';
+                        html += '<div class="video-item">';
+                        html += '<div class="video-title">' + escapeHtml(v.title || 'Видео') + '</div>';
+                        html += '<iframe src="' + v.videoUrl + '" allow="autoplay" allowfullscreen></iframe>';
+                        html += '<div class="video-meta">';
+                        html += '<span>' + date + '</span>';
+                        html += '<button onclick="deleteVideo(\'' + doc.id + '\')">🗑️ Удалить</button>';
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                    container.innerHTML = html;
+                })
+                .catch(function(e) {
+                    container.innerHTML = '<div style="padding:20px;color:#d9534f;">Ошибка: ' + e.message + '</div>';
+                });
+        }
+
+        function deleteVideo(videoId) {
+            if (!confirm("Удалить это видео?")) return;
+            db.collection('videos').doc(videoId).delete()
+                .then(function() {
+                    alert("✅ Видео удалено");
+                    renderDesktopVideos();
+                })
+                .catch(function(e) { alert("Ошибка: " + e.message); });
+        }
+
         function setAsAvatar(photoDocId) {
             if (!confirm("Поставить это фото как аватарку?")) return;
             db.collection('photos').doc(photoDocId).get()
@@ -1103,21 +1337,46 @@
             var text = textEl.value.trim();
             var fileInput = document.getElementById(device === 'desktop' ? 'desk-post-image' : 'mob-post-image');
             var file = fileInput ? fileInput.files[0] : null;
-            if (!text && !file) { alert("Напишите текст или выберите фото!"); return; }
+            var hasVideo = !!attachedVideoUrl;
+            
+            if (!text && !file && !hasVideo) { alert("Напишите текст, выберите фото или прикрепите видео!"); return; }
             if (text.length > 2000) { alert("Слишком длинный пост!"); return; }
+            
             textEl.value = '';
             if(fileInput) fileInput.value = '';
             var previewBox = document.getElementById(device === 'desktop' ? 'desk-post-preview' : 'mob-post-preview');
             if (previewBox) previewBox.style.display = 'none';
+            
+            var videoUrlToSave = attachedVideoUrl;
+            var videoTitleToSave = attachedVideoTitle;
+            attachedVideoUrl = '';
+            attachedVideoTitle = '';
+            
             var btn = document.getElementById(device === 'desktop' ? 'desk-send-btn' : 'mob-send-btn');
             var original = btn ? btn.innerText : '';
             if(btn) { btn.innerText = '...'; btn.disabled = true; }
+            
             var postData = {
                 authorName: currentUser.displayName,
                 authorId: currentUser.uid, 
                 text: text,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             };
+            
+            var afterPostSave = function() {
+                if (hasVideo) {
+                    // Сохраняем в коллекцию videos
+                    return db.collection('videos').add({
+                        userId: currentUser.uid,
+                        userName: currentUser.displayName,
+                        videoUrl: videoUrlToSave,
+                        title: videoTitleToSave || 'Видео',
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                }
+                return Promise.resolve();
+            };
+            
             if (file) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
@@ -1139,6 +1398,9 @@
                         var base64 = canvas.toDataURL('image/jpeg', 0.6);
                         if (base64.length > 900 * 1024) { base64 = canvas.toDataURL('image/jpeg', 0.4); }
                         postData.imageURL = base64;
+                        if (hasVideo) postData.videoUrl = videoUrlToSave;
+                        if (hasVideo) postData.videoTitle = videoTitleToSave;
+                        
                         db.collection('posts').add(postData)
                             .then(function() {
                                 return db.collection('photos').add({
@@ -1149,6 +1411,7 @@
                                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                                 });
                             })
+                            .then(afterPostSave)
                             .then(function() {
                                 renderUI(device);
                                 if(btn) { btn.innerText = original; btn.disabled = false; }
@@ -1162,16 +1425,26 @@
                 };
                 reader.readAsDataURL(file);
             } else {
-                db.collection('posts').add(postData).then(function() {
-                    renderUI(device);
-                    if(btn) { btn.innerText = original; btn.disabled = false; }
-                });
+                if (hasVideo) {
+                    postData.videoUrl = videoUrlToSave;
+                    postData.videoTitle = videoTitleToSave;
+                }
+                db.collection('posts').add(postData)
+                    .then(afterPostSave)
+                    .then(function() {
+                        renderUI(device);
+                        if(btn) { btn.innerText = original; btn.disabled = false; }
+                    })
+                    .catch(function(err) {
+                        alert("Ошибка: " + err.message);
+                        if(btn) { btn.innerText = original; btn.disabled = false; }
+                    });
             }
         }
 
         function renderUI(device) {
             if (device === 'desktop') {
-                renderDesktopWall(); renderDesktopPhotos();
+                renderDesktopWall(); renderDesktopPhotos(); renderDesktopVideos();
             } else {
                 renderMobileWall(); renderMobilePhotos();
             }
@@ -1192,8 +1465,9 @@
                         if (!p.authorId) return;
                         var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
                         var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
+                        var videoHtml = p.videoUrl ? '<div class="video-embed"><iframe src="' + p.videoUrl + '" allow="autoplay" allowfullscreen style="width:100%; max-width:400px; height:250px; border:1px solid #ccc;"></iframe></div>' : '';
                         var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                            html += '<div class="desktop-post"><img src="' + avatar + '"><div><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div>';
+                            html += '<div class="desktop-post"><img src="' + avatar + '"><div><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + '</div></div>';
                         });
                         promises.push(promise);
                     });
@@ -1217,8 +1491,9 @@
                         if (!p.authorId) return;
                         var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
                         var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
+                        var videoHtml = p.videoUrl ? '<div class="video-embed"><iframe src="' + p.videoUrl + '" allow="autoplay" allowfullscreen style="width:100%; height:200px; border:1px solid #ccc;"></iframe></div>' : '';
                         var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                            html += '<div class="mobile-post"><img src="' + avatar + '"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div>';
+                            html += '<div class="mobile-post"><img src="' + avatar + '"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + '</div></div>';
                         });
                         promises.push(promise);
                     });
@@ -1252,8 +1527,9 @@
                                 if (!p.authorId) return;
                                 var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
                                 var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
+                                var videoHtml = p.videoUrl ? '<div class="video-embed"><iframe src="' + p.videoUrl + '" allow="autoplay" allowfullscreen style="width:100%; height:200px; border:1px solid #ccc;"></iframe></div>' : '';
                                 var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                                    html += '<div class="mobile-post"><img src="' + avatar + '"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div>';
+                                    html += '<div class="mobile-post"><img src="' + avatar + '"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + '</div></div>';
                                 });
                                 promises.push(promise);
                             });
@@ -1348,8 +1624,9 @@
                         if (!p.authorId) return;
                         var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
                         var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
+                        var videoHtml = p.videoUrl ? '<div class="video-embed"><iframe src="' + p.videoUrl + '" allow="autoplay" allowfullscreen style="width:100%; max-width:400px; height:250px; border:1px solid #ccc;"></iframe></div>' : '';
                         var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                            html += '<div class="desktop-post"><img src="' + avatar + '"><div><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div>';
+                            html += '<div class="desktop-post"><img src="' + avatar + '"><div><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + '</div></div>';
                         });
                         promises.push(promise);
                     });
@@ -1393,8 +1670,9 @@
                         if (!p.authorId) return;
                         var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
                         var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
+                        var videoHtml = p.videoUrl ? '<div class="video-embed"><iframe src="' + p.videoUrl + '" allow="autoplay" allowfullscreen style="width:100%; height:200px; border:1px solid #ccc;"></iframe></div>' : '';
                         var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                            html += '<div class="mobile-post"><img src="' + avatar + '"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div>';
+                            html += '<div class="mobile-post"><img src="' + avatar + '"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + '</div></div>';
                         });
                         promises.push(promise);
                     });
@@ -1561,6 +1839,7 @@
             }
             else if (page === 'news') renderDesktopNews();
             else if (page === 'photos') renderDesktopPhotos();
+            else if (page === 'videos') renderDesktopVideos();
             else if (page === 'friends') {
                 document.getElementById('desk-friends-list-view').style.display = 'block';
                 document.getElementById('desk-friends-profile-view').style.display = 'none';
@@ -1589,8 +1868,9 @@
                                 if (!p.authorId) return;
                                 var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
                                 var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
+                                var videoHtml = p.videoUrl ? '<div class="video-embed"><iframe src="' + p.videoUrl + '" allow="autoplay" allowfullscreen style="width:100%; max-width:400px; height:250px; border:1px solid #ccc;"></iframe></div>' : '';
                                 var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                                    html += '<div class="desktop-post"><img src="' + avatar + '"><div><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div>';
+                                    html += '<div class="desktop-post"><img src="' + avatar + '"><div><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + videoHtml + '</div></div>';
                                 });
                                 promises.push(promise);
                             });
