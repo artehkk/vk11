@@ -18,6 +18,7 @@
         ul { list-style: none; }
         #auth-error { color: red; font-size: 12px; margin-bottom: 10px; display: none; }
 
+        /* ================= АВТОРИЗАЦИЯ ================= */
         #auth-screen { display: flex; flex-direction: column; justify-content: flex-start; height: 100vh; background: #ffffff; }
         .auth-header-bar { background: #C9D1D8; height: 44px; display: flex; align-items: center; padding: 0 10px; border-bottom: 1px solid #b0b9c0; }
         .auth-header-bar svg { height: 24px; width: auto; fill: #fff; }
@@ -31,6 +32,7 @@
         .auth-signup-area { margin-top: 15px; padding-top: 10px; border-top: 1px solid #E5E9ED; }
         .auth-signup-area button { width: 100%; background: #E5E9ED; color: #45688E; border: 1px solid #C5D0DB; padding: 8px; font-size: 14px; font-weight: bold; cursor: pointer; }
 
+        /* ================= ДЕСКТОП ================= */
         .desktop-view { display: none; }
         .desktop-header {
             background: linear-gradient(to bottom, #6D98C6, #45739E);
@@ -89,31 +91,79 @@
         .desktop-post-input .btn-row { margin-top: 5px; text-align: right; }
         .desktop-post-input .btn-row button { background: #5E83A9; color: white; border: none; padding: 4px 15px; border-radius: 2px; cursor: pointer; font-size: 12px; }
 
-        .mobile-view { display: none; padding-bottom: 50px; background: #F2F2F2; min-height: 100vh; }
-        .mobile-header { background-image: linear-gradient(to bottom, #5E83A9, #3A6087); height: 44px; display: flex; align-items: center; justify-content: center; position: sticky; top: 0; z-index: 100; color: white; font-weight: bold; font-size: 18px; padding: 0 10px; text-shadow: 0 1px 0 rgba(0,0,0,0.3); }
-        .mobile-header .logout-btn { position: absolute; right: 10px; top: 12px; color: #dbeaff; font-size: 13px; font-weight: normal; }
-        .mobile-bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 50px; background: #2E2E2E; background-image: linear-gradient(to bottom, #444, #222); display: flex; justify-content: space-around; align-items: center; border-top: 2px solid #111; z-index: 999; }
-        .mobile-tab-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 100%; color: #999; font-size: 10px; text-transform: uppercase; border: none; background: transparent; cursor: pointer; }
-        .mobile-tab-btn.active { color: #F2F2F2; background: rgba(255,255,255,0.05); }
-        .tab-icon { width: 24px; height: 24px; margin-bottom: 2px; }
-        .mobile-tab-btn.active .tab-icon { fill: #5E83A9; }
-        .mobile-view-container { display: none; background: #f2f2f2; min-height: calc(100vh - 94px); }
+        /* ================= МОБИЛЬНЫЙ (СТИЛЬ СТАРОГО ВК) ================= */
+        .mobile-view { display: none; padding-bottom: 44px; background: #FFFFFF; min-height: 100vh; }
+        
+        /* Верхняя синяя панель с вкладками */
+        .mobile-top-tabs {
+            background: linear-gradient(to bottom, #5E83A9, #3A6087);
+            height: 36px;
+            display: flex;
+            align-items: stretch;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #1E3A5F;
+        }
+        .mobile-top-tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #C5D8EC;
+            font-size: 12px;
+            font-weight: bold;
+            text-shadow: 0 1px 0 rgba(0,0,0,0.4);
+            cursor: pointer;
+            border-right: 1px solid #2A4B70;
+            border-left: 1px solid #6F95B8;
+            background: transparent;
+            text-transform: capitalize;
+        }
+        .mobile-top-tab:first-child { border-left: none; }
+        .mobile-top-tab:last-child { border-right: none; }
+        .mobile-top-tab.active {
+            background: linear-gradient(to bottom, #4A6E94, #2C4A6B);
+            color: #FFFFFF;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Контент мобильный */
+        .mobile-view-container { display: none; background: #f2f2f2; min-height: calc(100vh - 80px); }
         .mobile-view-container.active { display: block; }
         .mobile-empty { padding: 40px 20px; text-align: center; color: #666; }
+
         .mobile-profile-header { background: #fff; padding: 15px; border-bottom: 1px solid #ddd; display: flex; gap: 15px; align-items: center; }
         .mobile-profile-avatar { width: 80px; height: 80px; border-radius: 2px !important; border: 1px solid #ddd; object-fit: cover; }
         .mobile-profile-name { font-size: 18px; font-weight: bold; color: #000; }
+
         .mobile-create-post { background: #fff; padding: 10px; border-bottom: 1px solid #eee; display: flex; gap: 8px; align-items: center; }
         .mobile-create-post textarea { flex: 1; border: 1px solid #ccc; border-radius: 2px; padding: 5px; height: 40px; resize: none; max-height: 150px; font-family: inherit; font-size: 14px; background: #F9F9F9; }
         .mobile-create-post .file-label { cursor: pointer; font-size: 20px; padding: 0 10px; }
         .mobile-create-post .file-label input { display: none; }
         .mobile-create-post button { background: #5E83A9; color: white; border: 1px solid #3A6087; padding: 0 15px; border-radius: 2px; font-size: 14px; font-weight: bold; cursor: pointer; height: 40px; }
-        .mobile-post img { width: 40px; height: 40px; border-radius: 2px !important; border: 1px solid #ddd; object-fit: cover; }
+
+        /* Посты мобильные */
+        .mobile-post {
+            background: #fff;
+            padding: 8px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            gap: 8px;
+        }
+        .mobile-post img { width: 40px; height: 40px; border-radius: 2px !important; border: 1px solid #ddd; object-fit: cover; flex-shrink: 0; }
+        .mobile-post .post-body { flex: 1; }
+        .mobile-post .author { font-weight: bold; color: #2B587A; font-size: 13px; }
+        .mobile-post .date { color: #999; font-size: 11px; margin-left: 5px; }
+        .mobile-post .text { margin-top: 3px; line-height: 1.3; color: #333; font-size: 13px; }
+
+        /* Друзья и чаты */
         .friend-item, .chat-item { background: #fff; border-bottom: 1px solid #eee; padding: 12px 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
         .friend-item:hover, .chat-item:hover { background: #f4f6f8; }
         .friend-info { display: flex; gap: 10px; align-items: center; }
         .friend-info img { width: 45px; height: 45px; border-radius: 2px !important; border: 1px solid #ddd; object-fit: cover; }
-        .add-btn { color: #fff; background: #5E83A9; padding: 4px 12px; border-radius: 2px; font-size: 12px; border: 1px solid #3F6484; cursor: pointer; }
+
+        /* Окно чата */
         #chat-interface { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #F2F2F2; z-index: 9999; flex-direction: column; }
         .chat-header { background: #5E83A9; color: white; padding: 12px; display: flex; align-items: center; gap: 15px; min-height: 44px; }
         .chat-header .back-btn { font-size: 20px; cursor: pointer; }
@@ -124,18 +174,19 @@
         .chat-input-area input { flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 2px; font-size: 14px; }
         .chat-input-area button { background: #5E83A9; color: white; border: none; padding: 0 20px; border-radius: 2px; font-weight: bold; cursor: pointer; }
 
+        /* Редактирование профиля */
         .edit-btn { background: #e0e0e0; color: #333; border: none; padding: 4px 12px; border-radius: 2px; font-size: 12px; cursor: pointer; margin-left: 10px; }
         .edit-btn:hover { background: #ccc; }
-        .profile-info-block { margin-top: 5px; font-size: 13px; color: #333; display: flex; flex-direction: column; gap: 2px; }
+        .profile-info-block { margin-top: 5px; font-size: 13px; color: #333; display: flex; flex-direction: column; gap: 2px; padding: 0 15px 10px; }
         .profile-info-block span { color: #777; font-weight: normal; }
-        .edit-form { background: #F9F9F9; padding: 10px; border: 1px solid #ddd; border-radius: 2px; margin-top: 10px; display: none; flex-direction: column; gap: 8px; }
+        .edit-form { background: #F9F9F9; padding: 10px; border: 1px solid #ddd; border-radius: 2px; margin: 10px; display: none; flex-direction: column; gap: 8px; }
         .edit-form input, .edit-form textarea { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 2px; font-family: inherit; font-size: 13px; }
         .edit-form button { background: #5E83A9; color: white; border: none; padding: 6px 15px; border-radius: 2px; cursor: pointer; }
         .edit-form button:hover { background: #4A739E; }
         .delete-wall-btn { background: #d9534f; color: white; border: none; padding: 8px 15px; border-radius: 2px; cursor: pointer; margin-top: 15px; font-weight: bold; }
         .delete-wall-btn:hover { background: #c9302c; }
 
-        #offline-banner { display: none; background: #d9534f; color: white; text-align: center; padding: 5px; font-size: 12px; position: sticky; top: 44px; z-index: 101; }
+        #offline-banner { display: none; background: #d9534f; color: white; text-align: center; padding: 5px; font-size: 12px; position: sticky; top: 36px; z-index: 101; }
 
         @media (min-width: 769px) { .desktop-view { display: block; } .mobile-view { display: none !important; } }
         @media (max-width: 768px) { .desktop-view { display: none !important; } .mobile-view { display: block; } }
@@ -200,7 +251,6 @@
         </div>
 
         <div class="desktop-layout">
-            <!-- Левое меню -->
             <div class="desktop-sidebar">
                 <ul>
                     <li><a href="#" onclick="showDeskPage('wall')"><b>Моя Страница</b> <span style="font-weight:normal;color:#777;font-size:11px;">ред.</span></a></li>
@@ -221,7 +271,6 @@
                 </ul>
             </div>
 
-            <!-- Правый контент -->
             <div class="desktop-content" id="desktop-main">
                 <div id="desk-page-wall">
                     <div class="desktop-page-title">Моя Страница</div>
@@ -298,15 +347,25 @@
         </div>
     </div>
 
-    <!-- МОБИЛЬНЫЙ -->
+    <!-- МОБИЛЬНЫЙ (В СТИЛЕ СТАРОГО ВК) -->
     <div id="mobile-app" class="mobile-view">
-        <div class="mobile-header">
-            <span id="mob-header-title">Новости</span>
-            <a href="#" class="logout-btn" onclick="logout()">Выход</a>
+        
+        <!-- Верхние синие вкладки -->
+        <div class="mobile-top-tabs">
+            <div class="mobile-top-tab active" onclick="switchMobTopTab('news', this)">Новости</div>
+            <div class="mobile-top-tab" onclick="switchMobTopTab('wall', this)">Стена</div>
+            <div class="mobile-top-tab" onclick="switchMobTopTab('friends', this)">Друзья</div>
+            <div class="mobile-top-tab" onclick="switchMobTopTab('messages', this)">Диалоги</div>
         </div>
 
-        <div id="mob-wall" class="mobile-view-container active">
-            <div class="mobile-profile-header" id="mob-profile-header">
+        <!-- ====== СТРАНИЦА: НОВОСТИ ====== -->
+        <div id="mob-news" class="mobile-view-container active">
+            <div class="mobile-empty"><h3>Загрузка новостей...</h3></div>
+        </div>
+
+        <!-- ====== СТРАНИЦА: СТЕНА (ПРОФИЛЬ) ====== -->
+        <div id="mob-wall" class="mobile-view-container">
+            <div class="mobile-profile-header">
                 <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='40' fill='%235E83A9'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='30' font-weight='bold'%3E?%3C/text%3E%3C/svg%3E" id="mob-profile-avatar" class="mobile-profile-avatar">
                 <div>
                     <div class="mobile-profile-name" id="mob-profile-name">Пользователь</div>
@@ -339,19 +398,7 @@
             <div id="mobile-wall-content"></div>
         </div>
 
-        <div id="mob-news" class="mobile-view-container">
-            <div class="mobile-empty"><h3>Загрузка новостей...</h3></div>
-        </div>
-
-        <div id="mob-gifts" class="mobile-view-container">
-            <div id="mob-gifts-content"></div>
-        </div>
-
-        <div id="mob-msg" class="mobile-view-container">
-            <div style="padding:10px; background:#fff; border-bottom:1px solid #eee;"><h3 style="font-size:15px; color:#000;">Сообщения</h3></div>
-            <div id="mobile-msg-list"></div>
-        </div>
-
+        <!-- ====== СТРАНИЦА: ДРУЗЬЯ ====== -->
         <div id="mob-friends" class="mobile-view-container">
             <div style="padding:10px; background:#fff; border-bottom:1px solid #eee;">
                 <h3 style="font-size:15px; color:#000;">Друзья</h3>
@@ -360,21 +407,33 @@
             <div id="mobile-friends-list"></div>
         </div>
 
-        <nav class="mobile-bottom-nav">
-            <button class="mobile-tab-btn" onclick="switchMobTab('news')">
-                <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M22 3H2v16h20V3zM4 5h16v10H4V5zm0 12h16v2H4v-2z"/></svg>Новости
+        <!-- ====== СТРАНИЦА: СООБЩЕНИЯ ====== -->
+        <div id="mob-msg" class="mobile-view-container">
+            <div style="padding:10px; background:#fff; border-bottom:1px solid #eee;"><h3 style="font-size:15px; color:#000;">Сообщения</h3></div>
+            <div id="mobile-msg-list"></div>
+        </div>
+
+        <!-- ====== НИЖНЕЕ ЧЁРНОЕ МЕНЮ (СТАРЫЙ ВК) ====== -->
+        <nav class="mobile-bottom-nav" style="position: fixed; bottom: 0; left: 0; width: 100%; height: 44px; background: #1A1A1A; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #000; z-index: 999;">
+            <button class="mobile-tab-btn" onclick="switchMobTab('news')" style="display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1; height:100%; color:#999; font-size:10px; background:transparent; border:none; cursor:pointer;">
+                <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor" style="width:24px; height:24px;"><path d="M22 3H2v16h20V3zM4 5h16v10H4V5zm0 12h16v2H4v-2z"/></svg>
+                Новости
             </button>
-            <button class="mobile-tab-btn active" onclick="switchMobTab('wall')">
-                <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Моя Стр.
+            <button class="mobile-tab-btn" onclick="switchMobTab('wall')" style="display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1; height:100%; color:#F2F2F2; font-size:10px; background:rgba(255,255,255,0.05); border:none; cursor:pointer;">
+                <svg class="tab-icon" viewBox="0 0 24 24" fill="#5E83A9" style="width:24px; height:24px;"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                Стена
             </button>
-            <button class="mobile-tab-btn" onclick="switchMobTab('gifts')">
-                <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/></svg>Подарки
+            <button class="mobile-tab-btn" onclick="switchMobTab('friends')" style="display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1; height:100%; color:#999; font-size:10px; background:transparent; border:none; cursor:pointer;">
+                <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor" style="width:24px; height:24px;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                Друзья
             </button>
-            <button class="mobile-tab-btn" onclick="switchMobTab('msg')">
-                <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM8 9h8v2H8V9zm4 5H8v-2h4v2zm4-4H8V8h8v2z"/></svg>Сообщения
+            <button class="mobile-tab-btn" onclick="switchMobTab('msg')" style="display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1; height:100%; color:#999; font-size:10px; background:transparent; border:none; cursor:pointer;">
+                <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor" style="width:24px; height:24px;"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM8 9h8v2H8V9zm4 5H8v-2h4v2zm4-4H8V8h8v2z"/></svg>
+                Диалоги
             </button>
-            <button class="mobile-tab-btn" onclick="switchMobTab('friends')">
-                <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Друзья
+            <button class="mobile-tab-btn" onclick="switchMobTab('gifts')" style="display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1; height:100%; color:#999; font-size:10px; background:transparent; border:none; cursor:pointer;">
+                <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor" style="width:24px; height:24px;"><path d="M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"/></svg>
+                Подарки
             </button>
         </nav>
     </div>
@@ -522,12 +581,66 @@
                 document.getElementById('desktop-app').style.display = 'none';
                 document.getElementById('mobile-app').style.display = 'block';
                 loadUserProfile();
-                switchMobTab('wall');
+                // По умолчанию открываем вкладку "Новости"
+                switchMobTopTab('news', document.querySelector('.mobile-top-tab.active'));
             } else {
                 document.getElementById('desktop-app').style.display = 'block';
                 document.getElementById('mobile-app').style.display = 'none';
                 showDeskPage('wall');
             }
+        }
+
+        // ====== ПЕРЕКЛЮЧЕНИЕ ВЕРХНИХ ВКЛАДОК (НОВОСТИ / СТЕНА / ДРУЗЬЯ / ДИАЛОГИ) ======
+        function switchMobTopTab(tab, btn) {
+            // Убираем active у всех вкладок
+            var tabs = document.querySelectorAll('.mobile-top-tab');
+            for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+            if (btn) btn.classList.add('active');
+
+            // Скрываем все контейнеры
+            var containers = document.querySelectorAll('.mobile-view-container');
+            for (var i = 0; i < containers.length; i++) containers[i].classList.remove('active');
+
+            // Показываем нужный
+            var target = document.getElementById('mob-' + tab);
+            if (target) target.classList.add('active');
+
+            // Подгружаем данные
+            if (tab === 'news') renderMobileNews();
+            else if (tab === 'wall') { loadUserProfile(); renderMobileWall(); }
+            else if (tab === 'friends') renderMobileFriends();
+            else if (tab === 'messages') renderMobileMessages();
+        }
+
+        // ====== ПЕРЕКЛЮЧЕНИЕ НИЖНЕГО МЕНЮ ======
+        function switchMobTab(tab) {
+            if (unsubscribeChat) unsubscribeChat();
+            if (unsubscribeWall) unsubscribeWall();
+            if (unsubscribeNews) unsubscribeNews();
+            if (unsubscribeGifts) unsubscribeGifts();
+
+            // Меняем верхние вкладки тоже
+            var topTabMap = { 'news': 'news', 'wall': 'wall', 'friends': 'friends', 'msg': 'messages', 'gifts': 'wall' };
+            var topTabName = topTabMap[tab] || 'wall';
+            var tabs = document.querySelectorAll('.mobile-top-tab');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+                if (tabs[i].innerText.toLowerCase().indexOf(topTabName === 'news' ? 'новости' : topTabName === 'wall' ? 'стена' : topTabName === 'friends' ? 'друзья' : 'диалоги') !== -1) {
+                    tabs[i].classList.add('active');
+                }
+            }
+
+            // Скрываем все
+            var containers = document.querySelectorAll('.mobile-view-container');
+            for (var i = 0; i < containers.length; i++) containers[i].classList.remove('active');
+            // Показываем нужный
+            document.getElementById('mob-' + tab).classList.add('active');
+
+            if (tab === 'wall') { loadUserProfile(); renderMobileWall(); }
+            else if (tab === 'friends') renderMobileFriends();
+            else if (tab === 'msg') renderMobileMessages();
+            else if (tab === 'news') renderMobileNews();
+            else if (tab === 'gifts') renderMobileGifts();
         }
 
         function loadUserProfile() {
@@ -568,9 +681,6 @@
             return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='40' fill='%23" + color + "%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='30' font-weight='bold'%3E" + letter + "%3C/text%3E%3C/svg%3E";
         }
 
-        // =============================================
-        // ИСПРАВЛЕННАЯ ФУНКЦИЯ - ГАРАНТИРОВАННО ВОЗВРАЩАЕТ PROMISE
-        // =============================================
         function getUserAvatar(userId, name) {
             return new Promise(function(resolve) {
                 if (!userId) {
@@ -863,7 +973,7 @@
                         var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
                         var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '" alt="Фото поста"></div>' : '';
                         var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                            html += '<div class="mobile-post"><div class="post-content-area"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div></div>';
+                            html += '<div class="mobile-post"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div>';
                         });
                         promises.push(promise);
                     });
@@ -903,7 +1013,7 @@
                                 var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
                                 var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
                                 var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                                    html += '<div class="mobile-post"><div class="post-content-area"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div></div>';
+                                    html += '<div class="mobile-post"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div>';
                                 });
                                 promises.push(promise);
                             });
@@ -917,19 +1027,26 @@
         function renderMobileGifts() {
             if (unsubscribeGifts) unsubscribeGifts();
             var container = document.getElementById('mob-gifts-content');
+            if (!container) {
+                // Если контейнера нет — создадим временно
+                var temp = document.createElement('div');
+                temp.id = 'mob-gifts-content';
+                document.getElementById('mob-wall').appendChild(temp);
+                container = temp;
+            }
             var GIFTS = [
                 { id: 'rose', name: '🌹 Роза', price: 10 },
                 { id: 'bear', name: '🧸 Мишка', price: 15 },
                 { id: 'cactus', name: '🌵 Кактус', price: 5 },
                 { id: 'heart', name: '❤️ Сердечко', price: 20 }
             ];
-            var storeHtml = '<div class="gifts-store-window"><h3>🎁 Магазин подарков</h3><div class="gift-grid">';
+            var storeHtml = '<div style="padding:15px;"><h3>🎁 Магазин подарков</h3><div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">';
             for (var i = 0; i < GIFTS.length; i++) {
                 var g = GIFTS[i];
-                storeHtml += '<div class="gift-item" onclick="buyGift(\'' + g.id + '\')"><img src="gifts/' + g.id + '.png" onerror="this.src=\'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22%3E%3Crect width=%2250%22 height=%2250%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2225%22 y=%2230%22 font-size=%2212%22 text-anchor=%22middle%22 fill=%22%23999%22%3E' + g.id + '%3C/text%3E%3C/svg%3E\'" /><span class="gift-name">' + g.name + '</span><span class="gift-price">' + g.price + ' монет</span></div>';
+                storeHtml += '<div style="text-align:center; padding:10px; background:#f9f9f9; border:1px solid #eee; border-radius:2px;" onclick="buyGift(\'' + g.id + '\')"><div style="font-size:30px;">' + g.name.split(' ')[0] + '</div><div style="font-weight:bold; font-size:12px;">' + g.name.split(' ').slice(1).join(' ') + '</div><div style="color:#777; font-size:11px;">' + g.price + ' монет</div></div>';
             }
             storeHtml += '</div></div>';
-            var myHtml = '<div class="gifts-store-window"><h3>💝 Мои подарки</h3><div class="my-gifts-grid">';
+            var myHtml = '<div style="padding:15px;"><h3>💝 Мои подарки</h3>';
             db.collection('gifts').where('toId', '==', currentUser.uid).orderBy('createdAt', 'desc').get()
                 .then(function(snap) {
                     if (snap.empty) {
@@ -938,11 +1055,10 @@
                         snap.forEach(function(doc) {
                             var gData = doc.data();
                             var gift = GIFTS.find(function(x) { return x.id === gData.giftId; });
-                            var iconName = gift ? gift.id : 'unknown';
-                            myHtml += '<div class="my-gift-item"><img src="gifts/' + iconName + '.png"><span class="gift-from">от ' + escapeHtml(gData.fromName) + '</span><button class="return-btn" onclick="returnCoins(\'' + doc.id + '\', \'' + gData.fromId + '\')">↩️ Вернуть монеты</button></div>';
+                            myHtml += '<div style="padding:8px; background:#f9f9f9; border:1px solid #eee; margin-bottom:5px; border-radius:2px;"><b>' + (gift ? gift.name : gData.giftId) + '</b> от ' + escapeHtml(gData.fromName) + ' <button onclick="returnCoins(\'' + doc.id + '\', \'' + gData.fromId + '\')" style="margin-left:10px; background:#5E83A9; color:white; border:none; padding:3px 8px; border-radius:2px; cursor:pointer; font-size:11px;">↩️ Вернуть</button></div>';
                         });
                     }
-                    myHtml += '</div></div>';
+                    myHtml += '</div>';
                     container.innerHTML = storeHtml + myHtml;
                 });
         }
@@ -959,47 +1075,27 @@
                         { id: 'heart', name: '❤️ Сердечко', price: 20 }
                     ];
                     var gift = GIFTS.find(function(g) { return g.id === giftId; });
-                    if (!gift) {
-                        alert("Подарок не найден!");
-                        return;
-                    }
-                    if (userData.coins < gift.price) {
-                        alert("Не хватает монет! Нужно " + gift.price + ", у вас " + userData.coins);
-                        return;
-                    }
+                    if (!gift) { alert("Подарок не найден!"); return; }
+                    if (userData.coins < gift.price) { alert("Не хватает монет!"); return; }
                     db.collection('friends').where('userId', '==', currentUser.uid).get()
                         .then(function(friendSnap) {
                             var friendNames = [];
                             friendSnap.forEach(function(doc) { friendNames.push(doc.data().friendName); });
-                            if (!friendNames.length) {
-                                alert("У вас нет друзей, чтобы дарить подарки!");
-                                return;
-                            }
+                            if (!friendNames.length) { alert("У вас нет друзей!"); return; }
                             var recipientName = prompt("Кому подарить " + gift.name + "?\nДрузья: " + friendNames.join(', '));
                             if (!recipientName) return;
-                            if (friendNames.indexOf(recipientName) === -1) {
-                                alert("Этот пользователь не у вас в друзьях!");
-                                return;
-                            }
+                            if (friendNames.indexOf(recipientName) === -1) { alert("Не в друзьях!"); return; }
                             db.collection('users').where('name', '==', recipientName).get()
                                 .then(function(snap) {
-                                    if (snap.empty) {
-                                        alert("Пользователь не найден!");
-                                        return;
-                                    }
+                                    if (snap.empty) { alert("Пользователь не найден!"); return; }
                                     var recipientId = snap.docs[0].id;
-                                    db.collection('users').doc(currentUser.uid).update({
-                                        coins: firebase.firestore.FieldValue.increment(-gift.price)
-                                    });
+                                    db.collection('users').doc(currentUser.uid).update({ coins: firebase.firestore.FieldValue.increment(-gift.price) });
                                     db.collection('gifts').add({
-                                        fromId: currentUser.uid,
-                                        fromName: currentUser.displayName,
-                                        toId: recipientId,
-                                        toName: recipientName,
-                                        giftId: giftId,
-                                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                                        fromId: currentUser.uid, fromName: currentUser.displayName,
+                                        toId: recipientId, toName: recipientName,
+                                        giftId: giftId, createdAt: firebase.firestore.FieldValue.serverTimestamp()
                                     });
-                                    alert("🎁 " + gift.name + " успешно подарен " + recipientName + "!");
+                                    alert("🎁 Подарок отправлен!");
                                     loadUserProfile();
                                 });
                         });
@@ -1009,42 +1105,21 @@
         function returnCoins(giftDocId, fromId) {
             db.collection('gifts').doc(giftDocId).get()
                 .then(function(doc) {
-                    if (!doc.exists) {
-                        alert("Подарок не найден!");
-                        return;
-                    }
-                    if (doc.data().returned) {
-                        alert("Вы уже вернули монеты за этот подарок!");
-                        return;
-                    }
+                    if (!doc.exists || doc.data().returned) { alert("Уже возвращено!"); return; }
                     var GIFTS = [
-                        { id: 'rose', name: '🌹 Роза', price: 10 },
-                        { id: 'bear', name: '🧸 Мишка', price: 15 },
-                        { id: 'cactus', name: '🌵 Кактус', price: 5 },
-                        { id: 'heart', name: '❤️ Сердечко', price: 20 }
+                        { id: 'rose', name: '🌹 Роза', price: 10 }, { id: 'bear', name: '🧸 Мишка', price: 15 },
+                        { id: 'cactus', name: '🌵 Кактус', price: 5 }, { id: 'heart', name: '❤️ Сердечко', price: 20 }
                     ];
                     var gift = GIFTS.find(function(g) { return g.id === doc.data().giftId; });
-                    if (!gift) {
-                        alert("Ошибка: подарок не найден в каталоге");
-                        return;
-                    }
-                    db.collection('users').doc(currentUser.uid).get()
-                        .then(function(myDoc) {
-                            var myData = myDoc.data();
-                            if (myData.coins < gift.price) {
-                                alert("У вас недостаточно монет, чтобы вернуть! Нужно " + gift.price);
-                                return;
-                            }
-                            db.collection('users').doc(fromId).update({
-                                coins: firebase.firestore.FieldValue.increment(gift.price)
-                            });
-                            db.collection('users').doc(currentUser.uid).update({
-                                coins: firebase.firestore.FieldValue.increment(-gift.price)
-                            });
-                            db.collection('gifts').doc(giftDocId).update({ returned: true });
-                            alert("✅ Монеты (" + gift.price + ") возвращены. Подарок остался у вас.");
-                            loadUserProfile();
-                        });
+                    if (!gift) { alert("Ошибка"); return; }
+                    db.collection('users').doc(currentUser.uid).get().then(function(myDoc) {
+                        if (myDoc.data().coins < gift.price) { alert("Не хватает монет!"); return; }
+                        db.collection('users').doc(fromId).update({ coins: firebase.firestore.FieldValue.increment(gift.price) });
+                        db.collection('users').doc(currentUser.uid).update({ coins: firebase.firestore.FieldValue.increment(-gift.price) });
+                        db.collection('gifts').doc(giftDocId).update({ returned: true });
+                        alert("✅ Монеты возвращены");
+                        loadUserProfile();
+                    });
                 });
         }
 
@@ -1065,9 +1140,7 @@
                         });
                         promises.push(promise);
                     });
-                    Promise.all(promises).then(function() {
-                        container.innerHTML = html;
-                    });
+                    Promise.all(promises).then(function() { container.innerHTML = html; });
                 });
         }
 
@@ -1088,9 +1161,7 @@
                         });
                         promises.push(promise);
                     });
-                    Promise.all(promises).then(function() {
-                        container.innerHTML = html;
-                    });
+                    Promise.all(promises).then(function() { container.innerHTML = html; });
                 });
         }
 
@@ -1111,9 +1182,7 @@
                         });
                         promises.push(promise);
                     });
-                    Promise.all(promises).then(function() {
-                        container.innerHTML = html;
-                    });
+                    Promise.all(promises).then(function() { container.innerHTML = html; });
                 });
         }
 
@@ -1134,9 +1203,7 @@
                         });
                         promises.push(promise);
                     });
-                    Promise.all(promises).then(function() {
-                        container.innerHTML = html;
-                    });
+                    Promise.all(promises).then(function() { container.innerHTML = html; });
                 });
         }
 
@@ -1201,29 +1268,6 @@
                 text: text,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             }).catch(function(e) { alert("Ошибка"); });
-        }
-
-        function switchMobTab(tab) {
-            if (unsubscribeChat) unsubscribeChat();
-            if (unsubscribeWall) unsubscribeWall();
-            if (unsubscribeNews) unsubscribeNews();
-            if (unsubscribeGifts) unsubscribeGifts();
-            var containers = document.querySelectorAll('.mobile-view-container');
-            for (var i = 0; i < containers.length; i++) {
-                containers[i].classList.remove('active');
-            }
-            var btns = document.querySelectorAll('.mobile-tab-btn');
-            for (var i = 0; i < btns.length; i++) {
-                btns[i].classList.remove('active');
-            }
-            document.getElementById('mob-' + tab).classList.add('active');
-            var map = { news: 0, wall: 1, gifts: 2, games: 3, msg: 4, friends: 5 };
-            if (map[tab] !== undefined) btns[map[tab]].classList.add('active');
-            if (tab === 'wall') { loadUserProfile(); renderMobileWall(); }
-            else if (tab === 'friends') renderMobileFriends();
-            else if (tab === 'msg') renderMobileMessages();
-            else if (tab === 'news') renderMobileNews();
-            else if (tab === 'gifts') renderMobileGifts();
         }
 
         function showDeskPage(page) {
