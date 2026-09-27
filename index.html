@@ -67,10 +67,10 @@
         .desktop-page-title { padding: 10px 15px; border-bottom: 1px solid #E4EAF0; font-size: 16px; font-weight: normal; color: #000; }
         .desktop-page-content { padding: 15px; }
 
-        /* ====== ПРОФИЛЬ В СТИЛЕ СТАРОГО ВК ====== */
+        /* ====== ПРОФИЛЬ ====== */
         .vk-profile-container { display: flex; gap: 15px; padding: 10px; }
         .vk-profile-left { width: 200px; flex-shrink: 0; }
-        .vk-profile-photo { width: 200px; height: 250px; background: #f0f0f0; border: 1px solid #ccc; object-fit: cover; margin-bottom: 8px; cursor: pointer; }
+        .vk-profile-photo { width: 200px; height: 250px; background: #f0f0f0; border: 1px solid #ccc; object-fit: cover; margin-bottom: 8px; }
         .vk-profile-right { flex: 1; }
         .vk-profile-name { font-size: 18px; font-weight: bold; color: #2B587A; margin-bottom: 2px; }
         .vk-profile-status { font-size: 12px; color: #777; margin-bottom: 10px; }
@@ -78,7 +78,6 @@
         .vk-profile-info-table td { padding: 3px 0; vertical-align: top; }
         .vk-profile-info-table td:first-child { width: 120px; color: #777; }
         .vk-profile-info-table td:last-child { color: #2B587A; }
-        .vk-profile-info-table td:last-child a { color: #2B587A; }
 
         .vk-info-section { margin-bottom: 15px; }
         .vk-info-section-title { background: #E5E9ED; padding: 5px 10px; font-weight: bold; font-size: 12px; color: #2B587A; margin-bottom: 8px; border: 1px solid #C5D0DB; }
@@ -88,10 +87,11 @@
         /* ====== ФОТОГРАФИИ ====== */
         .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; padding: 10px; }
         .photo-item { position: relative; border: 1px solid #C5D0DB; background: #f9f9f9; padding: 5px; text-align: center; }
-        .photo-item img { width: 100%; height: 150px; object-fit: cover; display: block; }
+        .photo-item img { width: 100%; height: 150px; object-fit: cover; display: block; cursor: pointer; }
         .photo-item .photo-actions { margin-top: 5px; font-size: 11px; color: #777; }
         .photo-item .photo-actions button { background: #5E83A9; color: white; border: none; padding: 2px 8px; border-radius: 2px; cursor: pointer; font-size: 11px; margin: 0 2px; }
         .photo-item .photo-actions .current-badge { background: #5cb85c; color: white; padding: 2px 8px; border-radius: 2px; font-size: 11px; display: inline-block; }
+        .photo-item .photo-source { font-size: 10px; color: #999; margin-top: 2px; }
 
         /* ====== ПОСТЫ ====== */
         .desktop-post { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; gap: 10px; }
@@ -106,6 +106,8 @@
         .desktop-post-input textarea { width: 100%; border: 1px solid #ccc; padding: 5px; border-radius: 2px; font-family: inherit; resize: vertical; min-height: 40px; font-size: 13px; }
         .desktop-post-input .btn-row { margin-top: 5px; text-align: right; }
         .desktop-post-input .btn-row button { background: #5E83A9; color: white; border: none; padding: 4px 15px; border-radius: 2px; cursor: pointer; font-size: 12px; }
+        .desktop-post-input .file-label { cursor: pointer; font-size: 20px; padding: 0 10px; margin-right: 5px; }
+        .desktop-post-input .file-label input { display: none; }
 
         /* ================= МОБИЛЬНЫЙ ================= */
         .mobile-view { display: none; padding-bottom: 44px; background: #FFFFFF; min-height: 100vh; }
@@ -293,6 +295,10 @@
                         <div class="desktop-post-input">
                             <textarea id="desk-post-text" placeholder="Что у вас нового?"></textarea>
                             <div class="btn-row">
+                                <label class="file-label">
+                                    🖼️
+                                    <input type="file" id="desk-post-image" accept="image/*">
+                                </label>
                                 <button onclick="createPost('desktop')">Отправить</button>
                             </div>
                         </div>
@@ -302,7 +308,7 @@
 
                 <div id="desk-page-news" style="display:none;">
                     <div class="desktop-page-title">Новости</div>
-                    <div class="desktop-page-content"><div id="desk-news-content">Здесь будут посты ваших друзей.</div></div>
+                    <div class="desktop-page-content"><div id="desk-news-content"></div></div>
                 </div>
 
                 <div id="desk-page-music" style="display:none;">
@@ -317,7 +323,6 @@
                                 <button onclick="alert('⏭ Следующий')">⏭</button>
                             </div>
                         </div>
-                        <div class="section-grid" id="desk-music-list"></div>
                     </div>
                 </div>
 
@@ -344,9 +349,7 @@
 
                 <div id="desk-page-settings" style="display:none;">
                     <div class="desktop-page-title">Настройки</div>
-                    <div class="desktop-page-content">
-                        <p>Здесь будут настройки профиля.</p>
-                    </div>
+                    <div class="desktop-page-content"><p>Здесь будут настройки профиля.</p></div>
                 </div>
 
                 <div id="desk-page-friends" style="display:none;">
@@ -392,7 +395,6 @@
         <div id="mob-friends" class="mobile-view-container">
             <div style="padding:10px; background:#fff; border-bottom:1px solid #eee;">
                 <h3 style="font-size:15px; color:#000;">Друзья</h3>
-                <input type="text" id="mob-search-input" placeholder="Поиск людей" style="width:100%; padding:6px; border:1px solid #ccc; margin-top:5px; border-radius:2px;">
             </div>
             <div id="mobile-friends-list"></div>
         </div>
@@ -400,6 +402,12 @@
         <div id="mob-msg" class="mobile-view-container">
             <div style="padding:10px; background:#fff; border-bottom:1px solid #eee;"><h3 style="font-size:15px; color:#000;">Сообщения</h3></div>
             <div id="mobile-msg-list"></div>
+        </div>
+
+        <!-- СТРАНИЦА ФОТО МОБИЛЬНАЯ -->
+        <div id="mob-photos" class="mobile-view-container" style="min-height:calc(100vh - 80px);">
+            <div style="padding:10px; background:#fff; border-bottom:1px solid #eee;"><h3 style="font-size:15px; color:#000;">Мои Фотографии</h3></div>
+            <div id="mobile-photos-list" style="display:grid; grid-template-columns:repeat(2,1fr); gap:8px; padding:10px;"></div>
         </div>
 
         <nav style="position: fixed; bottom: 0; left: 0; width: 100%; height: 44px; background: #1A1A1A; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #000; z-index: 999;">
@@ -419,12 +427,6 @@
                 <svg viewBox="0 0 24 24" fill="currentColor" style="width:24px; height:24px;"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>Фото
             </button>
         </nav>
-    </div>
-
-    <!-- МОБИЛЬНАЯ СТРАНИЦА ФОТО -->
-    <div id="mob-photos" class="mobile-view-container" style="position:fixed; top:36px; left:0; width:100%; height:calc(100vh - 80px); overflow-y:auto; background:#f2f2f2; z-index:50;">
-        <div style="padding:10px; background:#fff; border-bottom:1px solid #eee;"><h3 style="font-size:15px; color:#000;">Мои Фотографии</h3></div>
-        <div id="mobile-photos-list" style="display:grid; grid-template-columns:repeat(2,1fr); gap:8px; padding:10px;"></div>
     </div>
 
     <!-- ОКНО ЧАТА -->
@@ -529,7 +531,7 @@
 
     <script>
         // =============================================
-        // КОНФИГУРАЦИЯ FIREBASE (БЕЗ STORAGE)
+        // КОНФИГУРАЦИЯ FIREBASE
         // =============================================
         var firebaseConfig = {
             apiKey: "AIzaSyCIBVlQhliefITacCWgtHJlol0s3QWYcZU",
@@ -548,10 +550,8 @@
         var unsubscribeChat = null;
         var unsubscribeWall = null;
         var unsubscribeNews = null;
-        var unsubscribeGifts = null;
         var isRegisterMode = false;
         var avatarCache = {};
-        var MAX_IMAGE_SIZE = 200 * 1024;
 
         function toggleAuthMode() {
             isRegisterMode = !isRegisterMode;
@@ -686,9 +686,6 @@
             else if (tab === 'news') renderMobileNews();
         }
 
-        // =============================================
-        // ПРОФИЛЬ С ПОДПИСЬЮ "(это вы)"
-        // =============================================
         function loadUserProfile() {
             db.collection('users').doc(currentUser.uid).get()
                 .then(function(doc) {
@@ -696,7 +693,6 @@
                         var data = doc.data();
                         var avatarUrl = data.photoURL || generateAvatar(currentUser.uid, data.name);
                         
-                        // === МОБИЛЬНЫЙ ПРОФИЛЬ ===
                         var mobHtml = '<div class="mobile-profile-header">';
                         mobHtml += '<img src="' + avatarUrl + '" class="mobile-profile-avatar" onerror="this.src=\'' + generateAvatar(currentUser.uid, data.name) + '\'">';
                         mobHtml += '<div style="flex:1;">';
@@ -709,37 +705,10 @@
                         if (data.gender) infoTable += '<tr><td>Пол:</td><td>' + escapeHtml(data.gender) + '</td></tr>';
                         if (data.birthday) infoTable += '<tr><td>День рождения:</td><td>' + escapeHtml(data.birthday) + '</td></tr>';
                         if (data.hometown) infoTable += '<tr><td>Родной город:</td><td>' + escapeHtml(data.hometown) + '</td></tr>';
-                        if (data.political) infoTable += '<tr><td>Полит. взгляды:</td><td>' + escapeHtml(data.political) + '</td></tr>';
-                        if (data.religion) infoTable += '<tr><td>Религ. взгляды:</td><td>' + escapeHtml(data.religion) + '</td></tr>';
                         infoTable += '</table>';
                         mobHtml += infoTable;
 
-                        if (data.city || data.mobile || data.website) {
-                            mobHtml += '<div class="mobile-info-section"><div class="mobile-info-section-title">Контактная информация</div><div class="mobile-info-section-content">';
-                            if (data.city) mobHtml += '<div>Город: <b>' + escapeHtml(data.city) + '</b></div>';
-                            if (data.mobile) mobHtml += '<div>Моб. телефон: <b>' + escapeHtml(data.mobile) + '</b></div>';
-                            if (data.website) mobHtml += '<div>Веб-сайт: <b>' + escapeHtml(data.website) + '</b></div>';
-                            mobHtml += '</div></div>';
-                        }
-
-                        if (data.activity || data.interests || data.music || data.films || data.books || data.quotes) {
-                            mobHtml += '<div class="mobile-info-section"><div class="mobile-info-section-title">Личная информация</div><div class="mobile-info-section-content">';
-                            if (data.activity) mobHtml += '<div><b>Деятельность:</b> ' + escapeHtml(data.activity) + '</div>';
-                            if (data.interests) mobHtml += '<div><b>Интересы:</b> ' + escapeHtml(data.interests) + '</div>';
-                            if (data.music) mobHtml += '<div><b>Любимая музыка:</b> ' + escapeHtml(data.music) + '</div>';
-                            if (data.films) mobHtml += '<div><b>Любимые фильмы:</b> ' + escapeHtml(data.films) + '</div>';
-                            if (data.books) mobHtml += '<div><b>Любимые книги:</b> ' + escapeHtml(data.books) + '</div>';
-                            if (data.quotes) mobHtml += '<div><b>Любимые цитаты:</b> ' + escapeHtml(data.quotes) + '</div>';
-                            mobHtml += '</div></div>';
-                        }
-
-                        if (data.coins !== undefined) {
-                            mobHtml += '<div class="mobile-info-section"><div class="mobile-info-section-title">Игровая валюта</div><div class="mobile-info-section-content">💰 <b>' + data.coins + ' монет</b></div></div>';
-                        }
-
                         document.getElementById('mob-profile-render').innerHTML = mobHtml;
-
-                        // === ДЕСКТОПНЫЙ ПРОФИЛЬ ===
                         renderDesktopProfile(data, avatarUrl);
                     }
                 });
@@ -760,26 +729,13 @@
             if (data.gender) html += '<tr><td>Пол:</td><td>' + escapeHtml(data.gender) + '</td></tr>';
             if (data.birthday) html += '<tr><td>День рождения:</td><td>' + escapeHtml(data.birthday) + '</td></tr>';
             if (data.hometown) html += '<tr><td>Родной город:</td><td>' + escapeHtml(data.hometown) + '</td></tr>';
-            if (data.political) html += '<tr><td>Полит. взгляды:</td><td>' + escapeHtml(data.political) + '</td></tr>';
-            if (data.religion) html += '<tr><td>Религ. взгляды:</td><td>' + escapeHtml(data.religion) + '</td></tr>';
             html += '</table>';
 
             if (data.city || data.mobile || data.website) {
                 html += '<div class="vk-info-section"><div class="vk-info-section-title">Контактная информация</div><div class="vk-info-section-content">';
                 if (data.city) html += '<div><b>Город:</b> ' + escapeHtml(data.city) + '</div>';
                 if (data.mobile) html += '<div><b>Моб. телефон:</b> ' + escapeHtml(data.mobile) + '</div>';
-                if (data.website) html += '<div><b>Веб-сайт:</b> <a href="' + escapeHtml(data.website) + '" target="_blank">' + escapeHtml(data.website) + '</a></div>';
-                html += '</div></div>';
-            }
-
-            if (data.activity || data.interests || data.music || data.films || data.books || data.quotes) {
-                html += '<div class="vk-info-section"><div class="vk-info-section-title">Личная информация</div><div class="vk-info-section-content">';
-                if (data.activity) html += '<div><b>Деятельность:</b> ' + escapeHtml(data.activity) + '</div>';
-                if (data.interests) html += '<div><b>Интересы:</b> ' + escapeHtml(data.interests) + '</div>';
-                if (data.music) html += '<div><b>Любимая музыка:</b> ' + escapeHtml(data.music) + '</div>';
-                if (data.films) html += '<div><b>Любимые фильмы:</b> ' + escapeHtml(data.films) + '</div>';
-                if (data.books) html += '<div><b>Любимые книги:</b> ' + escapeHtml(data.books) + '</div>';
-                if (data.quotes) html += '<div><b>Любимые цитаты:</b> ' + escapeHtml(data.quotes) + '</div>';
+                if (data.website) html += '<div><b>Веб-сайт:</b> ' + escapeHtml(data.website) + '</div>';
                 html += '</div></div>';
             }
 
@@ -790,8 +746,6 @@
             html += '<button class="edit-btn" onclick="openEditProfile()">⚙️ Редактировать</button>';
             html += '</div></div>';
             document.getElementById('desk-wall-profile').innerHTML = html;
-            
-            // Обновляем количество фотографий
             updatePhotoCount();
         }
 
@@ -803,9 +757,6 @@
                 });
         }
 
-        // =============================================
-        // РЕДАКТИРОВАНИЕ ПРОФИЛЯ
-        // =============================================
         function openEditProfile() {
             db.collection('users').doc(currentUser.uid).get().then(function(doc) {
                 var data = doc.data() || {};
@@ -829,9 +780,7 @@
             });
         }
 
-        function closeEditProfile() {
-            document.getElementById('edit-profile-modal').style.display = 'none';
-        }
+        function closeEditProfile() { document.getElementById('edit-profile-modal').style.display = 'none'; }
 
         function saveProfileFull() {
             var name = document.getElementById('edit-name').value.trim();
@@ -865,7 +814,7 @@
         }
 
         // =============================================
-        // ЗАГРУЗКА АВАТАРКИ + ДОБАВЛЕНИЕ В ФОТОГРАФИИ
+        // АВАТАРКА + ДОБАВЛЕНИЕ В ФОТО
         // =============================================
         function uploadAvatar() {
             var file = document.getElementById('avatar-upload').files[0];
@@ -879,31 +828,27 @@
                     var maxSize = 200;
                     var width = img.width;
                     var height = img.height;
-                    
                     if (width > height) {
                         if (width > maxSize) { height = Math.round(height * maxSize / width); width = maxSize; }
                     } else {
                         if (height > maxSize) { width = Math.round(width * maxSize / height); height = maxSize; }
                     }
-                    
                     canvas.width = width;
                     canvas.height = height;
                     var ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-                    
                     var base64 = canvas.toDataURL('image/jpeg', 0.7);
                     if (base64.length > 900 * 1024) {
                         base64 = canvas.toDataURL('image/jpeg', 0.5);
                     }
                     
-                    // Сохраняем аватарку в профиль
                     db.collection('users').doc(currentUser.uid).update({ photoURL: base64 })
                         .then(function() {
-                            // Добавляем фото в коллекцию "photos"
                             return db.collection('photos').add({
                                 userId: currentUser.uid,
                                 userName: currentUser.displayName,
                                 imageURL: base64,
+                                source: 'avatar',
                                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
                             });
                         })
@@ -921,7 +866,7 @@
         }
 
         function resetAvatar() {
-            if (!confirm("Сбросить аватарку? Текущее фото будет удалено.")) return;
+            if (!confirm("Сбросить аватарку?")) return;
             db.collection('users').doc(currentUser.uid).update({ photoURL: "" })
                 .then(function() {
                     delete avatarCache[currentUser.uid];
@@ -932,22 +877,20 @@
         }
 
         // =============================================
-        // МОИ ФОТОГРАФИИ (ДЕСКТОП И МОБИЛЬНЫЙ)
+        // МОИ ФОТОГРАФИИ (АВАТАРКИ + ФОТО ИЗ ПОСТОВ)
         // =============================================
         function renderDesktopPhotos() {
             var container = document.getElementById('desk-photos-list');
-            container.innerHTML = '<div style="padding:20px;color:#777;">Загрузка...</div>';
+            container.innerHTML = '<div style="padding:20px;color:#777; grid-column: 1/-1;">Загрузка...</div>';
             
             db.collection('photos').where('userId', '==', currentUser.uid).orderBy('createdAt', 'desc').get()
                 .then(function(snap) {
                     if (snap.empty) {
-                        container.innerHTML = '<div style="padding:20px;color:#777; grid-column: 1/-1;">У вас пока нет фотографий. Смените аватарку — она появится здесь.</div>';
+                        container.innerHTML = '<div style="padding:20px;color:#777; grid-column: 1/-1;">У вас пока нет фотографий. Смените аватарку или прикрепите фото к посту.</div>';
                         return;
                     }
                     var html = '';
-                    var promises = [];
                     
-                    // Получаем текущую аватарку пользователя
                     var getCurrentAvatar = db.collection('users').doc(currentUser.uid).get();
                     
                     Promise.all([getCurrentAvatar, snap]).then(function(results) {
@@ -959,16 +902,18 @@
                             var p = doc.data();
                             var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : '';
                             var isCurrent = (p.imageURL === currentPhotoURL);
+                            var sourceLabel = p.source === 'avatar' ? '📷 Аватарка' : '🖼️ Из поста';
                             
                             var actionsHtml = '';
                             if (isCurrent) {
-                                actionsHtml = '<span class="current-badge">✔ Текущая</span>';
+                                actionsHtml = '<span class="current-badge">✔ Текущая ава</span>';
                             } else {
-                                actionsHtml = '<button onclick="setAsAvatar(\'' + doc.id + '\')">Сделать аватаркой</button>';
+                                actionsHtml = '<button onclick="setAsAvatar(\'' + doc.id + '\')">Сделать авой</button>';
                             }
                             
                             html += '<div class="photo-item">';
                             html += '<img src="' + p.imageURL + '" alt="Фото">';
+                            html += '<div class="photo-source">' + sourceLabel + '</div>';
                             html += '<div class="photo-actions">' + date + '<br>' + actionsHtml + '</div>';
                             html += '</div>';
                         });
@@ -1004,6 +949,7 @@
                             var p = doc.data();
                             var date = p.createdAt ? p.createdAt.toDate().toLocaleDateString('ru-RU') : '';
                             var isCurrent = (p.imageURL === currentPhotoURL);
+                            var sourceLabel = p.source === 'avatar' ? '📷 Ава' : '🖼️ Пост';
                             
                             var actionsHtml = '';
                             if (isCurrent) {
@@ -1014,7 +960,8 @@
                             
                             html += '<div style="background:#fff; border:1px solid #C5D0DB; padding:5px; text-align:center;">';
                             html += '<img src="' + p.imageURL + '" style="width:100%; height:120px; object-fit:cover; display:block;">';
-                            html += '<div style="font-size:10px; color:#777; margin-top:3px;">' + date + '</div>';
+                            html += '<div style="font-size:10px; color:#999; margin-top:3px;">' + sourceLabel + '</div>';
+                            html += '<div style="font-size:10px; color:#777;">' + date + '</div>';
                             html += '<div style="margin-top:3px;">' + actionsHtml + '</div>';
                             html += '</div>';
                         });
@@ -1032,8 +979,7 @@
             db.collection('photos').doc(photoDocId).get()
                 .then(function(doc) {
                     if (!doc.exists) { alert("Фото не найдено"); return; }
-                    var photoData = doc.data();
-                    return db.collection('users').doc(currentUser.uid).update({ photoURL: photoData.imageURL });
+                    return db.collection('users').doc(currentUser.uid).update({ photoURL: doc.data().imageURL });
                 })
                 .then(function() {
                     avatarCache = {};
@@ -1083,20 +1029,8 @@
         }
 
         // =============================================
-        // ПОСТЫ
+        // ПОСТЫ (С ДОБАВЛЕНИЕМ ФОТО В "МОИ ФОТОГРАФИИ")
         // =============================================
-        function deleteWall() {
-            if (!confirm("Очистить стену?")) return;
-            db.collection('posts').where('authorId', '==', currentUser.uid).get()
-                .then(function(snap) {
-                    var batch = db.batch();
-                    snap.forEach(function(doc) { batch.delete(doc.ref); });
-                    batch.commit();
-                    alert("Готово.");
-                    renderUI(window.innerWidth > 768 ? 'desktop' : 'mobile');
-                });
-        }
-
         function createPost(device) {
             var textEl = document.getElementById(device === 'desktop' ? 'desk-post-text' : 'mob-post-text');
             var text = textEl.value.trim();
@@ -1140,10 +1074,27 @@
                             base64 = canvas.toDataURL('image/jpeg', 0.4);
                         }
                         postData.imageURL = base64;
-                        db.collection('posts').add(postData).then(function() {
-                            renderUI(device);
-                            if(btn) { btn.innerText = original; btn.disabled = false; }
-                        });
+                        
+                        // Сохраняем пост
+                        db.collection('posts').add(postData)
+                            .then(function() {
+                                // Добавляем фото в "Мои Фотографии"
+                                return db.collection('photos').add({
+                                    userId: currentUser.uid,
+                                    userName: currentUser.displayName,
+                                    imageURL: base64,
+                                    source: 'post',
+                                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                                });
+                            })
+                            .then(function() {
+                                renderUI(device);
+                                if(btn) { btn.innerText = original; btn.disabled = false; }
+                            })
+                            .catch(function(err) {
+                                alert("Ошибка: " + err.message);
+                                if(btn) { btn.innerText = original; btn.disabled = false; }
+                            });
                     };
                     img.src = e.target.result;
                 };
@@ -1158,9 +1109,9 @@
 
         function renderUI(device) {
             if (device === 'desktop') {
-                renderDesktopWall(); renderDesktopNews(); renderDesktopFriends(); renderDesktopMessages();
+                renderDesktopWall(); renderDesktopPhotos();
             } else {
-                renderMobileWall(); renderMobileNews(); renderMobileFriends(); renderMobileMessages();
+                renderMobileWall(); renderMobilePhotos();
             }
         }
 
@@ -1185,41 +1136,6 @@
                         promises.push(promise);
                     });
                     Promise.all(promises).then(function() { container.innerHTML = html; });
-                });
-        }
-
-        function renderDesktopNews() {
-            var container = document.getElementById('desk-news-content');
-            container.innerHTML = '<div style="padding:20px;color:#777;">Загрузка...</div>';
-            db.collection('friends').where('userId', '==', currentUser.uid).get()
-                .then(function(snap) {
-                    var ids = [];
-                    snap.forEach(function(doc) { ids.push(doc.data().friendId); });
-                    if (!ids.length) {
-                        container.innerHTML = '<div style="padding:20px;color:#777;">У вас пока нет друзей</div>';
-                        return;
-                    }
-                    var chunk = ids.slice(0, 10);
-                    db.collection('posts').where('authorId', 'in', chunk).orderBy('createdAt', 'desc').limit(50)
-                        .onSnapshot(function(snapshot) {
-                            if (snapshot.empty) {
-                                container.innerHTML = '<div style="padding:20px;color:#777;">У друзей пока нет постов</div>';
-                                return;
-                            }
-                            var html = '';
-                            var promises = [];
-                            snapshot.forEach(function(doc) {
-                                var p = doc.data();
-                                if (!p.authorId) return;
-                                var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
-                                var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
-                                var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                                    html += '<div class="desktop-post"><img src="' + avatar + '"><div><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div>';
-                                });
-                                promises.push(promise);
-                            });
-                            Promise.all(promises).then(function() { container.innerHTML = html; });
-                        });
                 });
         }
 
@@ -1248,50 +1164,11 @@
                 });
         }
 
-        function renderMobileNews() {
-            if (unsubscribeNews) unsubscribeNews();
-            var container = document.getElementById('mob-news');
-            container.innerHTML = '<div class="mobile-empty"><h3>Загрузка...</h3></div>';
-            db.collection('friends').where('userId', '==', currentUser.uid).get()
-                .then(function(snap) {
-                    var ids = [];
-                    snap.forEach(function(doc) { ids.push(doc.data().friendId); });
-                    if (!ids.length) {
-                        container.innerHTML = '<div class="mobile-empty"><h3>У вас пока нет друзей</h3></div>';
-                        return;
-                    }
-                    var chunk = ids.slice(0, 10);
-                    unsubscribeNews = db.collection('posts').where('authorId', 'in', chunk).orderBy('createdAt', 'desc').limit(50)
-                        .onSnapshot(function(snapshot) {
-                            if (snapshot.empty) {
-                                container.innerHTML = '<div class="mobile-empty"><h3>У друзей пока нет постов</h3></div>';
-                                return;
-                            }
-                            var html = '';
-                            var promises = [];
-                            snapshot.forEach(function(doc) {
-                                var p = doc.data();
-                                if (!p.authorId) return;
-                                var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : 'Только что';
-                                var imgHtml = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
-                                var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                                    html += '<div class="mobile-post"><img src="' + avatar + '"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + imgHtml + '</div></div>';
-                                });
-                                promises.push(promise);
-                            });
-                            Promise.all(promises).then(function() { container.innerHTML = html; });
-                        });
-                });
-        }
-
         function renderMobileFriends() {
             var container = document.getElementById('mobile-friends-list');
             db.collection('friends').where('userId', '==', currentUser.uid).get()
                 .then(function(snap) {
-                    if (snap.empty) {
-                        container.innerHTML = '<div class="mobile-empty"><h3>Список друзей пуст</h3></div>';
-                        return;
-                    }
+                    if (snap.empty) { container.innerHTML = '<div class="mobile-empty"><h3>Список друзей пуст</h3></div>'; return; }
                     var html = '';
                     var promises = [];
                     snap.forEach(function(doc) {
@@ -1309,10 +1186,7 @@
             var container = document.getElementById('mobile-msg-list');
             db.collection('friends').where('userId', '==', currentUser.uid).get()
                 .then(function(snap) {
-                    if (snap.empty) {
-                        container.innerHTML = '<div class="mobile-empty"><h3>Нет сообщений</h3></div>';
-                        return;
-                    }
+                    if (snap.empty) { container.innerHTML = '<div class="mobile-empty"><h3>Нет сообщений</h3></div>'; return; }
                     var html = '';
                     var promises = [];
                     snap.forEach(function(doc) {
@@ -1330,10 +1204,7 @@
             var container = document.getElementById('desk-friends-list');
             db.collection('friends').where('userId', '==', currentUser.uid).get()
                 .then(function(snap) {
-                    if (snap.empty) {
-                        container.innerHTML = '<div style="padding:20px;color:#777;">У вас пока нет друзей</div>';
-                        return;
-                    }
+                    if (snap.empty) { container.innerHTML = '<div style="padding:20px;color:#777;">У вас пока нет друзей</div>'; return; }
                     var html = '';
                     var promises = [];
                     snap.forEach(function(doc) {
@@ -1351,10 +1222,7 @@
             var container = document.getElementById('desk-msg-list');
             db.collection('friends').where('userId', '==', currentUser.uid).get()
                 .then(function(snap) {
-                    if (snap.empty) {
-                        container.innerHTML = '<div style="padding:20px;color:#777;">Нет активных чатов</div>';
-                        return;
-                    }
+                    if (snap.empty) { container.innerHTML = '<div style="padding:20px;color:#777;">Нет активных чатов</div>'; return; }
                     var html = '';
                     var promises = [];
                     snap.forEach(function(doc) {
@@ -1373,11 +1241,7 @@
             document.getElementById('chat-interface').style.display = 'flex';
             db.collection('users').doc(friendId).get()
                 .then(function(doc) {
-                    if (!doc.exists) {
-                        document.getElementById('chat-interface').style.display = 'none';
-                        alert("Пользователь не найден");
-                        return;
-                    }
+                    if (!doc.exists) { document.getElementById('chat-interface').style.display = 'none'; alert("Пользователь не найден"); return; }
                     currentChatPartnerId = friendId;
                     currentChatPartnerName = doc.data().name;
                     document.getElementById('chat-partner-name').innerText = currentChatPartnerName;
@@ -1398,10 +1262,7 @@
             var chatId = [currentUser.uid, currentChatPartnerId].sort().join('_');
             unsubscribeChat = db.collection('messages').where('chatId', '==', chatId).orderBy('createdAt')
                 .onSnapshot(function(snapshot) {
-                    if (snapshot.empty) {
-                        box.innerHTML = '<div style="padding:10px;color:#777;text-align:center;">Начните общение</div>';
-                        return;
-                    }
+                    if (snapshot.empty) { box.innerHTML = '<div style="padding:10px;color:#777;text-align:center;">Начните общение</div>'; return; }
                     var wasScrolledToBottom = box.scrollHeight - box.scrollTop === box.clientHeight;
                     snapshot.docChanges().forEach(function(change) {
                         if (change.type === 'added') {
@@ -1442,10 +1303,7 @@
         }
 
         auth.onAuthStateChanged(function(user) {
-            if (user && !currentUser) {
-                currentUser = user;
-                enterApp();
-            }
+            if (user && !currentUser) { currentUser = user; enterApp(); }
         });
     </script>
 </body>
