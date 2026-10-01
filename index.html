@@ -24,7 +24,7 @@
         .badge-ceo       { background: #f0ad4e; color: #4a3500; text-shadow: none; }
         .badge-founder   { background: #8e44ad; }
 
-        /* ============== АВТОРИЗАЦИЯ ============== */
+        /* АВТОРИЗАЦИЯ */
         #auth-screen { display: flex; flex-direction: column; justify-content: flex-start; height: 100vh; background: #ffffff; }
         .auth-header-bar { background: #C9D1D8; height: 44px; display: flex; align-items: center; padding: 0 10px; border-bottom: 1px solid #b0b9c0; }
         .auth-header-bar svg { height: 24px; width: auto; fill: #fff; }
@@ -38,7 +38,7 @@
         .auth-signup-area { margin-top: 15px; padding-top: 10px; border-top: 1px solid #E5E9ED; }
         .auth-signup-area button { width: 100%; background: #E5E9ED; color: #45688E; border: 1px solid #C5D0DB; padding: 8px; font-size: 14px; font-weight: bold; cursor: pointer; }
 
-        /* ============== ДЕСКТОП ============== */
+        /* ДЕСКТОП */
         .desktop-view { display: none; }
         .desktop-header { background: linear-gradient(to bottom, #6D98C6, #45739E); height: 30px; border-bottom: 1px solid #3B6082; padding: 0 15px; display: flex; justify-content: space-between; align-items: center; color: white; font-size: 11px; font-weight: bold; }
         .desktop-header .left { display: flex; align-items: center; gap: 10px; }
@@ -86,7 +86,7 @@
         .photo-item .photo-actions .current-badge { background: #5cb85c; color: white; padding: 2px 8px; border-radius: 2px; font-size: 11px; display: inline-block; }
         .photo-item .photo-source { font-size: 10px; color: #999; margin-top: 2px; }
 
-        /* ============== ПОДАРКИ ============== */
+        /* ПОДАРКИ */
         .gift-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; padding: 10px 0; }
         .gift-card { background: #F9F9F9; border: 1px solid #C5D0DB; border-radius: 2px; padding: 10px; text-align: center; cursor: pointer; transition: background 0.15s, transform 0.1s; }
         .gift-card:hover { background: #EEF2F6; }
@@ -108,7 +108,7 @@
         .coins-bar { background: #FFF8E1; border: 1px solid #F0AD4E; padding: 8px 12px; border-radius: 2px; font-size: 13px; color: #2B587A; margin-bottom: 12px; }
         .coins-bar b { color: #d9534f; }
 
-        /* ============== ПОСТЫ ============== */
+        /* ПОСТЫ */
         .desktop-post { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; gap: 10px; }
         .desktop-post img.post-avatar { width: 40px; height: 40px; border-radius: 2px; border: 1px solid #ddd; object-fit: cover; }
         .desktop-post .author { font-weight: bold; color: #2B587A; }
@@ -150,7 +150,7 @@
         .friend-item, .chat-item { cursor: pointer; }
         .friend-item:hover, .chat-item:hover { background: #f4f6f8; }
 
-        /* ============== МОБИЛЬНЫЙ ============== */
+        /* МОБИЛЬНЫЙ */
         .mobile-view { display: none; background: #E8EBEE; min-height: 100vh; }
 
         .vk-top-tabs { background: linear-gradient(to bottom, #6D8EB5 0%, #4A6E94 50%, #3A5878 100%); height: 32px; display: flex; align-items: stretch; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #2A4256; box-shadow: 0 1px 2px rgba(0,0,0,0.3); }
@@ -199,7 +199,6 @@
         .vk-mob-nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #999; font-size: 10px; background: transparent; border: none; cursor: pointer; position: relative; font-family: Tahoma, Verdana, sans-serif; padding: 2px 0; }
         .vk-mob-nav-btn.active { color: #FFFFFF; }
         .vk-mob-nav-btn svg { width: 22px; height: 22px; margin-bottom: 1px; fill: currentColor; }
-        .vk-mob-nav-btn .vk-counter { position: absolute; top: 2px; right: 50%; margin-right: -18px; background: #E74C3C; color: #fff; font-size: 9px; font-weight: bold; min-width: 15px; height: 14px; line-height: 14px; padding: 0 3px; border-radius: 7px; text-align: center; border: 1px solid #A02B1F; }
 
         .vk-mob-list-item { background: #FFFFFF; border-bottom: 1px solid #C8D0D8; padding: 8px; display: flex; gap: 8px; align-items: center; cursor: pointer; }
         .vk-mob-list-item:active { background: #E8EBEE; }
@@ -399,10 +398,8 @@
                     <div class="desktop-page-title">Мои Подарки</div>
                     <div class="desktop-page-content">
                         <div class="coins-bar">💰 У вас: <b><span id="desk-gifts-coins">0</span> монет</b></div>
-
                         <div style="font-weight:bold; color:#2B587A; font-size:14px; margin-bottom:5px;">🎁 Магазин подарков</div>
                         <div id="desk-gifts-shop" class="gift-grid"></div>
-
                         <div style="font-weight:bold; color:#2B587A; font-size:14px; margin-top:20px; margin-bottom:5px;">💝 Мои подарки</div>
                         <div id="desk-my-gifts"></div>
                     </div>
@@ -442,10 +439,9 @@
         </div>
     </div>
 
-    <!-- ================== МОБИЛЬНЫЙ ================== -->
+    <!-- МОБИЛЬНЫЙ -->
     <div id="mobile-app" class="mobile-view">
 
-        <!-- БОКОВОЕ МЕНЮ -->
         <div id="vk-side-menu" class="vk-mob-side-menu">
             <div class="vk-mob-side-menu-head">
                 <div class="name" id="vk-side-name">Загрузка...</div>
@@ -482,7 +478,6 @@
         </div>
         <div id="vk-side-overlay" class="vk-mob-side-menu-overlay" onclick="closeSideMenu()"></div>
 
-        <!-- ВЕРХНИЕ ВКЛАДКИ -->
         <div class="vk-top-tabs">
             <div class="vk-top-tab active" data-tab="news" onclick="switchMobTopTab('news', this)">Новости</div>
             <div class="vk-top-tab" data-tab="wall" onclick="switchMobTopTab('wall', this)">Стена</div>
@@ -490,15 +485,12 @@
             <div class="vk-top-tab" data-tab="messages" onclick="switchMobTopTab('messages', this)">Диалоги</div>
         </div>
 
-        <!-- ШАПКА (заменяется для каждой страницы) -->
         <div id="vk-mob-header" style="display:none;"></div>
 
-        <!-- НОВОСТИ -->
         <div id="mob-news" class="mobile-view-container active">
             <div class="mobile-empty"><h3>Загрузка новостей...</h3></div>
         </div>
 
-        <!-- СТЕНА -->
         <div id="mob-wall" class="mobile-view-container">
             <div id="vk-mob-profile-container"></div>
             <div id="vk-mob-post-form" style="display:none; background:#FFFFFF; border-bottom:1px solid #C8D0D8; padding:8px; margin-bottom:6px;">
@@ -524,7 +516,6 @@
             <div id="mobile-wall-content"></div>
         </div>
 
-        <!-- ДРУЗЬЯ -->
         <div id="mob-friends" class="mobile-view-container">
             <div id="mob-friends-list-view">
                 <div style="padding:8px; background:#D6DEE5; border-bottom:1px solid #A0AEB8;">
@@ -538,17 +529,15 @@
             </div>
         </div>
 
-        <!-- СООБЩЕНИЯ -->
         <div id="mob-msg" class="mobile-view-container">
             <div id="mobile-msg-list"></div>
         </div>
 
-        <!-- ФОТО -->
         <div id="mob-photos" class="mobile-view-container">
             <div id="mobile-photos-list" style="padding:6px;"></div>
         </div>
 
-        <!-- ================== ПОДАРКИ (мобильный) ================== -->
+        <!-- ПОДАРКИ (мобильный) -->
         <div id="mob-gifts" class="mobile-view-container">
             <div style="background:#FFF8E1; border-bottom:1px solid #F0AD4E; padding:8px 12px; font-size:13px;">💰 У вас: <b><span id="mob-gifts-coins">0</span> монет</b></div>
             <div class="vk-mob-section">
@@ -561,7 +550,6 @@
             <div id="mob-my-gifts"></div>
         </div>
 
-        <!-- НИЖНЕЕ МЕНЮ -->
         <nav class="vk-mob-bottom-nav">
             <button class="vk-mob-nav-btn" data-nav="news" onclick="switchMobTab('news')">
                 <svg viewBox="0 0 24 24"><path d="M22 3H2v16h20V3zM4 5h16v10H4V5zm0 12h16v2H4v-2z"/></svg>
@@ -585,7 +573,6 @@
             </button>
         </nav>
 
-        <!-- ЧАТ -->
         <div id="vk-chat-interface" class="vk-chat-interface">
             <div class="vk-chat-header">
                 <button class="back-btn" onclick="closeChat()">← Сообщ.</button>
@@ -699,31 +686,23 @@
         };
 
         // ================== ПОДАРКИ ==================
+        // Чтобы добавить подарок — скопируй строку и поменяй поля.
+        // id — уникальный (латиница, без пробелов)
+        // name — как отображать (эмодзи пробел Название)
+        // price — целое число монет
+        // img — ссылка на картинку в папке gifts (или оставь пустым — будет эмодзи)
         var GIFTS = [
-            { id: 'rose',   name: '🌹 Роза',       price: 10 },
-            { id: 'bear',   name: '🧸 Мишка',      price: 15 },
-            { id: 'cactus', name: '🌵 Кактус',     price: 5  },
-            { id: 'heart',  name: '❤️ Сердечко',   price: 20 },
-            { id: 'star',   name: '⭐ Звезда',     price: 30 },
-            { id: 'cake',   name: '🎂 Тортик',     price: 25 },
-            { id: 'ring',   name: '💍 Кольцо',     price: 50 },
-            { id: 'crown',  name: '👑 Корона',     price: 100}
+            { id: 'rose',   name: '🌹 Роза',     price: 10, img: 'https://artehkk.github.io/vk11/gifts/rose.png' },
+            { id: 'bear',   name: '🧸 Мишка',    price: 15, img: 'https://artehkk.github.io/vk11/gifts/bear.png' },
+            { id: 'cactus', name: '🌵 Кактус',   price: 5,  img: 'https://artehkk.github.io/vk11/gifts/cactus.png' },
+            { id: 'heart',  name: '❤️ Сердечко', price: 20, img: 'https://artehkk.github.io/vk11/gifts/heart.png' },
+            { id: 'egg',    name: '🥚 Яйцо',     price: 8,  img: 'https://artehkk.github.io/vk11/gifts/egg.png' }
         ];
 
-        function giftEmoji(id) {
-            var g = GIFTS.find(function(x) { return x.id === id; });
-            if (!g) return '🎁';
-            return g.name.split(' ')[0];
-        }
-        function giftName(id) {
-            var g = GIFTS.find(function(x) { return x.id === id; });
-            if (!g) return 'Подарок';
-            return g.name.split(' ').slice(1).join(' ');
-        }
-        function giftPrice(id) {
-            var g = GIFTS.find(function(x) { return x.id === id; });
-            return g ? g.price : 0;
-        }
+        function giftEmoji(id) { var g = GIFTS.find(function(x) { return x.id === id; }); return g ? g.name.split(' ')[0] : '🎁'; }
+        function giftName(id) { var g = GIFTS.find(function(x) { return x.id === id; }); return g ? g.name.split(' ').slice(1).join(' ') : 'Подарок'; }
+        function giftPrice(id) { var g = GIFTS.find(function(x) { return x.id === id; }); return g ? g.price : 0; }
+        function giftImg(id) { var g = GIFTS.find(function(x) { return x.id === id; }); return g ? (g.img || '') : ''; }
 
         // ================== УТИЛИТЫ ==================
         function escapeHtml(text) {
@@ -758,11 +737,7 @@
                 if (!userId) { resolve(''); return; }
                 if (badgeCache[userId] !== undefined) { resolve(badgeCache[userId]); return; }
                 db.collection('users').doc(userId).get()
-                    .then(function(doc) {
-                        var b = doc.exists ? (doc.data().badge || '') : '';
-                        badgeCache[userId] = b;
-                        resolve(b);
-                    })
+                    .then(function(doc) { var b = doc.exists ? (doc.data().badge || '') : ''; badgeCache[userId] = b; resolve(b); })
                     .catch(function() { badgeCache[userId] = ''; resolve(''); });
             });
         }
@@ -773,15 +748,14 @@
             return ' <span class="user-badge ' + b.cls + '">' + b.text + '</span>';
         }
 
-        // ================== КЛИК-ГЛОБАЛЬНЫЙ ==================
+        // ================== ГЛОБАЛЬНЫЙ КЛИК ==================
         document.addEventListener('click', function(e) {
             var friendEl = e.target.closest('.friend-item[data-user-id], .vk-mob-list-item[data-user-id]');
             if (friendEl) {
                 var userId = friendEl.getAttribute('data-user-id');
                 if (userId) {
                     var isMobile = window.innerWidth <= 768;
-                    if (isMobile) openUserProfileMobile(userId);
-                    else openUserProfileDesktop(userId);
+                    if (isMobile) openUserProfileMobile(userId); else openUserProfileDesktop(userId);
                 }
             }
             var chatEl = e.target.closest('.chat-item[data-user-id], .vk-mob-list-item[data-chat-id]');
@@ -874,7 +848,6 @@
             if (unsubscribeChat) unsubscribeChat();
             if (unsubscribeWall) unsubscribeWall();
             if (unsubscribeNews) unsubscribeNews();
-
             var map = { news: 'news', wall: 'wall', friends: 'friends', msg: 'messages', messages: 'messages', photos: 'photos', gifts: 'gifts' };
             var realTab = map[tab] || 'wall';
 
@@ -901,19 +874,12 @@
             if (realTab === 'news') renderMobileNews();
             if (realTab === 'messages') renderMobileMessages();
             if (realTab === 'photos') renderMobilePhotos();
-            if (realTab === 'gifts') { renderMobileGifts(); }
-
+            if (realTab === 'gifts') renderMobileGifts();
             closeSideMenu();
         }
 
-        function openSideMenu() {
-            document.getElementById('vk-side-menu').classList.add('open');
-            document.getElementById('vk-side-overlay').classList.add('open');
-        }
-        function closeSideMenu() {
-            document.getElementById('vk-side-menu').classList.remove('open');
-            document.getElementById('vk-side-overlay').classList.remove('open');
-        }
+        function openSideMenu() { document.getElementById('vk-side-menu').classList.add('open'); document.getElementById('vk-side-overlay').classList.add('open'); }
+        function closeSideMenu() { document.getElementById('vk-side-menu').classList.remove('open'); document.getElementById('vk-side-overlay').classList.remove('open'); }
 
         // ================== ЛАЙКИ ==================
         function loadLikesForPosts(postIds, callback) {
@@ -960,10 +926,8 @@
             openComments[postId] = !openComments[postId];
             var block = document.getElementById('comments-' + postId);
             if (!block) return;
-            if (openComments[postId]) {
-                block.classList.add('open');
-                loadComments(postId, function(arr) { renderCommentsList(postId, arr); });
-            } else block.classList.remove('open');
+            if (openComments[postId]) { block.classList.add('open'); loadComments(postId, function(arr) { renderCommentsList(postId, arr); }); }
+            else block.classList.remove('open');
         }
         function renderCommentsList(postId, arr) {
             var listEl = document.getElementById('comments-list-' + postId);
@@ -1012,11 +976,7 @@
             db.collection('posts').doc(postId).get().then(function(doc) {
                 if (!doc.exists) return;
                 var p = doc.data();
-                var rd = {
-                    authorId: currentUser.uid, authorName: currentUser.displayName, text: p.text || '',
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    repostedFrom: p.authorName || '', repostedFromId: p.authorId || '', originalPostId: postId
-                };
+                var rd = { authorId: currentUser.uid, authorName: currentUser.displayName, text: p.text || '', createdAt: firebase.firestore.FieldValue.serverTimestamp(), repostedFrom: p.authorName || '', repostedFromId: p.authorId || '', originalPostId: postId };
                 if (p.imageURL) rd.imageURL = p.imageURL;
                 if (p.videoUrl) rd.videoUrl = p.videoUrl;
                 if (p.videoTitle) rd.videoTitle = p.videoTitle;
@@ -1101,16 +1061,12 @@
             if (data.city) infoParts.push(escapeHtml(data.city));
             if (infoParts.length) html += '<div class="vk-mob-profile-info">' + infoParts.join(', ') + '</div>';
             html += '</div></div>';
-
-            var photosCount = data.photosCount || 0;
-            var friendsCount = data.friendsCount || 0;
-            var videosCount = data.videosCount || 0;
+            var photosCount = data.photosCount || 0, friendsCount = data.friendsCount || 0, videosCount = data.videosCount || 0;
             html += '<div class="vk-mob-profile-stats">';
             html += '<div class="vk-mob-stat-block" onclick="switchMobTab(\'friends\')"><div class="vk-mob-stat-num">' + friendsCount + '</div><div class="vk-mob-stat-label">друзей</div></div>';
             html += '<div class="vk-mob-stat-block" onclick="switchMobTab(\'photos\')"><div class="vk-mob-stat-num">' + photosCount + '</div><div class="vk-mob-stat-label">фото</div></div>';
             html += '<div class="vk-mob-stat-block"><div class="vk-mob-stat-num">' + videosCount + '</div><div class="vk-mob-stat-label">видео</div></div>';
             html += '</div>';
-
             html += '<div class="vk-mob-btn-row">';
             if (isMe) {
                 html += '<button class="vk-mob-btn" onclick="openMobilePostForm()">✎ Написать</button>';
@@ -1121,7 +1077,6 @@
                 html += '<button class="vk-mob-btn" onclick="openSideMenu()">☰ Меню</button>';
             }
             html += '</div>';
-
             if (data.city || data.mobile || data.website) {
                 html += '<div class="vk-mob-section"><div class="vk-mob-section-title">Контактная информация</div><div class="vk-mob-section-content">';
                 if (data.city) html += '<div>Город: <b>' + escapeHtml(data.city) + '</b></div>';
@@ -1129,7 +1084,6 @@
                 if (data.website) html += '<div>Веб-сайт: <b>' + escapeHtml(data.website) + '</b></div>';
                 html += '</div></div>';
             }
-
             if (data.activity || data.interests || data.music || data.films || data.books || data.quotes) {
                 html += '<div class="vk-mob-section"><div class="vk-mob-section-title">Личная информация</div><div class="vk-mob-section-content">';
                 if (data.activity) html += '<div><b>Деятельность:</b> ' + escapeHtml(data.activity) + '</div>';
@@ -1140,11 +1094,9 @@
                 if (data.quotes) html += '<div><b>Любимые цитаты:</b> ' + escapeHtml(data.quotes) + '</div>';
                 html += '</div></div>';
             }
-
             if (data.coins !== undefined) {
                 html += '<div class="vk-mob-section"><div class="vk-mob-section-title">Игровая валюта</div><div class="vk-mob-section-content">💰 <b>' + data.coins + ' монет</b></div></div>';
             }
-
             return html;
         }
 
@@ -1167,13 +1119,12 @@
                             updatePhotoCount();
                             document.getElementById('vk-side-name').innerText = data.name || 'Пользователь';
                             document.getElementById('vk-side-status').innerText = data.status || 'онлайн';
-                            document.getElementById('desk-gifts-coins') && (document.getElementById('desk-gifts-coins').innerText = data.coins || 0);
-                            document.getElementById('mob-gifts-coins') && (document.getElementById('mob-gifts-coins').innerText = data.coins || 0);
+                            if (document.getElementById('desk-gifts-coins')) document.getElementById('desk-gifts-coins').innerText = data.coins || 0;
+                            if (document.getElementById('mob-gifts-coins')) document.getElementById('mob-gifts-coins').innerText = data.coins || 0;
                         });
                     }
                 });
         }
-
         function updatePhotoCount() {
             db.collection('photos').where('userId', '==', currentUser.uid).get()
                 .then(function(snap) { var el = document.getElementById('photo-count'); if (el) el.innerText = snap.size; });
@@ -1208,8 +1159,7 @@
             var name = document.getElementById('edit-name').value.trim();
             if (!name || name.length < 2) { alert("Имя минимум 2 символа"); return; }
             var updateData = {
-                name: name,
-                status: document.getElementById('edit-status-text').value.trim(),
+                name: name, status: document.getElementById('edit-status-text').value.trim(),
                 badge: document.getElementById('edit-badge').value.trim(),
                 gender: document.getElementById('edit-gender').value,
                 birthday: document.getElementById('edit-birthday').value.trim(),
@@ -1236,22 +1186,14 @@
         }
 
         // ================== ПОСТЫ ==================
-        function openMobilePostForm() {
-            document.getElementById('vk-mob-post-form').style.display = 'block';
-            document.getElementById('mob-post-text').focus();
-        }
+        function openMobilePostForm() { document.getElementById('vk-mob-post-form').style.display = 'block'; document.getElementById('mob-post-text').focus(); }
         function closeMobilePostForm() {
             document.getElementById('vk-mob-post-form').style.display = 'none';
             document.getElementById('mob-post-text').value = '';
             var p = document.getElementById('mob-post-preview'); if (p) p.style.display = 'none';
             var f = document.getElementById('mob-post-image'); if (f) f.value = '';
         }
-        function openVideoModal(device) {
-            attachedVideoFor = device;
-            document.getElementById('video-link-input').value = '';
-            document.getElementById('video-title-input').value = '';
-            document.getElementById('video-modal').style.display = 'flex';
-        }
+        function openVideoModal(device) { attachedVideoFor = device; document.getElementById('video-link-input').value = ''; document.getElementById('video-title-input').value = ''; document.getElementById('video-modal').style.display = 'flex'; }
         function closeVideoModal() { document.getElementById('video-modal').style.display = 'none'; }
         function extractGoogleDriveId(url) {
             if (!url) return null;
@@ -1277,24 +1219,19 @@
             closeVideoModal();
         }
         function removeVideo() { attachedVideoUrl = ''; attachedVideoTitle = ''; var pb = document.getElementById(attachedVideoFor === 'desktop' ? 'desk-post-preview' : 'mob-post-preview'); if (pb) pb.style.display = 'none'; }
-
         function previewPostImage(device) {
             if (attachedVideoUrl) removeVideo();
             var fileInput = document.getElementById(device === 'desktop' ? 'desk-post-image' : 'mob-post-image');
             var previewBox = document.getElementById(device === 'desktop' ? 'desk-post-preview' : 'mob-post-preview');
             var file = fileInput.files[0];
             if (!file) { previewBox.style.display = 'none'; return; }
-            previewBox.innerHTML = '<img id="' + (device === 'desktop' ? 'desk-preview-img' : 'mob-preview-img') + '" style="max-width:200px; max-height:150px; border:1px solid #ccc;">' +
-                '<span onclick="removePostImage(\'' + device + '\')" style="position:absolute; top:-8px; left:190px; background:#d9534f; color:white; width:20px; height:20px; border-radius:50%; text-align:center; line-height:20px; cursor:pointer; font-weight:bold;">×</span>';
+            previewBox.innerHTML = '<img id="' + (device === 'desktop' ? 'desk-preview-img' : 'mob-preview-img') + '" style="max-width:200px; max-height:150px; border:1px solid #ccc;"><span onclick="removePostImage(\'' + device + '\')" style="position:absolute; top:-8px; left:190px; background:#d9534f; color:white; width:20px; height:20px; border-radius:50%; text-align:center; line-height:20px; cursor:pointer; font-weight:bold;">×</span>';
             var newImg = document.getElementById(device === 'desktop' ? 'desk-preview-img' : 'mob-preview-img');
             var reader = new FileReader();
             reader.onload = function(e) { newImg.src = e.target.result; previewBox.style.display = 'block'; };
             reader.readAsDataURL(file);
         }
-        function removePostImage(device) {
-            var fi = document.getElementById(device === 'desktop' ? 'desk-post-image' : 'mob-post-image'); if (fi) fi.value = '';
-            var pb = document.getElementById(device === 'desktop' ? 'desk-post-preview' : 'mob-post-preview'); if (pb) pb.style.display = 'none';
-        }
+        function removePostImage(device) { var fi = document.getElementById(device === 'desktop' ? 'desk-post-image' : 'mob-post-image'); if (fi) fi.value = ''; var pb = document.getElementById(device === 'desktop' ? 'desk-post-preview' : 'mob-post-preview'); if (pb) pb.style.display = 'none'; }
 
         function createPost(device) {
             var textEl = document.getElementById(device === 'desktop' ? 'desk-post-text' : 'mob-post-text');
@@ -1312,15 +1249,8 @@
             var orig = btn ? btn.innerText : '';
             if (btn) { btn.innerText = '...'; btn.disabled = true; }
             var postData = { authorName: currentUser.displayName, authorId: currentUser.uid, text: text, createdAt: firebase.firestore.FieldValue.serverTimestamp() };
-            var afterPost = function() {
-                if (hasVideo) return db.collection('videos').add({ userId: currentUser.uid, userName: currentUser.displayName, videoUrl: vUrl, title: vTitle || 'Видео', createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-                return Promise.resolve();
-            };
-            var finish = function() {
-                renderUI(device);
-                if (btn) { btn.innerText = orig; btn.disabled = false; }
-                if (device === 'mobile') closeMobilePostForm();
-            };
+            var afterPost = function() { if (hasVideo) return db.collection('videos').add({ userId: currentUser.uid, userName: currentUser.displayName, videoUrl: vUrl, title: vTitle || 'Видео', createdAt: firebase.firestore.FieldValue.serverTimestamp() }); return Promise.resolve(); };
+            var finish = function() { renderUI(device); if (btn) { btn.innerText = orig; btn.disabled = false; } if (device === 'mobile') closeMobilePostForm(); };
             if (file) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
@@ -1328,8 +1258,7 @@
                     img.onload = function() {
                         var c = document.createElement('canvas'); var maxS = 600;
                         var w = img.width, h = img.height;
-                        if (w > h) { if (w > maxS) { h = Math.round(h * maxS / w); w = maxS; } }
-                        else { if (h > maxS) { w = Math.round(w * maxS / h); h = maxS; } }
+                        if (w > h) { if (w > maxS) { h = Math.round(h * maxS / w); w = maxS; } } else { if (h > maxS) { w = Math.round(w * maxS / h); h = maxS; } }
                         c.width = w; c.height = h;
                         var ctx = c.getContext('2d'); ctx.drawImage(img, 0, 0, w, h);
                         var base64 = c.toDataURL('image/jpeg', 0.6);
@@ -1680,7 +1609,11 @@
             var shopHtml = '';
             GIFTS.forEach(function(g) {
                 shopHtml += '<div class="gift-card" onclick="giveGift(\'' + g.id + '\')">';
-                shopHtml += '<div class="gift-emoji">' + g.name.split(' ')[0] + '</div>';
+                if (g.img) {
+                    shopHtml += '<img src="' + g.img + '" alt="' + g.name + '" style="width:70px; height:70px; object-fit:contain; display:block; margin:0 auto 6px;" onerror="this.outerHTML=\'<div class=&quot;gift-emoji&quot;>' + g.name.split(' ')[0] + '</div>\'">';
+                } else {
+                    shopHtml += '<div class="gift-emoji">' + g.name.split(' ')[0] + '</div>';
+                }
                 shopHtml += '<div class="gift-name">' + g.name.split(' ').slice(1).join(' ') + '</div>';
                 shopHtml += '<div class="gift-price">💰 <b>' + g.price + '</b> монет</div>';
                 shopHtml += '</div>';
@@ -1695,7 +1628,11 @@
             var shopHtml = '';
             GIFTS.forEach(function(g) {
                 shopHtml += '<div class="vk-mob-gift-card" onclick="giveGift(\'' + g.id + '\')">';
-                shopHtml += '<div class="vk-mob-gift-emoji">' + g.name.split(' ')[0] + '</div>';
+                if (g.img) {
+                    shopHtml += '<img src="' + g.img + '" alt="' + g.name + '" style="width:60px; height:60px; object-fit:contain; display:block; margin:0 auto 4px;" onerror="this.outerHTML=\'<div class=&quot;vk-mob-gift-emoji&quot;>' + g.name.split(' ')[0] + '</div>\'">';
+                } else {
+                    shopHtml += '<div class="vk-mob-gift-emoji">' + g.name.split(' ')[0] + '</div>';
+                }
                 shopHtml += '<div class="vk-mob-gift-name">' + g.name.split(' ').slice(1).join(' ') + '</div>';
                 shopHtml += '<div class="vk-mob-gift-price">💰 <b>' + g.price + '</b></div>';
                 shopHtml += '</div>';
@@ -1718,20 +1655,25 @@
                     var html = '';
                     docs.forEach(function(item) {
                         var g = item.data;
-                        var emoji = giftEmoji(g.giftId);
-                        var name = giftName(g.giftId);
+                        var gift = GIFTS.find(function(x) { return x.id === g.giftId; });
+                        var emoji = gift ? gift.name.split(' ')[0] : '🎁';
+                        var name = gift ? gift.name.split(' ').slice(1).join(' ') : 'Подарок';
+                        var img = gift ? gift.img : '';
                         var date = g.createdAt ? g.createdAt.toDate().toLocaleString('ru-RU') : '';
                         var isMobile = window.innerWidth <= 768;
+                        var iconHtml = img
+                            ? '<img src="' + img + '" style="width:42px; height:42px; object-fit:contain;" onerror="this.outerHTML=\'<span style=&quot;font-size:36px;&quot;>' + emoji + '</span>\'">'
+                            : '<span style="font-size:36px;">' + emoji + '</span>';
                         if (isMobile) {
                             html += '<div class="vk-mob-my-gift">';
-                            html += '<div class="emoji">' + emoji + '</div>';
+                            html += '<div class="emoji">' + iconHtml + '</div>';
                             html += '<div class="info"><div class="from">' + name + '</div><div class="date">от ' + escapeHtml(g.fromName || 'Аноним') + ' • ' + date + '</div></div>';
                             if (g.returned) html += '<span class="returned">✔ Вернули</span>';
                             else html += '<button onclick="returnCoins(\'' + item.id + '\', \'' + g.fromId + '\', \'' + g.giftId + '\')">↩ Вернуть</button>';
                             html += '</div>';
                         } else {
                             html += '<div class="my-gift-item">';
-                            html += '<div class="gift-emoji">' + emoji + '</div>';
+                            html += '<div style="width:50px; text-align:center;">' + iconHtml + '</div>';
                             html += '<div class="gift-info"><div class="gift-from">' + name + '</div><div class="gift-date">от ' + escapeHtml(g.fromName || 'Аноним') + ' • ' + date + '</div></div>';
                             if (g.returned) html += '<span class="returned-badge">✔ Вернули</span>';
                             else html += '<button class="return-btn" onclick="returnCoins(\'' + item.id + '\', \'' + g.fromId + '\', \'' + g.giftId + '\')">↩ Вернуть</button>';
@@ -1748,28 +1690,20 @@
                 var gift = GIFTS.find(function(g) { return g.id === giftId; });
                 if (!gift) { alert("Подарок не найден"); return; }
                 if ((userData.coins || 0) < gift.price) { alert("Не хватает монет! Нужно " + gift.price + ", у вас " + (userData.coins || 0)); return; }
-
                 db.collection('users').get().then(function(usersSnap) {
                     var friends = [];
-                    usersSnap.forEach(function(u) {
-                        if (u.id !== currentUser.uid) friends.push({ id: u.id, name: u.data().name || 'Без имени' });
-                    });
-                    if (!friends.length) { alert("Нет других пользователей, чтобы дарить."); return; }
-
+                    usersSnap.forEach(function(u) { if (u.id !== currentUser.uid) friends.push({ id: u.id, name: u.data().name || 'Без имени' }); });
+                    if (!friends.length) { alert("Нет других пользователей."); return; }
                     var namesList = friends.map(function(f) { return f.name; }).join(', ');
                     var chosenName = prompt('Кому подарить ' + gift.name + '?\nДоступные пользователи: ' + namesList);
                     if (!chosenName) return;
                     var target = friends.find(function(f) { return f.name.toLowerCase() === chosenName.toLowerCase().trim(); });
                     if (!target) { alert("Пользователь не найден."); return; }
-
                     db.collection('users').doc(currentUser.uid).update({ coins: firebase.firestore.FieldValue.increment(-gift.price) });
                     db.collection('gifts').add({
-                        fromId: currentUser.uid,
-                        fromName: currentUser.displayName,
-                        toId: target.id,
-                        toName: target.name,
-                        giftId: gift.id,
-                        returned: false,
+                        fromId: currentUser.uid, fromName: currentUser.displayName,
+                        toId: target.id, toName: target.name,
+                        giftId: gift.id, returned: false,
                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
                     }).then(function() {
                         alert('🎁 Подарок "' + gift.name + '" отправлен ' + target.name + '!');
