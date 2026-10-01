@@ -1,1965 +1,1588 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>ВКонтакте</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>ВКонтакте</title>
 
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
-<style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Tahoma','Verdana',Arial,sans-serif; }
-body { background:#DCE1E7; color:#2B587A; }
-a { text-decoration:none; color:#2B587A; cursor:pointer; }
-a:hover { text-decoration:underline; }
-ul { list-style:none; }
-#auth-error { color:red; font-size:12px; margin-bottom:10px; display:none; }
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Tahoma, Verdana, Arial, sans-serif; }
+        body { background: #DCE1E7; color: #2B587A; }
+        a { text-decoration: none; color: #2B587A; cursor: pointer; }
+        a:hover { text-decoration: underline; }
+        ul { list-style: none; }
 
-.user-badge { display:inline-block; font-size:10px; font-weight:bold; padding:1px 6px; border-radius:8px; margin-left:5px; color:#fff; vertical-align:middle; }
-.badge-developer { background:#4A76A8; }
-.badge-admin { background:#d9534f; }
-.badge-moder { background:#5cb85c; }
-.badge-ceo { background:#f0ad4e; color:#4a3500; }
-.badge-founder { background:#8e44ad; }
+        #auth-error { color: red; font-size: 12px; margin-bottom: 10px; display: none; }
 
-#auth-screen { display:flex; flex-direction:column; height:100vh; background:#fff; }
-.auth-header-bar { background:#C9D1D8; height:44px; display:flex; align-items:center; padding:0 10px; border-bottom:1px solid #b0b9c0; }
-.auth-header-bar svg { height:24px; fill:#fff; }
-.auth-content { padding:15px; display:flex; flex-direction:column; }
-.auth-intro { font-size:13px; color:#333; margin-bottom:15px; line-height:1.4; }
-.auth-row { margin-bottom:12px; }
-.auth-row label { display:block; font-size:13px; color:#2B587A; margin-bottom:4px; }
-.auth-row input { width:100%; padding:6px 8px; border:1px solid #9BAAB8; border-radius:2px; font-size:14px; }
-.auth-actions { display:flex; align-items:center; gap:15px; margin-top:5px; }
-.auth-actions button { background:#4D729A; color:#fff; border:1px solid #36587C; padding:6px 18px; font-size:13px; font-weight:bold; cursor:pointer; border-radius:2px; }
-.auth-signup-area { margin-top:15px; padding-top:10px; border-top:1px solid #E5E9ED; }
-.auth-signup-area button { width:100%; background:#E5E9ED; color:#45688E; border:1px solid #C5D0DB; padding:8px; font-size:14px; font-weight:bold; cursor:pointer; }
+        .user-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 1px 6px;
+            border-radius: 8px;
+            margin-left: 5px;
+            color: #fff;
+            vertical-align: middle;
+        }
+        .badge-developer { background: #4A76A8; }
+        .badge-admin     { background: #d9534f; }
+        .badge-moder     { background: #5cb85c; }
+        .badge-ceo       { background: #f0ad4e; color: #4a3500; }
+        .badge-founder   { background: #8e44ad; }
 
-.desktop-view { display:none; }
-.desktop-header { background:linear-gradient(to bottom,#6D98C6,#45739E); height:30px; border-bottom:1px solid #3B6082; padding:0 15px; display:flex; justify-content:space-between; align-items:center; color:#fff; font-size:11px; font-weight:bold; }
-.desktop-header .left { display:flex; align-items:center; gap:10px; }
-.logo-svg { height:18px; display:block; }
-.search-box { background:#fff; border-radius:2px; padding:1px 8px; height:22px; display:flex; align-items:center; color:#777; }
-.search-box input { border:none; outline:none; font-size:11px; width:200px; background:transparent; }
-.desktop-header .nav-links { display:flex; gap:15px; font-weight:normal; align-items:center; }
-.desktop-header .nav-links a { color:#E2EBF3; }
-.desktop-header .nav-links a:hover { color:#fff; }
-.donate-btn { background:#FF6B35 !important; color:#fff !important; padding:3px 10px !important; border-radius:3px !important; font-weight:bold !important; }
+        #auth-screen {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background: #fff;
+        }
+        .auth-header-bar {
+            background: #C9D1D8;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            border-bottom: 1px solid #b0b9c0;
+        }
+        .auth-content {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        .auth-intro {
+            font-size: 13px;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        .auth-row {
+            margin-bottom: 12px;
+        }
+        .auth-row label {
+            display: block;
+            font-size: 13px;
+            color: #2B587A;
+            margin-bottom: 4px;
+        }
+        .auth-row input {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid #9BAAB8;
+            border-radius: 2px;
+            font-size: 14px;
+        }
+        .auth-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 5px;
+        }
+        .auth-actions button {
+            background: #4D729A;
+            color: #fff;
+            border: 1px solid #36587C;
+            padding: 6px 18px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+        .auth-signup-area {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #E5E9ED;
+        }
+        .auth-signup-area button {
+            width: 100%;
+            background: #E5E9ED;
+            color: #45688E;
+            border: 1px solid #C5D0DB;
+            padding: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-.desktop-layout { display:flex; max-width:960px; margin:10px auto; background:#DCE1E7; position:relative; z-index:2; }
-.desktop-sidebar { width:200px; padding-right:15px; }
-.desktop-sidebar ul li { margin-bottom:2px; }
-.desktop-sidebar ul li a { display:block; padding:2px 0; font-size:13px; }
-.desktop-sidebar .section-title { margin-top:15px; font-weight:bold; font-size:13px; border-top:1px solid #DCE1E7; padding-top:8px; }
-.desktop-sidebar .badge { background:#DCE1E7; color:#666; font-size:10px; padding:0 4px; border-radius:2px; }
-.desktop-sidebar .app-list a { font-size:12px; }
-.desktop-content { flex:1; background:#fff; border:1px solid #C5D0DB; }
-.desktop-page-title { padding:10px 15px; border-bottom:1px solid #E4EAF0; font-size:16px; color:#000; }
-.desktop-page-content { padding:15px; }
+        .desktop-view { display: none; }
+        .desktop-header {
+            background: linear-gradient(to bottom, #6D98C6, #45739E);
+            height: 30px;
+            border-bottom: 1px solid #3B6082;
+            padding: 0 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .desktop-header .left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-svg { height: 22px; display: block; }
+        .search-box {
+            background: #fff;
+            border-radius: 2px;
+            padding: 1px 8px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            color: #777;
+        }
+        .search-box input {
+            border: none;
+            outline: none;
+            font-size: 11px;
+            width: 200px;
+            background: transparent;
+        }
+        .desktop-header .nav-links {
+            display: flex;
+            gap: 15px;
+            font-weight: normal;
+            align-items: center;
+        }
+        .desktop-header .nav-links a { color: #E2EBF3; }
+        .desktop-header .nav-links a:hover { color: #fff; }
+        .donate-btn {
+            background: #FF6B35 !important;
+            color: #fff !important;
+            padding: 3px 10px !important;
+            border-radius: 3px !important;
+            font-weight: bold !important;
+        }
 
-.vk-profile-container { display:flex; gap:15px; padding:10px; }
-.vk-profile-left { width:200px; flex-shrink:0; }
-.vk-profile-photo { width:200px; height:250px; background:#f0f0f0; border:1px solid #ccc; object-fit:cover; margin-bottom:8px; }
-.vk-profile-right { flex:1; min-width:0; }
-.vk-profile-name { font-size:18px; font-weight:bold; color:#2B587A; margin-bottom:2px; }
-.vk-profile-status { font-size:12px; color:#777; margin-bottom:10px; }
-.vk-profile-info-table { width:100%; border-collapse:collapse; font-size:12px; margin-bottom:15px; }
-.vk-profile-info-table td { padding:3px 0; vertical-align:top; }
-.vk-profile-info-table td:first-child { width:130px; color:#777; }
-.vk-profile-info-table td:last-child { color:#2B587A; word-wrap:break-word; }
-.vk-info-section { margin-bottom:15px; }
-.vk-info-section-title { background:#E5E9ED; padding:5px 10px; font-weight:bold; font-size:12px; color:#2B587A; margin-bottom:8px; border:1px solid #C5D0DB; }
-.vk-info-section-content { font-size:12px; color:#333; line-height:1.6; padding:0 5px; white-space:pre-wrap; word-wrap:break-word; }
+        .desktop-layout {
+            display: flex;
+            max-width: 960px;
+            margin: 10px auto;
+            background: #DCE1E7;
+            position: relative;
+            z-index: 2;
+        }
+        .desktop-sidebar {
+            width: 200px;
+            padding-right: 15px;
+        }
+        .desktop-sidebar ul li { margin-bottom: 2px; }
+        .desktop-sidebar ul li a {
+            display: block;
+            padding: 2px 0;
+            font-size: 13px;
+        }
+        .desktop-sidebar .section-title {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 13px;
+            border-top: 1px solid #DCE1E7;
+            padding-top: 8px;
+        }
+        .desktop-sidebar .badge {
+            background: #DCE1E7;
+            color: #666;
+            font-size: 10px;
+            padding: 0 4px;
+            border-radius: 2px;
+        }
+        .desktop-sidebar .app-list a { font-size: 12px; }
 
-.gift-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px; padding:10px 0; }
-.gift-card { background:#F9F9F9; border:1px solid #C5D0DB; padding:10px; text-align:center; cursor:pointer; }
-.gift-card:hover { background:#EEF2F6; }
-.gift-card .gift-emoji { font-size:42px; line-height:1; margin-bottom:6px; }
-.gift-card .gift-name { font-size:13px; font-weight:bold; color:#2B587A; margin-bottom:4px; }
-.gift-card .gift-price { font-size:11px; color:#667788; }
-.coins-bar { background:#FFF8E1; border:1px solid #F0AD4E; padding:8px 12px; border-radius:2px; font-size:13px; color:#2B587A; margin-bottom:12px; }
+        .desktop-content {
+            flex: 1;
+            background: #fff;
+            border: 1px solid #C5D0DB;
+        }
+        .desktop-page-title {
+            padding: 10px 15px;
+            border-bottom: 1px solid #E4EAF0;
+            font-size: 16px;
+            color: #000;
+        }
+        .desktop-page-content { padding: 15px; }
 
-.people-list { padding:5px 0; }
-.person-card { display:flex; gap:10px; align-items:center; padding:10px; border-bottom:1px solid #E5E9ED; }
-.person-card img { width:50px; height:50px; border:1px solid #C5D0DB; object-fit:cover; flex-shrink:0; }
-.person-card .person-info { flex:1; min-width:0; }
-.person-card .person-name { font-weight:bold; color:#2B587A; font-size:13px; }
-.person-card .person-actions { display:flex; gap:5px; flex-wrap:wrap; }
-.person-btn { background:#5E83A9; color:#fff; border:none; padding:5px 10px; border-radius:2px; font-size:11px; cursor:pointer; }
-.person-btn.friend { background:#5cb85c; }
-.person-btn.danger { background:#d9534f; }
-.person-btn.secondary { background:#E5E9ED; color:#2B587A; border:1px solid #C5D0DB; }
+        .vk-profile-container {
+            display: flex;
+            gap: 15px;
+            padding: 10px;
+        }
+        .vk-profile-left { width: 200px; flex-shrink: 0; }
+        .vk-profile-photo {
+            width: 200px;
+            height: 250px;
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            object-fit: cover;
+            margin-bottom: 8px;
+        }
+        .vk-profile-right { flex: 1; min-width: 0; }
+        .vk-profile-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2B587A;
+            margin-bottom: 2px;
+        }
+        .vk-profile-status {
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+        .vk-profile-info-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+        .vk-profile-info-table td {
+            padding: 2px 0;
+            vertical-align: top;
+        }
+        .vk-profile-info-table td:first-child {
+            width: 130px;
+            color: #777;
+        }
+        .vk-profile-info-table td:last-child {
+            color: #2B587A;
+            word-wrap: break-word;
+        }
 
-.desktop-post { border-bottom:1px solid #eee; padding:10px 0; display:flex; gap:10px; }
-.desktop-post img.post-avatar { width:40px; height:40px; border:1px solid #ddd; object-fit:cover; }
-.desktop-post .author { font-weight:bold; color:#2B587A; }
-.desktop-post .date { color:#999; font-size:11px; }
-.desktop-post .text { margin-top:5px; line-height:1.4; color:#333; }
-.desktop-post .post-body { flex:1; min-width:0; }
-.post-image-container { margin-top:8px; max-width:300px; border:1px solid #eee; }
-.post-image-container img { width:100%; display:block; }
-.post-actions { margin-top:8px; display:flex; gap:15px; font-size:12px; color:#777; align-items:center; }
-.post-action-btn { background:transparent; border:none; cursor:pointer; color:#777; font-size:12px; padding:2px 4px; }
-.post-action-btn:hover { color:#2B587A; background:#E1E7ED; }
-.post-action-btn.liked { color:#d9534f; font-weight:bold; }
-.comments-block { margin-top:10px; padding:8px; background:#F9F9F9; border:1px solid #E5E9ED; display:none; }
-.comments-block.open { display:block; }
-.comment-item { display:flex; gap:8px; padding:6px 0; border-bottom:1px solid #E5E9ED; }
-.comment-item:last-child { border-bottom:none; }
-.comment-item img { width:30px; height:30px; border:1px solid #ddd; object-fit:cover; }
-.comment-body { flex:1; min-width:0; }
-.comment-author { font-weight:bold; color:#2B587A; font-size:12px; }
-.comment-text { font-size:12px; color:#333; margin-top:2px; }
-.comment-input-row { display:flex; gap:6px; margin-top:8px; }
-.comment-input-row input { flex:1; padding:5px 8px; border:1px solid #ccc; border-radius:2px; font-size:12px; }
-.comment-input-row button { background:#5E83A9; color:#fff; border:none; padding:5px 12px; font-size:12px; cursor:pointer; }
+        .vk-info-section { margin-bottom: 6px; }
+        .vk-info-section-title {
+            background: #E5E9ED;
+            padding: 2px 8px;
+            font-weight: bold;
+            font-size: 11px;
+            color: #2B587A;
+            border: 1px solid #C5D0DB;
+            border-bottom: none;
+            display: inline-block;
+            min-width: 120px;
+        }
+        .vk-info-section-content {
+            font-size: 12px;
+            color: #333;
+            line-height: 1.4;
+            padding: 3px 8px;
+            border: 1px solid #C5D0DB;
+            background: #FAFBFC;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
 
-.desktop-post-input { background:#f9f9f9; border:1px solid #eee; padding:10px; margin-bottom:10px; }
-.desktop-post-input textarea { width:100%; border:1px solid #ccc; padding:5px; font-family:inherit; resize:vertical; min-height:40px; font-size:13px; }
-.attach-btn { cursor:pointer; font-size:22px; color:#5E83A9; padding:4px 8px; }
-.btn-row button { background:#5E83A9; color:#fff; border:none; padding:4px 15px; cursor:pointer; font-size:12px; }
+        .gift-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            padding: 10px 0;
+        }
+        .gift-card {
+            background: #F9F9F9;
+            border: 1px solid #C5D0DB;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .gift-card:hover { background: #EEF2F6; }
+        .gift-card .gift-emoji { font-size: 42px; line-height: 1; margin-bottom: 6px; }
+        .gift-card .gift-name { font-size: 13px; font-weight: bold; color: #2B587A; margin-bottom: 4px; }
+        .gift-card .gift-price { font-size: 11px; color: #667788; }
+        .coins-bar {
+            background: #FFF8E1;
+            border: 1px solid #F0AD4E;
+            padding: 8px 12px;
+            border-radius: 2px;
+            font-size: 13px;
+            color: #2B587A;
+            margin-bottom: 12px;
+        }
 
-.friends-search-box { padding:10px; background:#fff; border-bottom:1px solid #E4EAF0; }
-.friends-search-box input { width:100%; padding:6px 10px; border:1px solid #C5D0DB; border-radius:2px; font-size:13px; outline:none; }
+        .people-list { padding: 5px 0; }
+        .person-card {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #E5E9ED;
+        }
+        .person-card img {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #C5D0DB;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .person-card .person-info { flex: 1; min-width: 0; }
+        .person-card .person-name { font-weight: bold; color: #2B587A; font-size: 13px; }
+        .person-card .person-actions { display: flex; gap: 5px; flex-wrap: wrap; }
+        .person-btn {
+            background: #5E83A9;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 2px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        .person-btn.friend { background: #5cb85c; }
+        .person-btn.danger { background: #d9534f; }
+        .person-btn.secondary { background: #E5E9ED; color: #2B587A; border: 1px solid #C5D0DB; }
 
-.mobile-view { display:none; background:#E8EBEE; min-height:100vh; position:relative; z-index:2; }
-.vk-top-tabs { background:linear-gradient(to bottom,#6D8EB5,#4A6E94,#3A5878); height:32px; display:flex; position:sticky; top:0; z-index:100; border-bottom:1px solid #2A4256; }
-.vk-top-tab { flex:1; display:flex; align-items:center; justify-content:center; color:#C8D8E8; font-size:12px; font-weight:bold; cursor:pointer; border-right:1px solid #2A4256; background:transparent; font-family:Tahoma; }
-.vk-top-tab.active { background:linear-gradient(to bottom,#5A7FA6,#3E5E80); color:#fff; }
-.mobile-view-container { display:none; background:#E8EBEE; min-height:calc(100vh - 80px); padding-bottom:56px; }
-.mobile-view-container.active { display:block; }
-.mobile-empty { padding:40px 20px; text-align:center; color:#666; }
+        .desktop-post {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+            display: flex;
+            gap: 10px;
+        }
+        .desktop-post img.post-avatar {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ddd;
+            object-fit: cover;
+        }
+        .desktop-post .author { font-weight: bold; color: #2B587A; }
+        .desktop-post .date { color: #999; font-size: 11px; }
+        .desktop-post .text { margin-top: 5px; line-height: 1.4; color: #333; }
+        .desktop-post .post-body { flex: 1; min-width: 0; }
+        .post-image-container { margin-top: 8px; max-width: 300px; border: 1px solid #eee; }
+        .post-image-container img { width: 100%; display: block; }
 
-.vk-mob-profile-header { background:#fff; border-bottom:1px solid #B0BEC8; padding:8px; display:flex; gap:10px; }
-.vk-mob-profile-avatar { width:90px; height:90px; border:1px solid #9BAAB8; object-fit:cover; }
-.vk-mob-profile-name { font-size:15px; font-weight:bold; color:#2B587A; }
-.vk-mob-profile-status { font-size:11px; color:#666; }
-.vk-mob-profile-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; padding:8px; background:#E8EBEE; }
-.vk-mob-stat-block { background:#fff; border:1px solid #C8D0D8; padding:6px; text-align:center; cursor:pointer; }
-.vk-mob-stat-num { font-size:15px; font-weight:bold; color:#2B587A; }
-.vk-mob-stat-label { font-size:10px; color:#667788; }
-.vk-mob-btn-row { padding:6px 8px; background:#E8EBEE; display:flex; gap:6px; flex-wrap:wrap; }
-.vk-mob-btn { flex:1; min-width:100px; background:linear-gradient(to bottom,#6D8EB5,#4A6E94); color:#fff; border:1px solid #2A4256; padding:6px; font-size:12px; font-weight:bold; cursor:pointer; }
-.vk-mob-section { background:#fff; border-bottom:1px solid #B0BEC8; margin-bottom:6px; }
-.vk-mob-section-title { background:linear-gradient(to bottom,#D6DEE5,#B8C4CE); padding:5px 8px; font-size:11px; font-weight:bold; color:#2B587A; border-bottom:1px solid #A0AEB8; }
-.vk-mob-section-content { padding:6px 8px; font-size:12px; color:#333; line-height:1.5; white-space:pre-wrap; word-wrap:break-word; }
+        .post-actions {
+            margin-top: 8px;
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            color: #777;
+            align-items: center;
+        }
+        .post-action-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #777;
+            font-size: 12px;
+            padding: 2px 4px;
+        }
+        .post-action-btn:hover { color: #2B587A; background: #E1E7ED; }
+        .post-action-btn.liked { color: #d9534f; font-weight: bold; }
 
-.vk-mob-post { background:#fff; border-bottom:1px solid #C8D0D8; padding:8px; margin-bottom:6px; }
-.vk-mob-post-head { display:flex; gap:6px; align-items:flex-start; margin-bottom:6px; }
-.vk-mob-post-head img { width:38px; height:38px; border:1px solid #C8D0D8; object-fit:cover; flex-shrink:0; }
-.vk-mob-post-author { font-size:12px; font-weight:bold; color:#2B587A; }
-.vk-mob-post-date { font-size:10px; color:#8899AA; }
-.vk-mob-post-text { font-size:12px; color:#333; margin-bottom:5px; word-wrap:break-word; }
+        .comments-block {
+            margin-top: 10px;
+            padding: 8px;
+            background: #F9F9F9;
+            border: 1px solid #E5E9ED;
+            display: none;
+        }
+        .comments-block.open { display: block; }
+        .comment-item {
+            display: flex;
+            gap: 8px;
+            padding: 6px 0;
+            border-bottom: 1px solid #E5E9ED;
+        }
+        .comment-item:last-child { border-bottom: none; }
+        .comment-item img {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ddd;
+            object-fit: cover;
+        }
+        .comment-body { flex: 1; min-width: 0; }
+        .comment-author { font-weight: bold; color: #2B587A; font-size: 12px; }
+        .comment-text { font-size: 12px; color: #333; margin-top: 2px; }
+        .comment-input-row { display: flex; gap: 6px; margin-top: 8px; }
+        .comment-input-row input {
+            flex: 1;
+            padding: 5px 8px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            font-size: 12px;
+        }
+        .comment-input-row button {
+            background: #5E83A9;
+            color: #fff;
+            border: none;
+            padding: 5px 12px;
+            font-size: 12px;
+            cursor: pointer;
+        }
 
-.vk-mob-bottom-nav { position:fixed; bottom:0; left:0; width:100%; height:48px; background:linear-gradient(to bottom,#4A4A4A,#2A2A2A); display:flex; justify-content:space-around; align-items:stretch; border-top:1px solid #000; z-index:999; }
-.vk-mob-nav-btn { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#999; font-size:10px; background:transparent; border:none; cursor:pointer; }
-.vk-mob-nav-btn.active { color:#fff; }
-.vk-mob-nav-btn svg { width:22px; height:22px; fill:currentColor; }
+        .desktop-post-input {
+            background: #f9f9f9;
+            border: 1px solid #eee;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .desktop-post-input textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 5px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 40px;
+            font-size: 13px;
+        }
+        .attach-btn {
+            cursor: pointer;
+            font-size: 22px;
+            color: #5E83A9;
+            padding: 4px 8px;
+        }
+        .btn-row button {
+            background: #5E83A9;
+            color: #fff;
+            border: none;
+            padding: 4px 15px;
+            cursor: pointer;
+            font-size: 12px;
+        }
 
-.vk-mob-list-item { background:#fff; border-bottom:1px solid #C8D0D8; padding:8px; display:flex; gap:8px; align-items:center; cursor:pointer; }
-.vk-mob-list-item img { width:42px; height:42px; border:1px solid #C8D0D8; object-fit:cover; }
-.vk-mob-list-item-name { font-size:13px; font-weight:bold; color:#2B587A; }
+        .friends-search-box {
+            padding: 10px;
+            background: #fff;
+            border-bottom: 1px solid #E4EAF0;
+        }
+        .friends-search-box input {
+            width: 100%;
+            padding: 6px 10px;
+            border: 1px solid #C5D0DB;
+            border-radius: 2px;
+            font-size: 13px;
+            outline: none;
+        }
 
-.vk-chat-interface { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#E8EBEE; z-index:9998; flex-direction:column; }
-.vk-chat-interface.open { display:flex; }
-.vk-chat-header { background:linear-gradient(to bottom,#6D8EB5,#3A5878); height:44px; display:flex; align-items:center; padding:0 4px; color:#fff; }
-.vk-chat-header .back-btn { background:#5A7FA6; color:#fff; border:1px solid #2A4256; padding:4px 10px; font-size:13px; cursor:pointer; border-radius:2px; margin-right:8px; }
-.vk-chat-header .chat-name { flex:1; text-align:center; font-size:15px; font-weight:bold; }
-.vk-chat-header .chat-avatar { width:32px; height:32px; border:1px solid #2A4256; object-fit:cover; }
-.vk-chat-messages { flex:1; padding:8px; overflow-y:auto; display:flex; flex-direction:column; gap:6px; }
-.vk-chat-bubble { max-width:80%; padding:6px 10px; font-size:13px; color:#333; background:#fff; align-self:flex-start; border:1px solid #C8D0D8; border-radius:3px; }
-.vk-chat-bubble.my-msg { background:#DCF8C6; align-self:flex-end; border-color:#98D67B; }
-.vk-chat-input-area { background:#fff; padding:6px; border-top:1px solid #B0BEC8; display:flex; gap:6px; }
-.vk-chat-input-area input { flex:1; padding:7px 12px; border:1px solid #9BAAB8; border-radius:14px; font-size:13px; }
-.vk-chat-input-area button { background:#6D8EB5; color:#fff; border:1px solid #2A4256; padding:0 14px; font-size:12px; cursor:pointer; border-radius:14px; }
+        .mobile-view {
+            display: none;
+            background: #E8EBEE;
+            min-height: 100vh;
+            position: relative;
+            z-index: 2;
+        }
+        .vk-top-tabs {
+            background: linear-gradient(to bottom, #6D8EB5, #4A6E94, #3A5878);
+            height: 32px;
+            display: flex;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #2A4256;
+        }
+        .vk-top-tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #C8D8E8;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            border-right: 1px solid #2A4256;
+            background: transparent;
+            font-family: Tahoma;
+        }
+        .vk-top-tab.active {
+            background: linear-gradient(to bottom, #5A7FA6, #3E5E80);
+            color: #fff;
+        }
+        .mobile-view-container {
+            display: none;
+            background: #E8EBEE;
+            min-height: calc(100vh - 80px);
+            padding-bottom: 56px;
+        }
+        .mobile-view-container.active { display: block; }
+        .mobile-empty {
+            padding: 40px 20px;
+            text-align: center;
+            color: #666;
+        }
 
-.vk-mob-side-menu { position:fixed; top:0; left:-280px; width:260px; height:100%; background:#2A2A2A; z-index:10000; transition:left 0.25s; overflow-y:auto; }
-.vk-mob-side-menu.open { left:0; }
-.vk-mob-side-menu-head { background:linear-gradient(to bottom,#5E83A9,#3A6087); padding:12px; color:#fff; }
-.vk-mob-side-menu-head .name { font-size:15px; font-weight:bold; }
-.vk-mob-side-menu-head .status { font-size:11px; color:#C8D8E8; }
-.vk-mob-side-menu-item { padding:12px 14px; color:#fff; font-size:13px; border-bottom:1px solid #3A3A3A; display:flex; align-items:center; gap:10px; cursor:pointer; }
-.vk-mob-side-menu-item svg { width:20px; height:20px; fill:#8899AA; }
-.vk-mob-side-menu-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; display:none; }
-.vk-mob-side-menu-overlay.open { display:block; }
+        .vk-mob-profile-header {
+            background: #fff;
+            border-bottom: 1px solid #B0BEC8;
+            padding: 8px;
+            display: flex;
+            gap: 10px;
+        }
+        .vk-mob-profile-avatar {
+            width: 90px;
+            height: 90px;
+            border: 1px solid #9BAAB8;
+            object-fit: cover;
+        }
+        .vk-mob-profile-name {
+            font-size: 15px;
+            font-weight: bold;
+            color: #2B587A;
+        }
+        .vk-mob-profile-status { font-size: 11px; color: #666; }
 
-.drawing-canvas-wrapper { background:#fff; border:1px solid #C5D0DB; padding:10px; margin-bottom:15px; }
-#drawing-canvas { border:1px solid #9BAAB8; cursor:crosshair; display:block; max-width:100%; background:#fff; touch-action:none; }
-.color-palette { display:flex; flex-wrap:wrap; gap:5px; margin:10px 0; }
-.color-swatch { width:30px; height:30px; border:2px solid #C5D0DB; border-radius:50%; cursor:pointer; }
-.color-swatch.active { border-color:#2B587A; box-shadow:0 0 0 2px #5E83A9; }
-.draw-toolbar { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:10px; }
-.draw-toolbar button { background:#5E83A9; color:#fff; border:none; padding:6px 14px; cursor:pointer; font-size:13px; }
-.draw-toolbar button.danger { background:#d9534f; }
-.brush-size { display:flex; align-items:center; gap:5px; font-size:12px; }
-.my-drawings-list { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; padding:10px 0; }
-.my-drawing-item { border:1px solid #C5D0DB; background:#F9F9F9; padding:5px; text-align:center; }
-.my-drawing-item img { width:100%; display:block; }
-.my-drawing-item .date { font-size:10px; color:#999; margin-top:3px; }
+        .vk-mob-profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+            padding: 8px;
+            background: #E8EBEE;
+        }
+        .vk-mob-stat-block {
+            background: #fff;
+            border: 1px solid #C8D0D8;
+            padding: 6px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .vk-mob-stat-num { font-size: 15px; font-weight: bold; color: #2B587A; }
+        .vk-mob-stat-label { font-size: 10px; color: #667788; }
 
-#offline-banner { display:none; background:#d9534f; color:#fff; text-align:center; padding:5px; font-size:12px; position:sticky; top:0; z-index:101; }
-#video-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center; }
-#video-modal .modal-box { background:#fff; width:90%; max-width:500px; border:1px solid #C5D0DB; }
-#video-modal .modal-header { background:linear-gradient(to bottom,#6D98C6,#45739E); color:#fff; padding:10px 15px; font-weight:bold; display:flex; justify-content:space-between; align-items:center; }
-#video-modal .modal-body { padding:15px; }
-#video-modal .modal-body input { width:100%; padding:8px; border:1px solid #ccc; font-size:13px; margin-bottom:10px; }
-#video-modal .modal-body label { display:block; font-size:12px; color:#777; margin-bottom:5px; }
-#video-modal .modal-buttons { display:flex; gap:10px; justify-content:flex-end; }
-#video-modal .modal-buttons button { padding:6px 15px; cursor:pointer; font-size:13px; border:none; }
-.edit-btn { background:#e0e0e0; color:#333; border:none; padding:4px 12px; font-size:12px; cursor:pointer; margin-left:10px; }
+        .vk-mob-btn-row {
+            padding: 6px 8px;
+            background: #E8EBEE;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .vk-mob-btn {
+            flex: 1;
+            min-width: 100px;
+            background: linear-gradient(to bottom, #6D8EB5, #4A6E94);
+            color: #fff;
+            border: 1px solid #2A4256;
+            padding: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-/* ===== РИСОВАНИЕ МЕЛКАМИ НА СТРАНИЦЕ ===== */
-#page-drawing-bg {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 0;
-    background-size: cover;
-    background-position: center;
-    opacity: 0.55;
-    display: none;
-}
-#chalk-panel {
-    position: fixed;
-    bottom: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255,255,255,0.97);
-    border: 1px solid #C5D0DB;
-    border-radius: 8px;
-    padding: 10px 12px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-    z-index: 9997;
-    display: none;
-    max-width: 95%;
-}
-#chalk-panel.open { display: block; }
-#chalk-panel .chalk-colors { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; justify-content: center; }
-#chalk-panel .chalk-swatch { width: 26px; height: 26px; border-radius: 50%; border: 2px solid #C5D0DB; cursor: pointer; }
-#chalk-panel .chalk-swatch.active { border-color: #2B587A; box-shadow: 0 0 0 2px #5E83A9; }
-#chalk-panel .chalk-tools { display: flex; gap: 8px; justify-content: center; align-items: center; flex-wrap: wrap; }
-#chalk-panel button { background: #5E83A9; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
-#chalk-panel button.danger { background: #d9534f; }
-#chalk-panel button.green { background: #5cb85c; }
-#page-canvas {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 9996;
-    display: none;
-    cursor: crosshair;
-    touch-action: none;
-}
-#page-canvas.open { display: block; }
+        .vk-mob-section {
+            background: #fff;
+            border-bottom: 1px solid #B0BEC8;
+            margin-bottom: 6px;
+        }
+        .vk-mob-section-title {
+            background: linear-gradient(to bottom, #D6DEE5, #B8C4CE);
+            padding: 5px 8px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #2B587A;
+            border-bottom: 1px solid #A0AEB8;
+        }
+        .vk-mob-section-content {
+            padding: 6px 8px;
+            font-size: 12px;
+            color: #333;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
 
-@media (min-width:769px) { .desktop-view { display:block; } .mobile-view { display:none !important; } }
-@media (max-width:768px) { .desktop-view { display:none !important; } .mobile-view { display:block; } }
-</style>
+        .vk-mob-post {
+            background: #fff;
+            border-bottom: 1px solid #C8D0D8;
+            padding: 8px;
+            margin-bottom: 6px;
+        }
+        .vk-mob-post-head {
+            display: flex;
+            gap: 6px;
+            align-items: flex-start;
+            margin-bottom: 6px;
+        }
+        .vk-mob-post-head img {
+            width: 38px;
+            height: 38px;
+            border: 1px solid #C8D0D8;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .vk-mob-post-author { font-size: 12px; font-weight: bold; color: #2B587A; }
+        .vk-mob-post-date { font-size: 10px; color: #8899AA; }
+        .vk-mob-post-text { font-size: 12px; color: #333; margin-bottom: 5px; word-wrap: break-word; }
+
+        .vk-mob-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 48px;
+            background: linear-gradient(to bottom, #4A4A4A, #2A2A2A);
+            display: flex;
+            justify-content: space-around;
+            align-items: stretch;
+            border-top: 1px solid #000;
+            z-index: 999;
+        }
+        .vk-mob-nav-btn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 10px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .vk-mob-nav-btn.active { color: #fff; }
+
+        .vk-mob-list-item {
+            background: #fff;
+            border-bottom: 1px solid #C8D0D8;
+            padding: 8px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            cursor: pointer;
+        }
+        .vk-mob-list-item img {
+            width: 42px;
+            height: 42px;
+            border: 1px solid #C8D0D8;
+            object-fit: cover;
+        }
+        .vk-mob-list-item-name { font-size: 13px; font-weight: bold; color: #2B587A; }
+
+        .vk-chat-interface {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #E8EBEE;
+            z-index: 9998;
+            flex-direction: column;
+        }
+        .vk-chat-interface.open { display: flex; }
+        .vk-chat-header {
+            background: linear-gradient(to bottom, #6D8EB5, #3A5878);
+            height: 44px;
+            display: flex;
+            align-items: center;
+            padding: 0 4px;
+            color: #fff;
+        }
+        .vk-chat-header .back-btn {
+            background: #5A7FA6;
+            color: #fff;
+            border: 1px solid #2A4256;
+            padding: 4px 10px;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 2px;
+            margin-right: 8px;
+        }
+        .vk-chat-header .chat-name {
+            flex: 1;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .vk-chat-header .chat-avatar {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #2A4256;
+            object-fit: cover;
+        }
+        .vk-chat-messages {
+            flex: 1;
+            padding: 8px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .vk-chat-bubble {
+            max-width: 80%;
+            padding: 6px 10px;
+            font-size: 13px;
+            color: #333;
+            background: #fff;
+            align-self: flex-start;
+            border: 1px solid #C8D0D8;
+            border-radius: 3px;
+        }
+        .vk-chat-bubble.my-msg {
+            background: #DCF8C6;
+            align-self: flex-end;
+            border-color: #98D67B;
+        }
+        .vk-chat-input-area {
+            background: #fff;
+            padding: 6px;
+            border-top: 1px solid #B0BEC8;
+            display: flex;
+            gap: 6px;
+        }
+        .vk-chat-input-area input {
+            flex: 1;
+            padding: 7px 12px;
+            border: 1px solid #9BAAB8;
+            border-radius: 14px;
+            font-size: 13px;
+        }
+        .vk-chat-input-area button {
+            background: #6D8EB5;
+            color: #fff;
+            border: 1px solid #2A4256;
+            padding: 0 14px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 14px;
+        }
+
+        .vk-mob-side-menu {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 260px;
+            height: 100%;
+            background: #2A2A2A;
+            z-index: 10000;
+            transition: left .25s;
+            overflow-y: auto;
+        }
+        .vk-mob-side-menu.open { left: 0; }
+        .vk-mob-side-menu-head {
+            background: linear-gradient(to bottom, #5E83A9, #3A6087);
+            padding: 12px;
+            color: #fff;
+        }
+        .vk-mob-side-menu-head .name { font-size: 15px; font-weight: bold; }
+        .vk-mob-side-menu-head .status { font-size: 11px; color: #C8D8E8; }
+        .vk-mob-side-menu-item {
+            padding: 12px 14px;
+            color: #fff;
+            font-size: 13px;
+            border-bottom: 1px solid #3A3A3A;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        .vk-mob-side-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .5);
+            z-index: 9999;
+            display: none;
+        }
+        .vk-mob-side-menu-overlay.open { display: block; }
+
+        .drawing-canvas-wrapper {
+            background: #fff;
+            border: 1px solid #C5D0DB;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+        #drawing-canvas {
+            border: 1px solid #9BAAB8;
+            cursor: crosshair;
+            display: block;
+            max-width: 100%;
+            background: #fff;
+            touch-action: none;
+        }
+        .color-palette { display: flex; flex-wrap: wrap; gap: 5px; margin: 10px 0; }
+        .color-swatch {
+            width: 30px;
+            height: 30px;
+            border: 2px solid #C5D0DB;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .color-swatch.active {
+            border-color: #2B587A;
+            box-shadow: 0 0 0 2px #5E83A9;
+        }
+        .draw-toolbar {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .draw-toolbar button {
+            background: #5E83A9;
+            color: #fff;
+            border: none;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .draw-toolbar button.danger { background: #d9534f; }
+        .brush-size { display: flex; align-items: center; gap: 5px; font-size: 12px; }
+
+        .my-drawings-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            padding: 10px 0;
+        }
+        .my-drawing-item {
+            border: 1px solid #C5D0DB;
+            background: #F9F9F9;
+            padding: 5px;
+            text-align: center;
+        }
+        .my-drawing-item img { width: 100%; display: block; }
+        .my-drawing-item .date { font-size: 10px; color: #999; margin-top: 3px; }
+
+        #offline-banner {
+            display: none;
+            background: #d9534f;
+            color: #fff;
+            text-align: center;
+            padding: 5px;
+            font-size: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 101;
+        }
+
+        #video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        #video-modal .modal-box {
+            background: #fff;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid #C5D0DB;
+        }
+        #video-modal .modal-header {
+            background: linear-gradient(to bottom, #6D98C6, #45739E);
+            color: #fff;
+            padding: 10px 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #video-modal .modal-body { padding: 15px; }
+        #video-modal .modal-body input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+        #video-modal .modal-body label {
+            display: block;
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 5px;
+        }
+        #video-modal .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        #video-modal .modal-buttons button {
+            padding: 6px 15px;
+            cursor: pointer;
+            font-size: 13px;
+            border: none;
+        }
+
+        .edit-btn {
+            background: #e0e0e0;
+            color: #333;
+            border: none;
+            padding: 4px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        #page-drawing-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: .55;
+            display: none;
+        }
+
+        #chalk-panel {
+            position: fixed;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, .97);
+            border: 1px solid #C5D0DB;
+            border-radius: 8px;
+            padding: 10px 12px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, .25);
+            z-index: 9997;
+            display: none;
+            max-width: 95%;
+        }
+        #chalk-panel.open { display: block; }
+        #chalk-panel .chalk-colors {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+            justify-content: center;
+        }
+        #chalk-panel .chalk-swatch {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 2px solid #C5D0DB;
+            cursor: pointer;
+        }
+        #chalk-panel .chalk-swatch.active {
+            border-color: #2B587A;
+            box-shadow: 0 0 0 2px #5E83A9;
+        }
+        #chalk-panel .chalk-tools {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        #chalk-panel button {
+            background: #5E83A9;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        #chalk-panel button.danger { background: #d9534f; }
+        #chalk-panel button.green { background: #5cb85c; }
+
+        #page-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9996;
+            display: none;
+            cursor: crosshair;
+            touch-action: none;
+        }
+        #page-canvas.open { display: block; }
+
+        @media (min-width: 769px) {
+            .desktop-view { display: block; }
+            .mobile-view { display: none !important; }
+        }
+        @media (max-width: 768px) {
+            .desktop-view { display: none !important; }
+            .mobile-view { display: block; }
+        }
+    </style>
 </head>
 <body>
 
-<div id="offline-banner">⚠️ Нет соединения с интернетом. Проверьте подключение.</div>
+    <div id="offline-banner">⚠️ Нет соединения с интернетом. Проверьте подключение.</div>
 
-<div id="auth-screen">
-    <div class="auth-header-bar">
-        <svg viewBox="0 0 24 24"><path d="M21.6 8.5c.3-.9.6-1.4-1.2-1.4h-2.9c-.9 0-1.3.5-1.5 1.2L14.5 13l-1.7-4.9c-.2-.6-.6-1-1.4-1H8.8c-.9 0-1.2.5-1.2.9 0 1.2 2.4 7.6 2.4 7.6s-1.6 2.3-1.8 2.5c-.2.2-.3.5-.3.8 0 .4.1.8.8.8h2.9v4.1c0 .5.2.7.8.7h2.5c.5 0 .8-.3.8-.8v-5.5c0-.8.4-1 1.2-1h1.4c1.2 0 1.4-.6 1.6-1.3l2.1-5.9z"/></svg>
-    </div>
-    <div class="auth-content">
-        <div class="auth-intro">Our mobile version lets you stay in touch even when you're far from your computer.</div>
-        <div class="auth-row"><label>Phone or email:</label><input type="text" id="auth-name" placeholder=""></div>
-        <div class="auth-row"><label>Password:</label><input type="password" id="auth-pass" placeholder=""></div>
-        <div id="auth-error"></div>
-        <div class="auth-actions">
-            <button onclick="handleAuth()" id="auth-btn">Log in</button>
-            <a href="#" onclick="alert('Восстановление пока не работает в демо')">Forgot your password?</a>
+    <!-- ЭКРАН ВХОДА -->
+    <div id="auth-screen">
+        <div class="auth-header-bar">
+            <img src="logo.png" style="height:28px;" alt="ВКонтакте" onerror="this.style.display='none'">
         </div>
-        <div class="auth-signup-area">
-            <button onclick="toggleAuthMode()">Sign up for VK</button>
-        </div>
-    </div>
-</div>
-
-<div id="desktop-app" class="desktop-view">
-    <div class="desktop-header">
-        <div class="left">
-            <svg class="logo-svg" viewBox="0 0 400 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="0" y="10" width="24" height="28" rx="3" fill="#fff" stroke="#6d7e8e" stroke-width="1"/>
-                <text x="12" y="32" fill="#2B587A" font-family="Arial" font-weight="900" font-size="22" text-anchor="middle">B</text>
-                <text x="32" y="33" fill="#fff" font-family="Arial" font-weight="900" font-size="20" letter-spacing="0.5">КОНТАКТЕ</text>
-            </svg>
-            <div class="search-box"><input type="text" placeholder="Поиск"></div>
-        </div>
-        <div class="nav-links">
-            <a href="https://www.donationalerts.com/r/arteh_k_k_" target="_blank" class="donate-btn">💛 донат</a>
-            <a href="#">люди</a>
-            <a href="#">сообщества</a>
-            <a href="#">игры</a>
-            <a href="#">музыка</a>
-            <a href="#">помощь</a>
-            <a href="#" onclick="logout()">выйти</a>
+        <div class="auth-content">
+            <div class="auth-intro">Our mobile version lets you stay in touch even when you're far from your computer.</div>
+            <div class="auth-row">
+                <label>Phone or email:</label>
+                <input type="text" id="auth-name" placeholder="">
+            </div>
+            <div class="auth-row">
+                <label>Password:</label>
+                <input type="password" id="auth-pass" placeholder="">
+            </div>
+            <div id="auth-error"></div>
+            <div class="auth-actions">
+                <button onclick="handleAuth()" id="auth-btn">Log in</button>
+                <a onclick="alert('Восстановление пока не работает')">Forgot your password?</a>
+            </div>
+            <div class="auth-signup-area">
+                <button onclick="toggleAuthMode()">Sign up for VK</button>
+            </div>
         </div>
     </div>
 
-    <div class="desktop-layout">
-        <div class="desktop-sidebar">
-            <ul>
-                <li><a href="#" onclick="showDeskPage('wall'); return false;"><b>Моя Страница</b></a></li>
-                <li><a href="#" onclick="showDeskPage('people'); return false;">Люди</a></li>
-                <li><a href="#" onclick="showDeskPage('friends'); return false;">Мои Друзья</a></li>
-                <li><a href="#" onclick="showDeskPage('photos'); return false;">Мои Фотографии</a></li>
-                <li><a href="#" onclick="showDeskPage('videos'); return false;">Мои Видеозаписи</a></li>
-                <li><a href="#" onclick="showDeskPage('messages'); return false;">Мои Сообщения</a></li>
-                <li><a href="#" onclick="showDeskPage('groups'); return false;">Мои Группы</a></li>
-                <li><a href="#" onclick="showDeskPage('gifts'); return false;">Мои Подарки</a></li>
-                <li><a href="#" onclick="showDeskPage('drawings'); return false;">🎨 Моё творчество</a></li>
-                <li><a href="#" onclick="showDeskPage('news'); return false;">Мои Новости</a></li>
-                <li><a href="#" onclick="showDeskPage('music'); return false;">Моя Музыка</a></li>
-                <li><a href="#" onclick="showDeskPage('settings'); return false;">Мои Настройки</a></li>
-                <li class="section-title">Приложения <span class="badge">+6</span></li>
-                <li class="app-list"><a href="/games/turyaga.swf">Тюряга</a></li>
-                <li class="app-list"><a href="/games/bomzh.swf">Я — Бомж 18+</a></li>
-                <li class="app-list"><a href="/games/metro2033.swf">Метро 2033</a></li>
-                <li class="app-list"><a href="/games/contracity.swf">Контра Сити</a></li>
-            </ul>
+    <!-- ДЕСКТОП -->
+    <div id="desktop-app" class="desktop-view">
+        <div class="desktop-header">
+            <div class="left">
+                <img src="logo.png" class="logo-svg" alt="ВКонтакте" onerror="this.style.display='none'">
+                <div class="search-box">
+                    <input type="text" placeholder="Поиск">
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="https://www.donationalerts.com/r/arteh_k_k_" target="_blank" class="donate-btn">💛 донат</a>
+                <a>люди</a>
+                <a>сообщества</a>
+                <a>игры</a>
+                <a>музыка</a>
+                <a>помощь</a>
+                <a onclick="logout()">выйти</a>
+            </div>
         </div>
 
-        <div class="desktop-content" id="desktop-main">
-            <div id="desk-page-wall">
-                <div class="desktop-page-title" id="desk-wall-title">Моя Страница</div>
-                <div class="desktop-page-content" id="desk-wall-profile"></div>
-                <div class="desktop-page-content" id="desk-wall-post-input-block" style="border-top:1px solid #E4EAF0;">
-                    <div class="desktop-post-input">
-                        <textarea id="desk-post-text" placeholder="Что у вас нового?"></textarea>
-                        <div id="desk-post-preview" style="display:none; margin-top:8px; position:relative;">
-                            <img id="desk-preview-img" style="max-width:200px; max-height:150px; border:1px solid #ccc;">
-                            <span onclick="removePostImage('desktop')" style="position:absolute; top:-8px; left:190px; background:#d9534f; color:#fff; width:20px; height:20px; border-radius:50%; text-align:center; line-height:20px; cursor:pointer; font-weight:bold;">×</span>
-                        </div>
-                        <div class="btn-row" style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
-                            <div>
-                                <label class="attach-btn" title="Прикрепить фото">📎<input type="file" id="desk-post-image" accept="image/*" style="display:none;" onchange="previewPostImage('desktop')"></label>
-                                <span class="attach-btn" title="Прикрепить видео" onclick="openVideoModal('desktop')">🎬</span>
-                                <span class="attach-btn" title="Нарисовать на странице" onclick="openChalkPanel()">🖍️</span>
+        <div class="desktop-layout">
+            <div class="desktop-sidebar">
+                <ul>
+                    <li><a onclick="showDeskPage('wall'); return false;"><b>Моя Страница</b></a></li>
+                    <li><a onclick="showDeskPage('people'); return false;">Люди</a></li>
+                    <li><a onclick="showDeskPage('friends'); return false;">Мои Друзья</a></li>
+                    <li><a onclick="showDeskPage('photos'); return false;">Мои Фотографии</a></li>
+                    <li><a onclick="showDeskPage('messages'); return false;">Мои Сообщения</a></li>
+                    <li><a onclick="showDeskPage('gifts'); return false;">Мои Подарки</a></li>
+                    <li><a onclick="showDeskPage('drawings'); return false;">🎨 Моё творчество</a></li>
+                    <li><a onclick="showDeskPage('news'); return false;">Мои Новости</a></li>
+                    <li class="section-title">Приложения <span class="badge">+6</span></li>
+                    <li class="app-list"><a href="/games/turyaga.swf">Тюряга</a></li>
+                    <li class="app-list"><a href="/games/bomzh.swf">Я — Бомж 18+</a></li>
+                    <li class="app-list"><a href="/games/metro2033.swf">Метро 2033</a></li>
+                    <li class="app-list"><a href="/games/contracity.swf">Контра Сити</a></li>
+                </ul>
+            </div>
+
+            <div class="desktop-content" id="desktop-main">
+                <div id="desk-page-wall">
+                    <div class="desktop-page-title" id="desk-wall-title">Моя Страница</div>
+                    <div class="desktop-page-content" id="desk-wall-profile"></div>
+                    <div class="desktop-page-content" id="desk-wall-post-input-block" style="border-top:1px solid #E4EAF0;">
+                        <div class="desktop-post-input">
+                            <textarea id="desk-post-text" placeholder="Что у вас нового?"></textarea>
+                            <div id="desk-post-preview" style="display:none; margin-top:8px; position:relative;">
+                                <img id="desk-preview-img" style="max-width:200px; max-height:150px; border:1px solid #ccc;">
+                                <span onclick="removePostImage('desktop')" style="position:absolute; top:-8px; left:190px; background:#d9534f; color:#fff; width:20px; height:20px; border-radius:50%; text-align:center; line-height:20px; cursor:pointer; font-weight:bold;">×</span>
                             </div>
-                            <button onclick="createPost('desktop')" id="desk-send-btn">Отправить</button>
+                            <div class="btn-row" style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
+                                <div>
+                                    <label class="attach-btn" title="Прикрепить фото">📎<input type="file" id="desk-post-image" accept="image/*" style="display:none;" onchange="previewPostImage('desktop')"></label>
+                                    <span class="attach-btn" title="Прикрепить видео" onclick="openVideoModal('desktop')">🎬</span>
+                                    <span class="attach-btn" title="Нарисовать на странице" onclick="openChalkPanel()">🖍️</span>
+                                    <span class="attach-btn" title="Нарисовать в творчестве" onclick="openDrawingModal()">🎨</span>
+                                </div>
+                                <button onclick="createPost('desktop')" id="desk-send-btn">Отправить</button>
+                            </div>
+                        </div>
+                        <div id="desktop-wall-content"></div>
+                    </div>
+                </div>
+
+                <div id="desk-page-people" style="display:none;">
+                    <div class="desktop-page-title">Люди</div>
+                    <div class="friends-search-box">
+                        <input type="text" id="desk-people-search" placeholder="Поиск людей..." oninput="renderDesktopPeople(this.value)">
+                    </div>
+                    <div class="desktop-page-content">
+                        <div id="desk-people-list" class="people-list"></div>
+                    </div>
+                </div>
+
+                <div id="desk-page-news" style="display:none;">
+                    <div class="desktop-page-title">Новости</div>
+                    <div class="desktop-page-content">
+                        <div id="desk-news-content"></div>
+                    </div>
+                </div>
+
+                <div id="desk-page-photos" style="display:none;">
+                    <div class="desktop-page-title">Мои Фотографии</div>
+                    <div class="desktop-page-content">
+                        <div id="desk-photos-list" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px;"></div>
+                    </div>
+                </div>
+
+                <div id="desk-page-gifts" style="display:none;">
+                    <div class="desktop-page-title">Мои Подарки</div>
+                    <div class="desktop-page-content">
+                        <div class="coins-bar">💰 У вас: <b><span id="desk-gifts-coins">0</span> монет</b></div>
+                        <div style="font-weight:bold; color:#2B587A; font-size:14px; margin-bottom:5px;">🎁 Магазин подарков</div>
+                        <div id="desk-gifts-shop" class="gift-grid"></div>
+                        <div style="font-weight:bold; color:#2B587A; font-size:14px; margin-top:20px; margin-bottom:5px;">💝 Мои подарки</div>
+                        <div id="desk-my-gifts"></div>
+                    </div>
+                </div>
+
+                <div id="desk-page-drawings" style="display:none;">
+                    <div class="desktop-page-title">🎨 Моё творчество (Мелки)</div>
+                    <div class="desktop-page-content">
+                        <div class="coins-bar">🖍️ У вас: <b><span id="desk-drawings-chalks">0</span> мелков</b> — <button onclick="openDrawingModal()" style="background:#5E83A9; color:#fff; border:none; padding:5px 12px; cursor:pointer; font-size:12px; margin-left:10px;">➕ Нарисовать (1 мелок)</button></div>
+                        <div id="desk-drawings-list" class="my-drawings-list"></div>
+                    </div>
+                </div>
+
+                <div id="desk-page-friends" style="display:none;">
+                    <div class="desktop-page-title" id="desk-friends-title">Мои Друзья</div>
+                    <div id="desk-friends-list-view">
+                        <div class="friends-search-box">
+                            <input type="text" id="desk-friends-search" placeholder="Поиск друзей..." oninput="renderDesktopFriends(this.value)">
+                        </div>
+                        <div class="desktop-page-content">
+                            <div id="desk-friends-list" class="people-list"></div>
                         </div>
                     </div>
-                    <div id="desktop-wall-content"></div>
+                    <div id="desk-friends-profile-view" style="display:none;">
+                        <div class="desktop-page-content" id="desk-friends-profile"></div>
+                        <div class="desktop-page-content" style="border-top:1px solid #E4EAF0;">
+                            <div id="desk-friends-wall-content"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="desk-page-messages" style="display:none;">
+                    <div class="desktop-page-title">Мои Сообщения</div>
+                    <div class="desktop-page-content">
+                        <div id="desk-msg-list"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- МОБИЛЬНЫЙ -->
+    <div id="mobile-app" class="mobile-view">
+
+        <div id="vk-side-menu" class="vk-mob-side-menu">
+            <div class="vk-mob-side-menu-head">
+                <div class="name" id="vk-side-name">Загрузка...</div>
+                <div class="status" id="vk-side-status">онлайн</div>
+            </div>
+            <div class="vk-mob-side-menu-item" onclick="switchMobTab('people')">Люди</div>
+            <div class="vk-mob-side-menu-item" onclick="switchMobTab('friends')">Друзья</div>
+            <div class="vk-mob-side-menu-item" onclick="switchMobTab('wall')">Моя Страница</div>
+            <div class="vk-mob-side-menu-item" onclick="switchMobTab('photos')">Фотографии</div>
+            <div class="vk-mob-side-menu-item" onclick="switchMobTab('drawings')">🎨 Творчество</div>
+            <div class="vk-mob-side-menu-item" onclick="switchMobTab('gifts')">Подарки</div>
+            <div class="vk-mob-side-menu-item" onclick="switchMobTab('msg')">Сообщения</div>
+            <div class="vk-mob-side-menu-item" onclick="switchMobTab('news')">Новости</div>
+            <a href="https://www.donationalerts.com/r/arteh_k_k_" target="_blank" class="vk-mob-side-menu-item" style="background:#FF6B35; color:#fff;">💛 Поддержать</a>
+            <div class="vk-mob-side-menu-item" onclick="logout()">Выйти</div>
+        </div>
+        <div id="vk-side-overlay" class="vk-mob-side-menu-overlay" onclick="closeSideMenu()"></div>
+
+        <div class="vk-top-tabs">
+            <div class="vk-top-tab active" data-tab="news" onclick="switchMobTopTab('news', this)">Новости</div>
+            <div class="vk-top-tab" data-tab="wall" onclick="switchMobTopTab('wall', this)">Стена</div>
+            <div class="vk-top-tab" data-tab="friends" onclick="switchMobTopTab('friends', this)">Друзья</div>
+            <div class="vk-top-tab" data-tab="messages" onclick="switchMobTopTab('messages', this)">Диалоги</div>
+        </div>
+
+        <div id="vk-mob-header" style="display:none;"></div>
+
+        <div id="mob-news" class="mobile-view-container active">
+            <div class="mobile-empty"><h3>Загрузка новостей...</h3></div>
+        </div>
+
+        <div id="mob-wall" class="mobile-view-container">
+            <div id="vk-mob-profile-container"></div>
+            <div id="vk-mob-post-form" style="display:none; background:#fff; border-bottom:1px solid #C8D0D8; padding:8px; margin-bottom:6px;">
+                <textarea id="mob-post-text" placeholder="Что у вас нового?" style="width:100%; border:1px solid #9BAAB8; padding:6px; min-height:60px; font-size:13px;"></textarea>
+                <div id="mob-post-preview" style="display:none; margin-top:6px; position:relative;">
+                    <img id="mob-preview-img" style="max-width:150px; border:1px solid #ccc;">
+                    <span onclick="removePostImage('mobile')" style="position:absolute; top:-6px; left:150px; background:#d9534f; color:#fff; width:20px; height:20px; border-radius:50%; text-align:center; line-height:20px; cursor:pointer; font-weight:bold;">×</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                    <div>
+                        <label class="attach-btn" style="font-size:20px; padding:4px 8px;">📎<input type="file" id="mob-post-image" accept="image/*" style="display:none;" onchange="previewPostImage('mobile')"></label>
+                        <span class="attach-btn" style="font-size:20px; padding:4px 8px;" onclick="openVideoModal('mobile')">🎬</span>
+                        <span class="attach-btn" style="font-size:20px; padding:4px 8px;" onclick="openChalkPanel()">🖍️</span>
+                        <span class="attach-btn" style="font-size:20px; padding:4px 8px;" onclick="openDrawingModal()">🎨</span>
+                    </div>
+                    <div>
+                        <button onclick="closeMobilePostForm()" style="background:#ccc; color:#333; padding:5px 10px; font-size:12px; cursor:pointer; border:1px solid #999;">Отмена</button>
+                        <button onclick="createPost('mobile')" id="mob-send-btn" style="background:#6D8EB5; color:#fff; padding:5px 12px; font-size:12px; cursor:pointer; border:1px solid #2A4256;">Отправить</button>
+                    </div>
                 </div>
             </div>
+            <div id="mobile-wall-content"></div>
+        </div>
 
-            <div id="desk-page-people" style="display:none;">
-                <div class="desktop-page-title">Люди</div>
-                <div class="friends-search-box"><input type="text" id="desk-people-search" placeholder="Поиск людей..." oninput="renderDesktopPeople(this.value)"></div>
-                <div class="desktop-page-content"><div id="desk-people-list" class="people-list"></div></div>
+        <div id="mob-people" class="mobile-view-container">
+            <div style="padding:8px; background:#D6DEE5; border-bottom:1px solid #A0AEB8;">
+                <input type="text" id="mob-people-search" placeholder="Поиск людей" style="width:100%; padding:6px 10px; border:1px solid #9BAAB8; font-size:13px;" oninput="renderMobilePeople(this.value)">
             </div>
+            <div id="mobile-people-list"></div>
+        </div>
 
-            <div id="desk-page-news" style="display:none;">
-                <div class="desktop-page-title">Новости</div>
-                <div class="desktop-page-content"><div id="desk-news-content"></div></div>
-            </div>
-
-            <div id="desk-page-music" style="display:none;">
-                <div class="desktop-page-title">Моя Музыка</div>
-                <div class="desktop-page-content"><div style="background:#f9f9f9;border:1px solid #eee;padding:15px;text-align:center;">🎵 Сейчас играет: <b>Нет трека</b></div></div>
-            </div>
-
-            <div id="desk-page-photos" style="display:none;">
-                <div class="desktop-page-title">Мои Фотографии</div>
-                <div class="desktop-page-content"><div id="desk-photos-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;"></div></div>
-            </div>
-
-            <div id="desk-page-videos" style="display:none;">
-                <div class="desktop-page-title">Мои Видеозаписи</div>
-                <div class="desktop-page-content"><div id="desk-videos-list"></div></div>
-            </div>
-
-            <div id="desk-page-gifts" style="display:none;">
-                <div class="desktop-page-title">Мои Подарки</div>
-                <div class="desktop-page-content">
-                    <div class="coins-bar">💰 У вас: <b><span id="desk-gifts-coins">0</span> монет</b></div>
-                    <div style="font-weight:bold;color:#2B587A;font-size:14px;margin-bottom:5px;">🎁 Магазин подарков</div>
-                    <div id="desk-gifts-shop" class="gift-grid"></div>
-                    <div style="font-weight:bold;color:#2B587A;font-size:14px;margin-top:20px;margin-bottom:5px;">💝 Мои подарки</div>
-                    <div id="desk-my-gifts"></div>
+        <div id="mob-friends" class="mobile-view-container">
+            <div id="mob-friends-list-view">
+                <div style="padding:8px; background:#D6DEE5; border-bottom:1px solid #A0AEB8;">
+                    <input type="text" id="mob-search-input" placeholder="Поиск друзей" style="width:100%; padding:6px 10px; border:1px solid #9BAAB8; font-size:13px;" oninput="searchUsers('mobile')">
                 </div>
+                <div id="mobile-friends-list"></div>
             </div>
-
-            <div id="desk-page-drawings" style="display:none;">
-                <div class="desktop-page-title">🎨 Моё творчество (Мелки)</div>
-                <div class="desktop-page-content">
-                    <div class="coins-bar">🖍️ У вас: <b><span id="desk-drawings-chalks">0</span> мелков</b> — <button onclick="openDrawingModal()" style="background:#5E83A9;color:#fff;border:none;padding:5px 12px;cursor:pointer;font-size:12px;margin-left:10px;">➕ Нарисовать (1 мелок)</button></div>
-                    <div id="desk-drawings-list" class="my-drawings-list"></div>
-                </div>
+            <div id="mob-friends-profile-view" style="display:none;">
+                <div id="mob-friends-profile"></div>
+                <div id="mob-friends-wall-content"></div>
             </div>
+        </div>
 
-            <div id="desk-page-groups" style="display:none;">
-                <div class="desktop-page-title">Мои Группы</div>
-                <div class="desktop-page-content"></div>
+        <div id="mob-msg" class="mobile-view-container">
+            <div id="mobile-msg-list"></div>
+        </div>
+
+        <div id="mob-photos" class="mobile-view-container">
+            <div id="mobile-photos-list" style="padding:6px;"></div>
+        </div>
+
+        <div id="mob-drawings" class="mobile-view-container">
+            <div style="background:#FFF8E1; border-bottom:1px solid #F0AD4E; padding:8px 12px; font-size:13px;">
+                🖍️ Мелков: <b><span id="mob-drawings-chalks">0</span></b>
+                <button onclick="openDrawingModal()" style="background:#5E83A9; color:#fff; border:none; padding:4px 10px; cursor:pointer; font-size:11px; margin-left:8px;">➕ Нарисовать</button>
             </div>
-
-            <div id="desk-page-settings" style="display:none;">
-                <div class="desktop-page-title">Настройки</div>
-                <div class="desktop-page-content"><p>Здесь будут настройки профиля.</p></div>
+            <div class="vk-mob-section">
+                <div class="vk-mob-section-title">🎨 Мои рисунки</div>
             </div>
+            <div id="mobile-drawings-list" style="padding:8px;"></div>
+        </div>
 
-            <div id="desk-page-friends" style="display:none;">
-                <div class="desktop-page-title" id="desk-friends-title">Мои Друзья</div>
-                <div id="desk-friends-list-view">
-                    <div class="friends-search-box"><input type="text" id="desk-friends-search" placeholder="Поиск друзей..." oninput="renderDesktopFriends(this.value)"></div>
-                    <div class="desktop-page-content"><div id="desk-friends-list" class="people-list"></div></div>
-                </div>
-                <div id="desk-friends-profile-view" style="display:none;">
-                    <div class="desktop-page-content" id="desk-friends-profile"></div>
-                    <div class="desktop-page-content" style="border-top:1px solid #E4EAF0;"><div id="desk-friends-wall-content"></div></div>
-                </div>
+        <div id="mob-gifts" class="mobile-view-container">
+            <div style="background:#FFF8E1; border-bottom:1px solid #F0AD4E; padding:8px 12px; font-size:13px;">
+                💰 У вас: <b><span id="mob-gifts-coins">0</span> монет</b>
             </div>
+            <div class="vk-mob-section">
+                <div class="vk-mob-section-title">🎁 Магазин подарков</div>
+            </div>
+            <div id="mob-gifts-shop" style="display:grid; grid-template-columns:1fr 1fr; gap:6px; padding:8px;"></div>
+            <div class="vk-mob-section">
+                <div class="vk-mob-section-title">💝 Мои подарки</div>
+            </div>
+            <div id="mob-my-gifts"></div>
+        </div>
 
-            <div id="desk-page-messages" style="display:none;">
-                <div class="desktop-page-title">Мои Сообщения</div>
-                <div class="desktop-page-content"><div id="desk-msg-list"></div></div>
+        <nav class="vk-mob-bottom-nav">
+            <button class="vk-mob-nav-btn" data-nav="news" onclick="switchMobTab('news')">Новости</button>
+            <button class="vk-mob-nav-btn active" data-nav="wall" onclick="switchMobTab('wall')">Стена</button>
+            <button class="vk-mob-nav-btn" data-nav="friends" onclick="switchMobTab('friends')">Друзья</button>
+            <button class="vk-mob-nav-btn" data-nav="gifts" onclick="switchMobTab('gifts')">Подарки</button>
+            <button class="vk-mob-nav-btn" data-nav="msg" onclick="switchMobTab('msg')">Диалоги</button>
+        </nav>
+
+        <div id="vk-chat-interface" class="vk-chat-interface">
+            <div class="vk-chat-header">
+                <button class="back-btn" onclick="closeChat()">← Назад</button>
+                <div class="chat-name" id="vk-chat-partner-name">Пользователь</div>
+                <img class="chat-avatar" id="vk-chat-avatar" src="">
+            </div>
+            <div class="vk-chat-messages" id="vk-chat-messages-box"></div>
+            <div class="vk-chat-input-area">
+                <input type="text" id="vk-chat-input" placeholder="Написать сообщение" onkeypress="if(event.key==='Enter') sendMessage()">
+                <button onclick="sendMessage()">Отпр.</button>
             </div>
         </div>
     </div>
-</div>
 
-<div id="mobile-app" class="mobile-view">
-    <div id="vk-side-menu" class="vk-mob-side-menu">
-        <div class="vk-mob-side-menu-head">
-            <div class="name" id="vk-side-name">Загрузка...</div>
-            <div class="status" id="vk-side-status">онлайн</div>
-        </div>
-        <div class="vk-mob-side-menu-item" onclick="switchMobTab('people')">Люди</div>
-        <div class="vk-mob-side-menu-item" onclick="switchMobTab('friends')">Друзья</div>
-        <div class="vk-mob-side-menu-item" onclick="switchMobTab('wall')">Моя Страница</div>
-        <div class="vk-mob-side-menu-item" onclick="switchMobTab('photos')">Фотографии</div>
-        <div class="vk-mob-side-menu-item" onclick="switchMobTab('drawings')">🎨 Творчество</div>
-        <div class="vk-mob-side-menu-item" onclick="switchMobTab('gifts')">Подарки</div>
-        <div class="vk-mob-side-menu-item" onclick="switchMobTab('msg')">Сообщения</div>
-        <div class="vk-mob-side-menu-item" onclick="switchMobTab('news')">Новости</div>
-        <a href="https://www.donationalerts.com/r/arteh_k_k_" target="_blank" class="vk-mob-side-menu-item" style="background:#FF6B35;color:#fff;">💛 Поддержать</a>
-        <div class="vk-mob-side-menu-item" onclick="logout()">Выйти</div>
-    </div>
-    <div id="vk-side-overlay" class="vk-mob-side-menu-overlay" onclick="closeSideMenu()"></div>
-
-    <div class="vk-top-tabs">
-        <div class="vk-top-tab active" data-tab="news" onclick="switchMobTopTab('news', this)">Новости</div>
-        <div class="vk-top-tab" data-tab="wall" onclick="switchMobTopTab('wall', this)">Стена</div>
-        <div class="vk-top-tab" data-tab="friends" onclick="switchMobTopTab('friends', this)">Друзья</div>
-        <div class="vk-top-tab" data-tab="messages" onclick="switchMobTopTab('messages', this)">Диалоги</div>
-    </div>
-
-    <div id="vk-mob-header" style="display:none;"></div>
-
-    <div id="mob-news" class="mobile-view-container active"><div class="mobile-empty"><h3>Загрузка новостей...</h3></div></div>
-
-    <div id="mob-wall" class="mobile-view-container">
-        <div id="vk-mob-profile-container"></div>
-        <div id="vk-mob-post-form" style="display:none;background:#fff;border-bottom:1px solid #C8D0D8;padding:8px;margin-bottom:6px;">
-            <textarea id="mob-post-text" placeholder="Что у вас нового?" style="width:100%;border:1px solid #9BAAB8;padding:6px;min-height:60px;font-size:13px;"></textarea>
-            <div id="mob-post-preview" style="display:none;margin-top:6px;position:relative;">
-                <img id="mob-preview-img" style="max-width:150px;max-height:150px;border:1px solid #ccc;">
-                <span onclick="removePostImage('mobile')" style="position:absolute;top:-6px;left:150px;background:#d9534f;color:#fff;width:20px;height:20px;border-radius:50%;text-align:center;line-height:20px;cursor:pointer;font-weight:bold;">×</span>
+    <!-- МОДАЛКА РИСОВАНИЯ В ТВОРЧЕСТВЕ -->
+    <div id="drawing-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.6); z-index:9999; justify-content:center; align-items:center;">
+        <div style="background:#fff; width:95%; max-width:700px; max-height:95vh; overflow-y:auto; border:1px solid #C5D0DB;">
+            <div style="background:linear-gradient(to bottom,#6D98C6,#45739E); color:#fff; padding:10px 15px; font-weight:bold; display:flex; justify-content:space-between; align-items:center;">
+                <span>🎨 Нарисуй что-нибудь! Мелков: <span id="drawing-chalks-count">0</span></span>
+                <span onclick="closeDrawingModal()" style="cursor:pointer; font-size:20px;">×</span>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
-                <div>
-                    <label class="attach-btn" style="font-size:20px;color:#5E83A9;padding:4px 8px;cursor:pointer;">📎<input type="file" id="mob-post-image" accept="image/*" style="display:none;" onchange="previewPostImage('mobile')"></label>
-                    <span class="attach-btn" style="font-size:20px;color:#5E83A9;padding:4px 8px;" onclick="openVideoModal('mobile')">🎬</span>
-                    <span class="attach-btn" style="font-size:20px;color:#5E83A9;padding:4px 8px;" onclick="openChalkPanel()">🖍️</span>
+            <div style="padding:15px;">
+                <div class="color-palette" id="color-palette"></div>
+                <div class="brush-size">
+                    <span>Толщина:</span>
+                    <input type="range" id="brush-size-range" min="1" max="30" value="5" style="width:150px;">
+                    <span id="brush-size-value">5px</span>
                 </div>
-                <div>
-                    <button onclick="closeMobilePostForm()" style="background:#ccc;color:#333;border:1px solid #999;padding:5px 10px;font-size:12px;cursor:pointer;">Отмена</button>
-                    <button onclick="createPost('mobile')" id="mob-send-btn" style="background:#6D8EB5;color:#fff;border:1px solid #2A4256;padding:5px 12px;font-size:12px;cursor:pointer;">Отправить</button>
+                <div class="drawing-canvas-wrapper">
+                    <canvas id="drawing-canvas" width="600" height="400" style="width:100%; height:auto;"></canvas>
+                </div>
+                <div class="draw-toolbar">
+                    <button onclick="clearCanvas()">🗑️ Очистить</button>
+                    <button onclick="undoDraw()">↩️ Отменить</button>
+                    <button class="danger" onclick="closeDrawingModal()">Отмена</button>
+                    <button onclick="publishDrawing()" id="publish-drawing-btn" style="background:#5cb85c;">📤 Опубликовать (1 мелок)</button>
                 </div>
             </div>
         </div>
-        <div id="mobile-wall-content"></div>
     </div>
 
-    <div id="mob-people" class="mobile-view-container">
-        <div style="padding:8px;background:#D6DEE5;border-bottom:1px solid #A0AEB8;"><input type="text" id="mob-people-search" placeholder="Поиск людей" style="width:100%;padding:6px 10px;border:1px solid #9BAAB8;border-radius:12px;font-size:13px;" oninput="renderMobilePeople(this.value)"></div>
-        <div id="mobile-people-list"></div>
-    </div>
-
-    <div id="mob-friends" class="mobile-view-container">
-        <div id="mob-friends-list-view">
-            <div style="padding:8px;background:#D6DEE5;border-bottom:1px solid #A0AEB8;"><input type="text" id="mob-search-input" placeholder="Поиск друзей" style="width:100%;padding:6px 10px;border:1px solid #9BAAB8;border-radius:12px;font-size:13px;" oninput="searchUsers('mobile')"></div>
-            <div id="mobile-friends-list"></div>
-        </div>
-        <div id="mob-friends-profile-view" style="display:none;">
-            <div id="mob-friends-profile"></div>
-            <div id="mob-friends-wall-content"></div>
-        </div>
-    </div>
-
-    <div id="mob-msg" class="mobile-view-container"><div id="mobile-msg-list"></div></div>
-    <div id="mob-photos" class="mobile-view-container"><div id="mobile-photos-list" style="padding:6px;"></div></div>
-
-    <div id="mob-drawings" class="mobile-view-container">
-        <div style="background:#FFF8E1;border-bottom:1px solid #F0AD4E;padding:8px 12px;font-size:13px;">🖍️ Мелков: <b><span id="mob-drawings-chalks">0</span></b> <button onclick="openDrawingModal()" style="background:#5E83A9;color:#fff;border:none;padding:4px 10px;cursor:pointer;font-size:11px;margin-left:8px;">➕ Нарисовать</button></div>
-        <div class="vk-mob-section"><div class="vk-mob-section-title">🎨 Мои рисунки</div></div>
-        <div id="mobile-drawings-list" style="padding:8px;"></div>
-    </div>
-
-    <div id="mob-gifts" class="mobile-view-container">
-        <div style="background:#FFF8E1;border-bottom:1px solid #F0AD4E;padding:8px 12px;font-size:13px;">💰 У вас: <b><span id="mob-gifts-coins">0</span> монет</b></div>
-        <div class="vk-mob-section"><div class="vk-mob-section-title">🎁 Магазин подарков</div></div>
-        <div id="mob-gifts-shop" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px;"></div>
-        <div class="vk-mob-section"><div class="vk-mob-section-title">💝 Мои подарки</div></div>
-        <div id="mob-my-gifts"></div>
-    </div>
-
-    <nav class="vk-mob-bottom-nav">
-        <button class="vk-mob-nav-btn" data-nav="news" onclick="switchMobTab('news')">Новости</button>
-        <button class="vk-mob-nav-btn active" data-nav="wall" onclick="switchMobTab('wall')">Стена</button>
-        <button class="vk-mob-nav-btn" data-nav="friends" onclick="switchMobTab('friends')">Друзья</button>
-        <button class="vk-mob-nav-btn" data-nav="gifts" onclick="switchMobTab('gifts')">Подарки</button>
-        <button class="vk-mob-nav-btn" data-nav="msg" onclick="switchMobTab('msg')">Диалоги</button>
-    </nav>
-
-    <div id="vk-chat-interface" class="vk-chat-interface">
-        <div class="vk-chat-header">
-            <button class="back-btn" onclick="closeChat()">← Сообщ.</button>
-            <div class="chat-name" id="vk-chat-partner-name">Пользователь</div>
-            <img class="chat-avatar" id="vk-chat-avatar" src="">
-        </div>
-        <div class="vk-chat-messages" id="vk-chat-messages-box"></div>
-        <div class="vk-chat-input-area">
-            <input type="text" id="vk-chat-input" placeholder="Написать сообщение" onkeypress="if(event.key==='Enter') sendMessage()">
-            <button onclick="sendMessage()">Отпр.</button>
-        </div>
-    </div>
-</div>
-
-<div id="drawing-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;justify-content:center;align-items:center;">
-    <div style="background:#fff;width:95%;max-width:700px;max-height:95vh;overflow-y:auto;border:1px solid #C5D0DB;">
-        <div style="background:linear-gradient(to bottom,#6D98C6,#45739E);color:#fff;padding:10px 15px;font-weight:bold;display:flex;justify-content:space-between;align-items:center;">
-            <span>🎨 Нарисуй что-нибудь! Мелков: <span id="drawing-chalks-count">0</span></span>
-            <span onclick="closeDrawingModal()" style="cursor:pointer;font-size:20px;">×</span>
-        </div>
-        <div style="padding:15px;">
-            <div class="color-palette" id="color-palette"></div>
-            <div class="brush-size"><span>Толщина:</span><input type="range" id="brush-size-range" min="1" max="30" value="5" style="width:150px;"><span id="brush-size-value">5px</span></div>
-            <div class="drawing-canvas-wrapper"><canvas id="drawing-canvas" width="600" height="400" style="width:100%;height:auto;"></canvas></div>
-            <div class="draw-toolbar">
-                <button onclick="clearCanvas()">🗑️ Очистить</button>
-                <button onclick="undoDraw()">↩️ Отменить</button>
-                <button class="danger" onclick="closeDrawingModal()">Отмена</button>
-                <button onclick="publishDrawing()" id="publish-drawing-btn" style="background:#5cb85c;">📤 Опубликовать (1 мелок)</button>
+    <!-- МОДАЛКА ВИДЕО -->
+    <div id="video-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <span>🎬 Прикрепить видео</span>
+                <span onclick="closeVideoModal()" style="cursor:pointer; font-size:18px;">×</span>
+            </div>
+            <div class="modal-body">
+                <label>Ссылка на видео с Google Диска:</label>
+                <input type="text" id="video-link-input" placeholder="https://drive.google.com/file/d/.../view">
+                <label>Название видео (необязательно):</label>
+                <input type="text" id="video-title-input" placeholder="Моё видео">
+                <div class="modal-buttons">
+                    <button onclick="closeVideoModal()" style="background:#ccc; color:#333;">Отмена</button>
+                    <button onclick="attachVideo()" style="background:#5E83A9; color:#fff;">Прикрепить</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div id="video-modal">
-    <div class="modal-box">
-        <div class="modal-header"><span>🎬 Прикрепить видео</span><span onclick="closeVideoModal()" style="cursor:pointer;font-size:18px;">×</span></div>
-        <div class="modal-body">
-            <label>Ссылка на видео с Google Диска:</label>
-            <input type="text" id="video-link-input" placeholder="https://drive.google.com/file/d/.../view">
-            <label>Название видео (необязательно):</label>
-            <input type="text" id="video-title-input" placeholder="Моё видео">
-            <div class="modal-buttons">
-                <button onclick="closeVideoModal()" style="background:#ccc;color:#333;">Отмена</button>
-                <button onclick="attachVideo()" style="background:#5E83A9;color:#fff;">Прикрепить</button>
+    <!-- МОДАЛКА РЕДАКТИРОВАНИЯ ПРОФИЛЯ -->
+    <div id="edit-profile-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.5); z-index:9999; justify-content:center; align-items:center;">
+        <div style="background:#fff; width:90%; max-width:500px; max-height:90vh; overflow-y:auto; border:1px solid #C5D0DB;">
+            <div style="background:linear-gradient(to bottom,#6D98C6,#45739E); color:#fff; padding:8px 15px; font-weight:bold; display:flex; justify-content:space-between;">
+                <span>Редактировать профиль</span>
+                <span onclick="closeEditProfile()" style="cursor:pointer;">×</span>
+            </div>
+            <div style="padding:15px;">
+                <div style="margin-bottom:10px;"><label style="display:block; font-size:12px; color:#777;">Имя</label><input type="text" id="edit-name" style="width:100%; padding:6px; border:1px solid #ccc;"></div>
+                <div style="margin-bottom:10px;"><label style="display:block; font-size:12px; color:#777;">Статус</label><input type="text" id="edit-status-text" style="width:100%; padding:6px; border:1px solid #ccc;"></div>
+                <div style="margin-bottom:10px;"><label style="display:block; font-size:12px; color:#777;">Значок</label><input type="text" id="edit-badge" style="width:100%; padding:6px; border:1px solid #ccc;"></div>
+                <div style="margin-bottom:10px;"><label style="display:block; font-size:12px; color:#777;">Пол</label><select id="edit-gender" style="width:100%; padding:6px;"><option value="">Не указан</option><option value="Мужской">Мужской</option><option value="Женский">Женский</option></select></div>
+                <div style="margin-bottom:10px;"><label style="display:block; font-size:12px; color:#777;">День рождения</label><input type="text" id="edit-birthday" style="width:100%; padding:6px; border:1px solid #ccc;"></div>
+                <div style="margin-bottom:10px;"><label style="display:block; font-size:12px; color:#777;">Родной город</label><input type="text" id="edit-hometown" style="width:100%; padding:6px; border:1px solid #ccc;"></div>
+                <div style="margin-bottom:10px;"><label style="display:block; font-size:12px; color:#777;">Город</label><input type="text" id="edit-city" style="width:100%; padding:6px; border:1px solid #ccc;"></div>
+                <div style="margin-bottom:10px;"><label style="display:block; font-size:12px; color:#777;">Моб. телефон</label><input type="text" id="edit-mobile" style="width:100%; padding:6px; border:1px solid #ccc;"></div>
+                <div style="margin-bottom:10px;"><label style="display:block; font-size:12px; color:#777;">Веб-сайт</label><input type="text" id="edit-website" style="width:100%; padding:6px; border:1px solid #ccc;"></div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:15px;">
+                    <button onclick="saveProfileFull()" style="background:#5E83A9; color:#fff; border:none; padding:8px 20px; cursor:pointer;">💾 Сохранить</button>
+                    <button onclick="closeEditProfile()" style="background:#ccc; color:#333; border:none; padding:8px 20px; cursor:pointer;">Отмена</button>
+                    <input type="file" id="avatar-upload" accept="image/*" style="display:none;" onchange="uploadAvatar()">
+                    <button onclick="document.getElementById('avatar-upload').click()" style="background:#5cb85c; color:#fff; border:none; padding:8px 20px; cursor:pointer;">🖼️ Сменить аву</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div id="edit-profile-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9999;justify-content:center;align-items:center;">
-    <div style="background:#fff;width:90%;max-width:500px;max-height:90vh;overflow-y:auto;border:1px solid #C5D0DB;">
-        <div style="background:linear-gradient(to bottom,#6D98C6,#45739E);color:#fff;padding:8px 15px;font-weight:bold;display:flex;justify-content:space-between;">
-            <span>Редактировать профиль</span>
-            <span onclick="closeEditProfile()" style="cursor:pointer;">×</span>
-        </div>
-        <div style="padding:15px;">
-            <div style="margin-bottom:10px;"><label style="display:block;font-size:12px;color:#777;">Имя</label><input type="text" id="edit-name" style="width:100%;padding:6px;border:1px solid #ccc;"></div>
-            <div style="margin-bottom:10px;"><label style="display:block;font-size:12px;color:#777;">Статус</label><input type="text" id="edit-status-text" style="width:100%;padding:6px;border:1px solid #ccc;"></div>
-            <div style="margin-bottom:10px;"><label style="display:block;font-size:12px;color:#777;">Значок</label><input type="text" id="edit-badge" style="width:100%;padding:6px;border:1px solid #ccc;"></div>
-            <div style="margin-bottom:10px;"><label style="display:block;font-size:12px;color:#777;">Пол</label><select id="edit-gender" style="width:100%;padding:6px;"><option value="">Не указан</option><option value="Мужской">Мужской</option><option value="Женский">Женский</option></select></div>
-            <div style="margin-bottom:10px;"><label style="display:block;font-size:12px;color:#777;">День рождения</label><input type="text" id="edit-birthday" style="width:100%;padding:6px;border:1px solid #ccc;"></div>
-            <div style="margin-bottom:10px;"><label style="display:block;font-size:12px;color:#777;">Родной город</label><input type="text" id="edit-hometown" style="width:100%;padding:6px;border:1px solid #ccc;"></div>
-            <div style="margin-bottom:10px;"><label style="display:block;font-size:12px;color:#777;">Город</label><input type="text" id="edit-city" style="width:100%;padding:6px;border:1px solid #ccc;"></div>
-            <div style="margin-bottom:10px;"><label style="display:block;font-size:12px;color:#777;">Моб. телефон</label><input type="text" id="edit-mobile" style="width:100%;padding:6px;border:1px solid #ccc;"></div>
-            <div style="margin-bottom:10px;"><label style="display:block;font-size:12px;color:#777;">Веб-сайт</label><input type="text" id="edit-website" style="width:100%;padding:6px;border:1px solid #ccc;"></div>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:15px;">
-                <button onclick="saveProfileFull()" style="background:#5E83A9;color:#fff;border:none;padding:8px 20px;cursor:pointer;">💾 Сохранить</button>
-                <button onclick="closeEditProfile()" style="background:#ccc;color:#333;border:none;padding:8px 20px;cursor:pointer;">Отмена</button>
-                <input type="file" id="avatar-upload" accept="image/*" style="display:none;" onchange="uploadAvatar()">
-                <button onclick="document.getElementById('avatar-upload').click()" style="background:#5cb85c;color:#fff;border:none;padding:8px 20px;cursor:pointer;">🖼️ Сменить аву</button>
-            </div>
+    <!-- ФОН РИСУНКА + ПОЛОТНО + ПАНЕЛЬ МЕЛКОВ -->
+    <div id="page-drawing-bg"></div>
+    <canvas id="page-canvas"></canvas>
+
+    <div id="chalk-panel">
+        <div class="chalk-colors" id="chalk-colors"></div>
+        <div class="chalk-tools">
+            <span style="font-size:12px;">Толщина:</span>
+            <input type="range" id="chalk-size" min="2" max="40" value="12" style="width:100px;">
+            <button onclick="clearPageCanvas()" class="danger">🗑 Очистить</button>
+            <button onclick="closeChalkPanel()">Отмена</button>
+            <button onclick="savePageDrawing()" class="green">💾 Сохранить</button>
         </div>
     </div>
-</div>
-
-<div id="page-drawing-bg"></div>
-<canvas id="page-canvas"></canvas>
-<div id="chalk-panel">
-    <div class="chalk-colors" id="chalk-colors"></div>
-    <div class="chalk-tools">
-        <span style="font-size:12px;">Толщина:</span>
-        <input type="range" id="chalk-size" min="2" max="40" value="12" style="width:100px;">
-        <button onclick="clearPageCanvas()" class="danger">🗑 Очистить</button>
-        <button onclick="closeChalkPanel()">Отмена</button>
-        <button onclick="savePageDrawing()" class="green">💾 Сохранить</button>
-    </div>
-</div>
 
 <script>
-var firebaseConfig = {
-    apiKey: "AIzaSyCIBVlQhliefITacCWgtHJlol0s3QWYcZU",
-    authDomain: "vk11-9074e.firebaseapp.com",
-    projectId: "vk11-9074e",
-    messagingSenderId: "24051218089",
-    appId: "1:24051218089:web:1d6fd28d41d21f7a841bb8"
-};
-firebase.initializeApp(firebaseConfig);
-var auth = firebase.auth();
-var db = firebase.firestore();
-
-var currentUser = null;
-var currentChatPartnerId = null;
-var currentChatPartnerName = null;
-var unsubscribeChat = null;
-var unsubscribeWall = null;
-var unsubscribeNews = null;
-var isRegisterMode = false;
-var avatarCache = {};
-var badgeCache = {};
-var attachedVideoUrl = '';
-var attachedVideoTitle = '';
-var attachedVideoFor = '';
-var likesCache = {};
-var openComments = {};
-
-var BADGES = {
-    'developer': { text: 'Разработчик ВКонтакте', cls: 'badge-developer' },
-    'admin':     { text: 'Администратор',         cls: 'badge-admin' },
-    'moder':     { text: 'Модератор',             cls: 'badge-moder' },
-    'ceo':       { text: 'CEO вконтакте',         cls: 'badge-ceo' },
-    'founder':   { text: 'Основатель',            cls: 'badge-founder' }
-};
-
-var GIFTS = [
-    { id: 'rose',   name: '🌹 Роза',     price: 10, img: 'https://artehkk.github.io/vk11/gifts/rose.png' },
-    { id: 'bear',   name: '🧸 Мишка',    price: 15, img: 'https://artehkk.github.io/vk11/gifts/bear.png' },
-    { id: 'cactus', name: '🌵 Кактус',   price: 5,  img: 'https://artehkk.github.io/vk11/gifts/cactus.png' },
-    { id: 'heart',  name: '❤️ Сердечко', price: 20, img: 'https://artehkk.github.io/vk11/gifts/heart.png' },
-    { id: 'egg',    name: '🥚 Яйцо',     price: 8,  img: 'https://artehkk.github.io/vk11/gifts/egg.png' }
-];
-
-var CHALK_COLORS = ['#000000','#FFFFFF','#FF0000','#FF6B35','#FFD700','#00A651','#0099FF','#6A5ACD','#FF69B4','#8B4513','#00CED1','#FF4500'];
-var CHALK_PAGE_COLORS = ['#FFFFFF','#FFD700','#FF6B35','#FF0000','#00A651','#0099FF','#6A5ACD','#FF69B4','#8B4513','#00CED1','#000000','#7CFC00'];
-
-function escapeHtml(text) {
-    if (!text) return "";
-    var map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-    return text.replace(/[&<>"']/g, function(m) { return map[m]; });
-}
-function generateAvatar(userId, name) {
-    if (!userId) userId = 'unknown';
-    var hash = userId.split('').reduce(function(a, b) { a = ((a << 5) - a) + b.charCodeAt(0); return a & a; }, 0);
-    var colors = ['5E83A9', '8A9CB5', 'A1B3C8', '74A0C4', '4B739B'];
-    var color = colors[Math.abs(hash) % colors.length];
-    var letter = (name || '?').charAt(0).toUpperCase();
-    return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='40' fill='%23" + color + "%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='30' font-weight='bold'%3E" + letter + "%3C/text%3E%3C/svg%3E";
-}
-function getUserAvatar(userId, name) {
-    return new Promise(function(resolve) {
-        if (!userId) { resolve(generateAvatar('unknown', name || '?')); return; }
-        if (avatarCache[userId]) { resolve(avatarCache[userId]); return; }
-        db.collection('users').doc(userId).get()
-            .then(function(doc) {
-                var photoURL = doc.exists ? doc.data().photoURL : null;
-                var url = photoURL || generateAvatar(userId, name || (doc.exists ? doc.data().name : '?'));
-                avatarCache[userId] = url;
-                resolve(url);
-            })
-            .catch(function() { var url = generateAvatar(userId, name || '?'); avatarCache[userId] = url; resolve(url); });
-    });
-}
-function getBadgeForUser(userId) {
-    return new Promise(function(resolve) {
-        if (!userId) { resolve(''); return; }
-        if (badgeCache[userId] !== undefined) { resolve(badgeCache[userId]); return; }
-        db.collection('users').doc(userId).get()
-            .then(function(doc) { var b = doc.exists ? (doc.data().badge || '') : ''; badgeCache[userId] = b; resolve(b); })
-            .catch(function() { badgeCache[userId] = ''; resolve(''); });
-    });
-}
-function buildBadgeHtml(badgeCode) {
-    if (!badgeCode) return '';
-    var b = BADGES[badgeCode];
-    if (!b) return '';
-    return ' <span class="user-badge ' + b.cls + '">' + b.text + '</span>';
-}
-function checkFriendship(friendId) {
-    return new Promise(function(resolve) {
-        db.collection('friends').where('userId', '==', currentUser.uid).where('friendId', '==', friendId).get()
-            .then(function(snap) { resolve(!snap.empty); })
-            .catch(function() { resolve(false); });
-    });
-}
-
-/* ===== ПОЛНЫЙ ПРОФИЛЬ ===== */
-function buildProfileHtml(data, avatarUrl, userId, isMe) {
-    var nameHtml = escapeHtml(data.name || 'Пользователь');
-    var badgeHtml = buildBadgeHtml(data.badge);
-    if (isMe) nameHtml += ' <span style="font-size:11px;color:#999;">(это вы)</span>';
-    var html = '<div class="vk-profile-container"><div class="vk-profile-left">';
-    html += '<img src="' + avatarUrl + '" class="vk-profile-photo" onerror="this.src=\'' + generateAvatar(userId, data.name) + '\'">';
-    if (isMe) html += '<div style="font-size:11px;color:#777;text-align:center;">Фотографий: <span id="photo-count">0</span></div>';
-    html += '</div><div class="vk-profile-right">';
-    html += '<div class="vk-profile-name">' + nameHtml + badgeHtml + '</div>';
-    html += '<div class="vk-profile-status">' + (data.status ? escapeHtml(data.status) : '...') + '</div>';
-    html += '<table class="vk-profile-info-table">';
-    if (data.gender)    html += '<tr><td>Пол:</td><td>' + escapeHtml(data.gender) + '</td></tr>';
-    if (data.birthday)  html += '<tr><td>День рождения:</td><td>' + escapeHtml(data.birthday) + '</td></tr>';
-    if (data.hometown)  html += '<tr><td>Родной город:</td><td>' + escapeHtml(data.hometown) + '</td></tr>';
-    if (data.city)      html += '<tr><td>Город:</td><td>' + escapeHtml(data.city) + '</td></tr>';
-    if (data.mobile)    html += '<tr><td>Моб. телефон:</td><td>' + escapeHtml(data.mobile) + '</td></tr>';
-    if (data.website)   html += '<tr><td>Веб-сайт:</td><td>' + escapeHtml(data.website) + '</td></tr>';
-    html += '</table>';
-    if (data.coins !== undefined) html += '<div class="vk-info-section"><div class="vk-info-section-title">Игровая валюта</div><div class="vk-info-section-content">💰 <b>' + data.coins + ' монет</b></div></div>';
-    if (data.chalks !== undefined) html += '<div class="vk-info-section"><div class="vk-info-section-title">🎨 Мелки</div><div class="vk-info-section-content">🖍️ <b>' + data.chalks + ' мелков</b></div></div>';
-    if (data.activity)  html += '<div class="vk-info-section"><div class="vk-info-section-title">Деятельность</div><div class="vk-info-section-content">' + escapeHtml(data.activity) + '</div></div>';
-    if (data.interests) html += '<div class="vk-info-section"><div class="vk-info-section-title">Интересы</div><div class="vk-info-section-content">' + escapeHtml(data.interests) + '</div></div>';
-    if (data.music)     html += '<div class="vk-info-section"><div class="vk-info-section-title">Любимая музыка</div><div class="vk-info-section-content">' + escapeHtml(data.music) + '</div></div>';
-    if (data.films)     html += '<div class="vk-info-section"><div class="vk-info-section-title">Любимые фильмы</div><div class="vk-info-section-content">' + escapeHtml(data.films) + '</div></div>';
-    if (data.books)     html += '<div class="vk-info-section"><div class="vk-info-section-title">Любимые книги</div><div class="vk-info-section-content">' + escapeHtml(data.books) + '</div></div>';
-    if (data.about)     html += '<div class="vk-info-section"><div class="vk-info-section-title">О себе</div><div class="vk-info-section-content">' + escapeHtml(data.about) + '</div></div>';
-    if (data.political) html += '<div class="vk-info-section"><div class="vk-info-section-title">Политические предпочтения</div><div class="vk-info-section-content">' + escapeHtml(data.political) + '</div></div>';
-    if (data.religion)  html += '<div class="vk-info-section"><div class="vk-info-section-title">Религиозные взгляды</div><div class="vk-info-section-content">' + escapeHtml(data.religion) + '</div></div>';
-    if (data.quotes)    html += '<div class="vk-info-section"><div class="vk-info-section-title">Цитаты</div><div class="vk-info-section-content">' + escapeHtml(data.quotes) + '</div></div>';
-    html += '<div style="margin-top:10px;">';
-    if (isMe) {
-        html += '<button class="edit-btn" onclick="openEditProfile()">⚙️ Редактировать</button>';
-        html += '<button class="edit-btn" onclick="openDrawingModal()" style="background:#5cb85c;color:#fff;">🎨 Рисовать</button>';
-        html += '<button class="edit-btn" onclick="openChalkPanel()" style="background:#f0ad4e;color:#4a3500;">🖍️ Нарисовать на странице</button>';
-    } else {
-        html += '<button class="edit-btn" onclick="openChat(\'' + userId + '\')" style="background:#5E83A9;color:#fff;">✉️ Написать</button>';
-    }
-    html += '</div></div></div>';
-    return html;
-}
-
-function buildMobileProfileHtml(data, avatarUrl, userId, isMe) {
-    var nameHtml = escapeHtml(data.name || 'Пользователь');
-    var badgeHtml = buildBadgeHtml(data.badge);
-    var html = '<div class="vk-mob-profile-header">';
-    html += '<img src="' + avatarUrl + '" class="vk-mob-profile-avatar" onerror="this.src=\'' + generateAvatar(userId, data.name) + '\'">';
-    html += '<div class="vk-mob-profile-right"><div class="vk-mob-profile-name">' + nameHtml + badgeHtml + '</div>';
-    if (data.status) html += '<div class="vk-mob-profile-status">' + escapeHtml(data.status) + '</div>';
-    html += '</div></div>';
-    html += '<div class="vk-mob-profile-stats">';
-    html += '<div class="vk-mob-stat-block" onclick="switchMobTab(\'friends\')"><div class="vk-mob-stat-num">' + (data.friendsCount || 0) + '</div><div class="vk-mob-stat-label">друзей</div></div>';
-    html += '<div class="vk-mob-stat-block" onclick="switchMobTab(\'photos\')"><div class="vk-mob-stat-num">' + (data.photosCount || 0) + '</div><div class="vk-mob-stat-label">фото</div></div>';
-    html += '<div class="vk-mob-stat-block" onclick="switchMobTab(\'drawings\')"><div class="vk-mob-stat-num">🖍️ ' + (data.chalks || 0) + '</div><div class="vk-mob-stat-label">мелков</div></div>';
-    html += '</div>';
-    html += '<div class="vk-mob-btn-row">';
-    if (isMe) {
-        html += '<button class="vk-mob-btn" onclick="openMobilePostForm()">✎ Написать</button>';
-        html += '<button class="vk-mob-btn" onclick="openDrawingModal()" style="background:#5cb85c;">🎨 Рисовать</button>';
-        html += '<button class="vk-mob-btn" onclick="openChalkPanel()" style="background:#f0ad4e;">🖍️ На странице</button>';
-        html += '<button class="vk-mob-btn" onclick="openEditProfile()">⚙ Ред.</button>';
-        html += '<button class="vk-mob-btn" onclick="openSideMenu()">☰</button>';
-    } else {
-        html += '<button class="vk-mob-btn" onclick="openChat(\'' + userId + '\')">✉ Написать</button>';
-    }
-    html += '</div>';
-    var contactHtml = '';
-    if (data.city)    contactHtml += '<div>Город: <b>' + escapeHtml(data.city) + '</b></div>';
-    if (data.mobile)  contactHtml += '<div>Моб. телефон: <b>' + escapeHtml(data.mobile) + '</b></div>';
-    if (data.website) contactHtml += '<div>Веб-сайт: <b>' + escapeHtml(data.website) + '</b></div>';
-    if (contactHtml) html += '<div class="vk-mob-section"><div class="vk-mob-section-title">Контактная информация</div><div class="vk-mob-section-content">' + contactHtml + '</div></div>';
-    if (data.coins !== undefined) html += '<div class="vk-mob-section"><div class="vk-mob-section-title">Игровая валюта</div><div class="vk-mob-section-content">💰 <b>' + data.coins + ' монет</b></div></div>';
-    if (data.chalks !== undefined) html += '<div class="vk-mob-section"><div class="vk-mob-section-title">🎨 Мелки</div><div class="vk-mob-section-content">🖍️ <b>' + data.chalks + ' мелков</b></div></div>';
-    if (data.activity)  html += '<div class="vk-mob-section"><div class="vk-mob-section-title">Деятельность</div><div class="vk-mob-section-content">' + escapeHtml(data.activity) + '</div></div>';
-    if (data.interests) html += '<div class="vk-mob-section"><div class="vk-mob-section-title">Интересы</div><div class="vk-mob-section-content">' + escapeHtml(data.interests) + '</div></div>';
-    if (data.music)     html += '<div class="vk-mob-section"><div class="vk-mob-section-title">Любимая музыка</div><div class="vk-mob-section-content">' + escapeHtml(data.music) + '</div></div>';
-    if (data.films)     html += '<div class="vk-mob-section"><div class="vk-mob-section-title">Любимые фильмы</div><div class="vk-mob-section-content">' + escapeHtml(data.films) + '</div></div>';
-    if (data.books)     html += '<div class="vk-mob-section"><div class="vk-mob-section-title">Любимые книги</div><div class="vk-mob-section-content">' + escapeHtml(data.books) + '</div></div>';
-    if (data.about)     html += '<div class="vk-mob-section"><div class="vk-mob-section-title">О себе</div><div class="vk-mob-section-content">' + escapeHtml(data.about) + '</div></div>';
-    if (data.political) html += '<div class="vk-mob-section"><div class="vk-mob-section-title">Политические предпочтения</div><div class="vk-mob-section-content">' + escapeHtml(data.political) + '</div></div>';
-    if (data.religion)  html += '<div class="vk-mob-section"><div class="vk-mob-section-title">Религиозные взгляды</div><div class="vk-mob-section-content">' + escapeHtml(data.religion) + '</div></div>';
-    if (data.quotes)    html += '<div class="vk-mob-section"><div class="vk-mob-section-title">Цитаты</div><div class="vk-mob-section-content">' + escapeHtml(data.quotes) + '</div></div>';
-    return html;
-}
-
-/* ===== РИСОВАНИЕ В МОДАЛКЕ (старое, "Моё творчество") ===== */
-var drawingCanvas, drawingCtx, drawingHistory = [];
-var currentColor = '#000000';
-var currentBrushSize = 5;
-var isDrawing = false;
-var lastX = 0, lastY = 0;
-
-function openDrawingModal() {
-    db.collection('users').doc(currentUser.uid).get().then(function(doc) {
-        var chalks = (doc.data() || {}).chalks || 0;
-        if (chalks <= 0) { alert("У вас нет мелков!"); return; }
-        document.getElementById('drawing-chalks-count').innerText = chalks;
-        document.getElementById('drawing-modal').style.display = 'flex';
-        initCanvas();
-    });
-}
-function closeDrawingModal() { document.getElementById('drawing-modal').style.display = 'none'; drawingHistory = []; }
-function initCanvas() {
-    drawingCanvas = document.getElementById('drawing-canvas');
-    drawingCtx = drawingCanvas.getContext('2d');
-    drawingCtx.fillStyle = '#FFFFFF';
-    drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-    drawingHistory = []; saveCanvasState();
-    var paletteEl = document.getElementById('color-palette');
-    paletteEl.innerHTML = '';
-    CHALK_COLORS.forEach(function(color, idx) {
-        var sw = document.createElement('div');
-        sw.className = 'color-swatch' + (idx === 0 ? ' active' : '');
-        sw.style.background = color;
-        sw.onclick = function() {
-            currentColor = color;
-            document.querySelectorAll('.color-swatch').forEach(function(s) { s.classList.remove('active'); });
-            sw.classList.add('active');
-        };
-        paletteEl.appendChild(sw);
-    });
-    var sizeRange = document.getElementById('brush-size-range');
-    sizeRange.oninput = function() {
-        currentBrushSize = parseInt(this.value);
-        document.getElementById('brush-size-value').innerText = this.value + 'px';
+    var firebaseConfig = {
+        apiKey: "AIzaSyCIBVlQhliefITacCWgtHJlol0s3QWYcZU",
+        authDomain: "vk11-9074e.firebaseapp.com",
+        projectId: "vk11-9074e",
+        messagingSenderId: "24051218089",
+        appId: "1:24051218089:web:1d6fd28d41d21f7a841bb8"
     };
-    drawingCanvas.onmousedown = startDrawing;
-    drawingCanvas.onmousemove = drawMove;
-    drawingCanvas.onmouseup = stopDrawing;
-    drawingCanvas.onmouseout = stopDrawing;
-    drawingCanvas.ontouchstart = function(e) { e.preventDefault(); startDrawing(e.touches[0]); };
-    drawingCanvas.ontouchmove = function(e) { e.preventDefault(); drawMove(e.touches[0]); };
-    drawingCanvas.ontouchend = stopDrawing;
-}
-function getCanvasCoords(e) {
-    var rect = drawingCanvas.getBoundingClientRect();
-    var scaleX = drawingCanvas.width / rect.width;
-    var scaleY = drawingCanvas.height / rect.height;
-    return { x: (e.clientX - rect.left) * scaleX, y: (e.clientY - rect.top) * scaleY };
-}
-function startDrawing(e) { isDrawing = true; var c = getCanvasCoords(e); lastX = c.x; lastY = c.y; }
-function drawMove(e) {
-    if (!isDrawing) return;
-    var c = getCanvasCoords(e);
-    drawingCtx.beginPath();
-    drawingCtx.strokeStyle = currentColor;
-    drawingCtx.lineWidth = currentBrushSize;
-    drawingCtx.lineCap = 'round';
-    drawingCtx.lineJoin = 'round';
-    drawingCtx.moveTo(lastX, lastY);
-    drawingCtx.lineTo(c.x, c.y);
-    drawingCtx.stroke();
-    lastX = c.x; lastY = c.y;
-}
-function stopDrawing() { if (isDrawing) { isDrawing = false; saveCanvasState(); } }
-function saveCanvasState() {
-    try { drawingHistory.push(drawingCanvas.toDataURL()); if (drawingHistory.length > 20) drawingHistory.shift(); } catch (e) {}
-}
-function clearCanvas() {
-    if (!confirm("Очистить холст?")) return;
-    drawingCtx.fillStyle = '#FFFFFF';
-    drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-    saveCanvasState();
-}
-function undoDraw() {
-    if (drawingHistory.length <= 1) return;
-    drawingHistory.pop();
-    var prev = drawingHistory[drawingHistory.length - 1];
-    var img = new Image();
-    img.onload = function() { drawingCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height); drawingCtx.drawImage(img, 0, 0); };
-    img.src = prev;
-}
-function publishDrawing() {
-    db.collection('users').doc(currentUser.uid).get().then(function(doc) {
-        var chalks = (doc.data() || {}).chalks || 0;
-        if (chalks <= 0) { alert("Нет мелков!"); return; }
-        var btn = document.getElementById('publish-drawing-btn');
-        btn.disabled = true; btn.innerText = '...';
-        var dataUrl = drawingCanvas.toDataURL('image/png');
-        db.collection('drawings').add({ userId: currentUser.uid, userName: currentUser.displayName, imageURL: dataUrl, createdAt: firebase.firestore.FieldValue.serverTimestamp() })
-            .then(function() { return db.collection('users').doc(currentUser.uid).update({ chalks: firebase.firestore.FieldValue.increment(-1) }); })
-            .then(function() {
-                alert('🎨 Рисунок опубликован!');
-                closeDrawingModal(); loadUserProfile();
-                if (window.innerWidth <= 768) renderMobileDrawings();
-                else { renderDesktopDrawings(); renderDesktopWall(); }
-            })
-            .catch(function(e) { alert("Ошибка: " + e.message); })
-            .finally(function() { btn.disabled = false; btn.innerText = '📤 Опубликовать (1 мелок)'; });
-    });
-}
-function renderDesktopDrawings() {
-    var container = document.getElementById('desk-drawings-list');
-    if (!container) return;
-    db.collection('users').doc(currentUser.uid).get().then(function(doc) {
-        document.getElementById('desk-drawings-chalks').innerText = (doc.data() || {}).chalks || 0;
-    });
-    db.collection('drawings').where('userId', '==', currentUser.uid).get()
-        .then(function(snap) {
-            if (snap.empty) { container.innerHTML = '<div style="padding:20px;color:#777;">У вас пока нет рисунков.</div>'; return; }
-            var arr = [];
-            snap.forEach(function(doc) { arr.push(doc.data()); });
-            arr.sort(function(a, b) {
-                var ta = a.createdAt && a.createdAt.toDate ? a.createdAt.toDate().getTime() : 0;
-                var tb = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate().getTime() : 0;
-                return tb - ta;
-            });
-            var html = '';
-            arr.forEach(function(d) {
-                var date = d.createdAt ? d.createdAt.toDate().toLocaleString('ru-RU') : '';
-                html += '<div class="my-drawing-item"><img src="' + d.imageURL + '"><div class="date">' + date + '</div></div>';
-            });
-            container.innerHTML = html;
-        })
-        .catch(function(e) { container.innerHTML = '<div style="padding:20px;color:#d9534f;">Ошибка: ' + e.message + '</div>'; });
-}
-function renderMobileDrawings() {
-    var container = document.getElementById('mobile-drawings-list');
-    if (!container) return;
-    db.collection('users').doc(currentUser.uid).get().then(function(doc) {
-        document.getElementById('mob-drawings-chalks').innerText = (doc.data() || {}).chalks || 0;
-    });
-    db.collection('drawings').where('userId', '==', currentUser.uid).get()
-        .then(function(snap) {
-            if (snap.empty) { container.innerHTML = '<div class="mobile-empty"><h3>Пока нет рисунков</h3></div>'; return; }
-            var arr = [];
-            snap.forEach(function(doc) { arr.push(doc.data()); });
-            arr.sort(function(a, b) {
-                var ta = a.createdAt && a.createdAt.toDate ? a.createdAt.toDate().getTime() : 0;
-                var tb = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate().getTime() : 0;
-                return tb - ta;
-            });
-            var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">';
-            arr.forEach(function(d) {
-                html += '<div style="border:1px solid #C8D0D8;background:#fff;padding:3px;"><img src="' + d.imageURL + '" style="width:100%;display:block;"></div>';
-            });
-            html += '</div>';
-            container.innerHTML = html;
-        })
-        .catch(function(e) { container.innerHTML = '<div class="mobile-empty"><h3 style="color:#d9534f;">Ошибка: ' + e.message + '</h3></div>'; });
-}
+    firebase.initializeApp(firebaseConfig);
+    var auth = firebase.auth();
+    var db = firebase.firestore();
 
-/* ===== ФИКС: МОИ ФОТОГРАФИИ ===== */
-function renderDesktopPhotos() {
-    var container = document.getElementById('desk-photos-list');
-    if (!container) return;
-    container.innerHTML = '<div style="padding:20px;color:#777;grid-column:1/-1;">Загрузка...</div>';
-    db.collection('photos').where('userId', '==', currentUser.uid).get()
-        .then(function(snap) {
-            if (snap.empty) {
-                container.innerHTML = '<div style="padding:20px;color:#777;grid-column:1/-1;">У вас пока нет фотографий. Они появятся здесь после публикации постов с фото.</div>';
-                return;
-            }
-            var arr = [];
-            snap.forEach(function(doc) { arr.push(doc.data()); });
-            arr.sort(function(a, b) {
-                var ta = a.createdAt && a.createdAt.toDate ? a.createdAt.toDate().getTime() : 0;
-                var tb = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate().getTime() : 0;
-                return tb - ta;
-            });
-            var html = '';
-            arr.forEach(function(p) {
-                if (!p.imageURL) return;
-                html += '<div style="border:1px solid #C5D0DB;background:#f9f9f9;padding:5px;">' +
-                        '<img src="' + p.imageURL + '" style="width:100%;height:150px;object-fit:cover;display:block;">' +
-                        '</div>';
-            });
-            container.innerHTML = html;
-        })
-        .catch(function(e) {
-            container.innerHTML = '<div style="padding:20px;color:#d9534f;grid-column:1/-1;">Ошибка: ' + e.message + '</div>';
+    var currentUser = null;
+    var currentChatPartnerId = null;
+    var currentChatPartnerName = null;
+    var unsubscribeChat = null;
+    var unsubscribeWall = null;
+    var unsubscribeNews = null;
+    var isRegisterMode = false;
+    var avatarCache = {};
+    var badgeCache = {};
+    var attachedVideoUrl = '';
+    var attachedVideoTitle = '';
+    var attachedVideoFor = '';
+    var likesCache = {};
+    var openComments = {};
+
+    var BADGES = {
+        'developer': { text: 'Разработчик ВКонтакте', cls: 'badge-developer' },
+        'admin':     { text: 'Администратор',         cls: 'badge-admin' },
+        'moder':     { text: 'Модератор',             cls: 'badge-moder' },
+        'ceo':       { text: 'CEO вконтакте',         cls: 'badge-ceo' },
+        'founder':   { text: 'Основатель',            cls: 'badge-founder' }
+    };
+
+    var GIFTS = [
+        { id: 'rose',   name: '🌹 Роза',     price: 10, img: 'https://artehkk.github.io/vk11/gifts/rose.png' },
+        { id: 'bear',   name: '🧸 Мишка',    price: 15, img: 'https://artehkk.github.io/vk11/gifts/bear.png' },
+        { id: 'cactus', name: '🌵 Кактус',   price: 5,  img: 'https://artehkk.github.io/vk11/gifts/cactus.png' },
+        { id: 'heart',  name: '❤️ Сердечко', price: 20, img: 'https://artehkk.github.io/vk11/gifts/heart.png' },
+        { id: 'egg',    name: '🥚 Яйцо',     price: 8,  img: 'https://artehkk.github.io/vk11/gifts/egg.png' }
+    ];
+
+    var CHALK_COLORS = ['#000000','#FFFFFF','#FF0000','#FF6B35','#FFD700','#00A651','#0099FF','#6A5ACD','#FF69B4','#8B4513','#00CED1','#FF4500'];
+    var CHALK_PAGE_COLORS = ['#FFFFFF','#FFD700','#FF6B35','#FF0000','#00A651','#0099FF','#6A5ACD','#FF69B4','#8B4513','#00CED1','#000000','#7CFC00'];
+
+    function escapeHtml(text) {
+        if (!text) return "";
+        var map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+    }
+
+    function generateAvatar(userId, name) {
+        if (!userId) userId = 'unknown';
+        var hash = userId.split('').reduce(function(a, b) { a = ((a << 5) - a) + b.charCodeAt(0); return a & a; }, 0);
+        var colors = ['5E83A9', '8A9CB5', 'A1B3C8', '74A0C4', '4B739B'];
+        var color = colors[Math.abs(hash) % colors.length];
+        var letter = (name || '?').charAt(0).toUpperCase();
+        return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='40' fill='%23" + color + "'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='30' font-weight='bold'%3E" + letter + "%3C/text%3E%3C/svg%3E";
+    }
+
+    function getUserAvatar(userId, name) {
+        return new Promise(function(resolve) {
+            if (!userId) { resolve(generateAvatar('unknown', name || '?')); return; }
+            if (avatarCache[userId]) { resolve(avatarCache[userId]); return; }
+            db.collection('users').doc(userId).get()
+                .then(function(doc) {
+                    var photoURL = doc.exists ? doc.data().photoURL : null;
+                    var url = photoURL || generateAvatar(userId, name || (doc.exists ? doc.data().name : '?'));
+                    avatarCache[userId] = url;
+                    resolve(url);
+                })
+                .catch(function() {
+                    var url = generateAvatar(userId, name || '?');
+                    avatarCache[userId] = url;
+                    resolve(url);
+                });
         });
-}
-function renderMobilePhotos() {
-    var container = document.getElementById('mobile-photos-list');
-    if (!container) return;
-    container.innerHTML = '<div class="mobile-empty"><h3>Загрузка...</h3></div>';
-    db.collection('photos').where('userId', '==', currentUser.uid).get()
-        .then(function(snap) {
-            if (snap.empty) {
-                container.innerHTML = '<div class="mobile-empty"><h3>Пока нет фотографий</h3><div style="font-size:12px;color:#8899AA;margin-top:6px;">Они появятся здесь после постов с фото</div></div>';
-                return;
-            }
-            var arr = [];
-            snap.forEach(function(doc) { arr.push(doc.data()); });
-            arr.sort(function(a, b) {
-                var ta = a.createdAt && a.createdAt.toDate ? a.createdAt.toDate().getTime() : 0;
-                var tb = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate().getTime() : 0;
-                return tb - ta;
-            });
-            var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">';
-            arr.forEach(function(p) {
-                if (!p.imageURL) return;
-                html += '<div style="border:1px solid #C8D0D8;background:#fff;padding:3px;">' +
-                        '<img src="' + p.imageURL + '" style="width:100%;display:block;">' +
-                        '</div>';
-            });
-            html += '</div>';
-            container.innerHTML = html;
-        })
-        .catch(function(e) {
-            container.innerHTML = '<div class="mobile-empty"><h3 style="color:#d9534f;">Ошибка: ' + e.message + '</h3></div>';
+    }
+
+    function getBadgeForUser(userId) {
+        return new Promise(function(resolve) {
+            if (!userId) { resolve(''); return; }
+            if (badgeCache[userId] !== undefined) { resolve(badgeCache[userId]); return; }
+            db.collection('users').doc(userId).get()
+                .then(function(doc) {
+                    var b = doc.exists ? (doc.data().badge || '') : '';
+                    badgeCache[userId] = b;
+                    resolve(b);
+                })
+                .catch(function() { badgeCache[userId] = ''; resolve(''); });
         });
-}
+    }
 
-/* ===== РИСОВАНИЕ НА СТРАНИЦЕ МЕЛКАМИ ===== */
-var pageCanvas, pageCtx, pageDrawing = false, pageLastX = 0, pageLastY = 0;
-var pageColor = '#FFFFFF', pageSize = 12;
+    function buildBadgeHtml(badgeCode) {
+        if (!badgeCode) return '';
+        var b = BADGES[badgeCode];
+        if (!b) return '';
+        return ' <span class="user-badge ' + b.cls + '">' + b.text + '</span>';
+    }
 
-function openChalkPanel() {
-    if (!currentUser) { alert('Сначала войдите'); return; }
-    var panel = document.getElementById('chalk-panel');
-    var canvas = document.getElementById('page-canvas');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    pageCanvas = canvas;
-    pageCtx = canvas.getContext('2d');
-    pageCtx.clearRect(0, 0, canvas.width, canvas.height);
+    function checkFriendship(friendId) {
+        return new Promise(function(resolve) {
+            db.collection('friends')
+                .where('userId', '==', currentUser.uid)
+                .where('friendId', '==', friendId)
+                .get()
+                .then(function(snap) { resolve(!snap.empty); })
+                .catch(function() { resolve(false); });
+        });
+    }
 
-    // загрузить сохранённый рисунок как фон
-    db.collection('users').doc(currentUser.uid).get().then(function(doc) {
-        var bg = (doc.data() || {}).pageDrawing;
-        if (bg) {
-            var img = new Image();
-            img.onload = function() { pageCtx.drawImage(img, 0, 0, canvas.width, canvas.height); };
-            img.src = bg;
+
+    function buildProfileHtml(data, avatarUrl, userId, isMe) {
+        function row(label, val) {
+            return '<tr><td>' + label + ':</td><td>' + (val ? escapeHtml(val) : '<span style="color:#aaa;">—</span>') + '</td></tr>';
         }
-    });
-
-    var colorsBox = document.getElementById('chalk-colors');
-    colorsBox.innerHTML = '';
-    CHALK_PAGE_COLORS.forEach(function(c, i) {
-        var sw = document.createElement('div');
-        sw.className = 'chalk-swatch' + (i === 0 ? ' active' : '');
-        sw.style.background = c;
-        sw.onclick = function() {
-            pageColor = c;
-            document.querySelectorAll('#chalk-colors .chalk-swatch').forEach(function(s) { s.classList.remove('active'); });
-            sw.classList.add('active');
-        };
-        colorsBox.appendChild(sw);
-    });
-
-    var sizeRange = document.getElementById('chalk-size');
-    sizeRange.oninput = function() { pageSize = parseInt(this.value); };
-
-    canvas.onmousedown = startPageDraw;
-    canvas.onmousemove = movePageDraw;
-    canvas.onmouseup = stopPageDraw;
-    canvas.onmouseout = stopPageDraw;
-    canvas.ontouchstart = function(e) { e.preventDefault(); startPageDraw(e.touches[0]); };
-    canvas.ontouchmove = function(e) { e.preventDefault(); movePageDraw(e.touches[0]); };
-    canvas.ontouchend = stopPageDraw;
-
-    canvas.classList.add('open');
-    panel.classList.add('open');
-}
-function closeChalkPanel() {
-    document.getElementById('chalk-panel').classList.remove('open');
-    document.getElementById('page-canvas').classList.remove('open');
-}
-function getPageCoords(e) {
-    var rect = pageCanvas.getBoundingClientRect();
-    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
-}
-function startPageDraw(e) { pageDrawing = true; var c = getPageCoords(e); pageLastX = c.x; pageLastY = c.y; }
-function movePageDraw(e) {
-    if (!pageDrawing) return;
-    var c = getPageCoords(e);
-    pageCtx.beginPath();
-    pageCtx.strokeStyle = pageColor;
-    pageCtx.lineWidth = pageSize;
-    pageCtx.lineCap = 'round';
-    pageCtx.lineJoin = 'round';
-    pageCtx.moveTo(pageLastX, pageLastY);
-    pageCtx.lineTo(c.x, c.y);
-    pageCtx.stroke();
-    pageLastX = c.x; pageLastY = c.y;
-}
-function stopPageDraw() { pageDrawing = false; }
-function clearPageCanvas() {
-    if (!confirm('Очистить рисунок?')) return;
-    pageCtx.clearRect(0, 0, pageCanvas.width, pageCanvas.height);
-}
-function savePageDrawing() {
-    if (!currentUser) return;
-    var dataUrl = pageCanvas.toDataURL('image/png');
-    db.collection('users').doc(currentUser.uid).update({ pageDrawing: dataUrl })
-        .then(function() {
-            alert('✅ Рисунок сохранён на вашей странице!');
-            closeChalkPanel();
-            renderPageDrawingBg();
-        })
-        .catch(function(e) { alert('Ошибка: ' + e.message); });
-}
-function renderPageDrawingBg() {
-    if (!currentUser) return;
-    db.collection('users').doc(currentUser.uid).get().then(function(doc) {
-        var bg = (doc.data() || {}).pageDrawing;
-        var el = document.getElementById('page-drawing-bg');
-        if (bg) {
-            el.style.backgroundImage = 'url(' + bg + ')';
-            el.style.display = 'block';
+        function section(title, val) {
+            return '<div class="vk-info-section"><div class="vk-info-section-title">' + title + '</div><div class="vk-info-section-content">' + (val ? escapeHtml(val) : '<span style="color:#aaa;">—</span>') + '</div></div>';
+        }
+        var nameHtml = escapeHtml(data.name || 'Пользователь');
+        var badgeHtml = buildBadgeHtml(data.badge);
+        if (isMe) nameHtml += ' <span style="font-size:11px;color:#999;">(это вы)</span>';
+        var html = '<div class="vk-profile-container"><div class="vk-profile-left">';
+        html += '<img src="' + avatarUrl + '" class="vk-profile-photo" onerror="this.src=\'' + generateAvatar(userId, data.name) + '\'">';
+        if (isMe) html += '<div style="font-size:11px;color:#777;text-align:center;">Фотографий: ' + (data.photosCount || 0) + '</div>';
+        html += '</div><div class="vk-profile-right">';
+        html += '<div class="vk-profile-name">' + nameHtml + badgeHtml + '</div>';
+        html += '<div class="vk-profile-status">' + (data.status ? escapeHtml(data.status) : '<span style="color:#aaa;">Статус не указан</span>') + '</div>';
+        html += '<table class="vk-profile-info-table">';
+        html += row('Пол', data.gender);
+        html += row('День рождения', data.birthday);
+        html += row('Родной город', data.hometown);
+        html += row('Город', data.city);
+        html += row('Моб. телефон', data.mobile);
+        html += row('Веб-сайт', data.website);
+        html += '</table>';
+        html += section('Игровая валюта', (data.coins !== undefined ? '💰 ' + data.coins + ' монет' : ''));
+        html += section('🎨 Мелки', (data.chalks !== undefined ? '🖍️ ' + data.chalks + ' мелков' : ''));
+        html += section('Деятельность', data.activity);
+        html += section('Интересы', data.interests);
+        html += section('Любимая музыка', data.music);
+        html += section('Любимые фильмы', data.films);
+        html += section('Любимые книги', data.books);
+        html += section('О себе', data.about);
+        html += section('Политические предпочтения', data.political);
+        html += section('Религиозные взгляды', data.religion);
+        html += section('Цитаты', data.quotes);
+        html += '<div style="margin-top:10px;">';
+        if (isMe) {
+            html += '<button class="edit-btn" onclick="openEditProfile()">⚙️ Редактировать</button>';
+            html += '<button class="edit-btn" onclick="openDrawingModal()" style="background:#5cb85c;color:#fff;">🎨 Рисовать</button>';
+            html += '<button class="edit-btn" onclick="openChalkPanel()" style="background:#f0ad4e;color:#4a3500;">🖍️ Нарисовать на странице</button>';
         } else {
-            el.style.display = 'none';
+            html += '<button class="edit-btn" onclick="openChat(\'' + userId + '\')" style="background:#5E83A9;color:#fff;">✉️ Написать</button>';
         }
-    });
-}
-
-/* ===== ОСТАЛЬНОЕ ===== */
-function addFriend(friendId, friendName) {
-    db.collection('friends').where('userId', '==', currentUser.uid).where('friendId', '==', friendId).get()
-        .then(function(snap) {
-            if (!snap.empty) { alert('Уже в друзьях'); return; }
-            db.collection('friends').add({ userId: currentUser.uid, friendId: friendId, friendName: friendName, createdAt: firebase.firestore.FieldValue.serverTimestamp() })
-                .then(function() {
-                    alert('✅ ' + friendName + ' добавлен в друзья!');
-                    if (window.innerWidth <= 768) { renderMobileFriends(); renderMobilePeople(''); }
-                    else { renderDesktopFriends(''); renderDesktopPeople(''); }
-                });
-        });
-}
-function removeFriend(friendId, friendName) {
-    if (!confirm('Удалить ' + friendName + ' из друзей?')) return;
-    db.collection('friends').where('userId', '==', currentUser.uid).where('friendId', '==', friendId).get()
-        .then(function(snap) {
-            var batch = db.batch();
-            snap.forEach(function(doc) { batch.delete(doc.ref); });
-            batch.commit().then(function() {
-                alert('✅ Удалён');
-                if (window.innerWidth <= 768) { renderMobileFriends(); renderMobilePeople(''); }
-                else { renderDesktopFriends(''); renderDesktopPeople(''); }
-            });
-        });
-}
-
-function toggleAuthMode() {
-    isRegisterMode = !isRegisterMode;
-    var btn = document.getElementById('auth-btn');
-    if (isRegisterMode) { btn.innerText = "Sign up"; document.querySelector('.auth-intro').innerText = "Create a new account."; }
-    else { btn.innerText = "Log in"; document.querySelector('.auth-intro').innerText = "Our mobile version lets you stay in touch even when you're far from your computer."; }
-}
-function handleAuth() {
-    var name = document.getElementById('auth-name').value.trim();
-    var pass = document.getElementById('auth-pass').value.trim();
-    document.getElementById('auth-error').style.display = 'none';
-    if (!name || !pass) { showAuthError("Заполните поля!"); return; }
-    if (pass.length < 6) { showAuthError("Пароль минимум 6 символов!"); return; }
-    if (name.length < 2) { showAuthError("Имя минимум 2 символа!"); return; }
-    if (isRegisterMode) {
-        var newEmail = name + "_" + Date.now() + "@vkclone.local";
-        auth.createUserWithEmailAndPassword(newEmail, pass)
-            .then(function(cred) {
-                cred.user.updateProfile({ displayName: name });
-                return db.collection('users').doc(cred.user.uid).set({
-                    name: name, email: newEmail, city: "", status: "", about: "", photoURL: "",
-                    coins: 100, chalks: 50, gender: "", birthday: "", hometown: "", political: "", religion: "",
-                    mobile: "", website: "", activity: "", interests: "", music: "", films: "", books: "",
-                    quotes: "", badge: "", pageDrawing: "", createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-            })
-            .then(function() { alert("Аккаунт создан! Даётся 100 монет и 50 мелков."); currentUser = auth.currentUser; enterApp(); })
-            .catch(function(e) { showAuthError("Ошибка: " + e.message); });
-    } else {
-        db.collection('users').where('name', '==', name).get()
-            .then(function(snap) {
-                if (snap.empty) { showAuthError("Пользователь не найден."); return; }
-                var userData = snap.docs[0].data();
-                var realEmail = userData.email;
-                if (!realEmail) { showAuthError("Нет email."); return; }
-                auth.signInWithEmailAndPassword(realEmail, pass)
-                    .then(function() { currentUser = auth.currentUser; enterApp(); })
-                    .catch(function(e) {
-                        if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') showAuthError("Неверный пароль!");
-                        else if (e.code === 'auth/user-not-found') showAuthError("Пользователь не найден.");
-                        else showAuthError("Ошибка: " + e.message);
-                    });
-            });
+        html += '</div></div></div>';
+        return html;
     }
-}
-function showAuthError(msg) { var el = document.getElementById('auth-error'); el.innerText = msg; el.style.display = 'block'; }
 
-function logout() {
-    if (unsubscribeChat) unsubscribeChat();
-    if (unsubscribeWall) unsubscribeWall();
-    if (unsubscribeNews) unsubscribeNews();
-    auth.signOut(); currentUser = null; avatarCache = {}; badgeCache = {}; location.reload();
-}
-
-function enterApp() {
-    document.getElementById('auth-screen').style.display = 'none';
-    if (window.innerWidth <= 768) {
-        document.getElementById('desktop-app').style.display = 'none';
-        document.getElementById('mobile-app').style.display = 'block';
-        loadUserProfile();
-        switchMobTab('wall');
-    } else {
-        document.getElementById('desktop-app').style.display = 'block';
-        document.getElementById('mobile-app').style.display = 'none';
-        showDeskPage('wall');
+    function buildMobileProfileHtml(data, avatarUrl, userId, isMe) {
+        var nameHtml = escapeHtml(data.name || 'Пользователь');
+        var badgeHtml = buildBadgeHtml(data.badge);
+        var html = '<div class="vk-mob-profile-header">';
+        html += '<img src="' + avatarUrl + '" class="vk-mob-profile-avatar" onerror="this.src=\'' + generateAvatar(userId, data.name) + '\'">';
+        html += '<div><div class="vk-mob-profile-name">' + nameHtml + badgeHtml + '</div>';
+        if (data.status) html += '<div class="vk-mob-profile-status">' + escapeHtml(data.status) + '</div>';
+        html += '</div></div>';
+        html += '<div class="vk-mob-profile-stats">';
+        html += '<div class="vk-mob-stat-block" onclick="switchMobTab(\'friends\')"><div class="vk-mob-stat-num">' + (data.friendsCount || 0) + '</div><div class="vk-mob-stat-label">друзей</div></div>';
+        html += '<div class="vk-mob-stat-block" onclick="switchMobTab(\'photos\')"><div class="vk-mob-stat-num">' + (data.photosCount || 0) + '</div><div class="vk-mob-stat-label">фото</div></div>';
+        html += '<div class="vk-mob-stat-block" onclick="switchMobTab(\'drawings\')"><div class="vk-mob-stat-num">🖍️ ' + (data.chalks || 0) + '</div><div class="vk-mob-stat-label">мелков</div></div>';
+        html += '</div>';
+        html += '<div class="vk-mob-btn-row">';
+        if (isMe) {
+            html += '<button class="vk-mob-btn" onclick="openMobilePostForm()">✎ Написать</button>';
+            html += '<button class="vk-mob-btn" onclick="openDrawingModal()" style="background:#5cb85c;">🎨 Рисовать</button>';
+            html += '<button class="vk-mob-btn" onclick="openChalkPanel()" style="background:#f0ad4e;">🖍️ Страница</button>';
+            html += '<button class="vk-mob-btn" onclick="openEditProfile()">⚙ Ред.</button>';
+            html += '<button class="vk-mob-btn" onclick="openSideMenu()">☰</button>';
+        } else {
+            html += '<button class="vk-mob-btn" onclick="openChat(\'' + userId + '\')">✉ Написать</button>';
+        }
+        html += '</div>';
+        if (data.city || data.mobile || data.website) {
+            html += '<div class="vk-mob-section"><div class="vk-mob-section-title">Контактная информация</div><div class="vk-mob-section-content">';
+            if (data.city) html += '<div>Город: <b>' + escapeHtml(data.city) + '</b></div>';
+            if (data.mobile) html += '<div>Моб. телефон: <b>' + escapeHtml(data.mobile) + '</b></div>';
+            if (data.website) html += '<div>Веб-сайт: <b>' + escapeHtml(data.website) + '</b></div>';
+            html += '</div></div>';
+        }
+        if (data.coins !== undefined) html += '<div class="vk-mob-section"><div class="vk-mob-section-title">Игровая валюта</div><div class="vk-mob-section-content">💰 <b>' + data.coins + ' монет</b></div></div>';
+        if (data.chalks !== undefined) html += '<div class="vk-mob-section"><div class="vk-mob-section-title">🎨 Мелки</div><div class="vk-mob-section-content">🖍️ <b>' + data.chalks + ' мелков</b></div></div>';
+        var moreFields = ['activity:Деятельность','interests:Интересы','music:Любимая музыка','films:Любимые фильмы','books:Любимые книги','about:О себе','political:Политические предпочтения','religion:Религиозные взгляды','quotes:Цитаты'];
+        moreFields.forEach(function(x) {
+            var p = x.split(':');
+            html += '<div class="vk-mob-section"><div class="vk-mob-section-title">' + p[1] + '</div><div class="vk-mob-section-content">' + (data[p[0]] ? escapeHtml(data[p[0]]) : '<span style="color:#aaa;">—</span>') + '</div></div>';
+        });
+        return html;
     }
-    renderPageDrawingBg();
-}
-
-function switchMobTopTab(tab, el) {
-    document.querySelectorAll('.vk-top-tab').forEach(function(t) { t.classList.remove('active'); });
-    if (el) el.classList.add('active');
-    switchMobTab(tab);
-}
-function switchMobTab(tab) {
-    if (unsubscribeChat) unsubscribeChat();
-    if (unsubscribeWall) unsubscribeWall();
-    if (unsubscribeNews) unsubscribeNews();
-    var map = { news: 'news', wall: 'wall', friends: 'friends', msg: 'messages', messages: 'messages', photos: 'photos', gifts: 'gifts', people: 'people', drawings: 'drawings' };
-    var realTab = map[tab] || 'wall';
-    document.querySelectorAll('.vk-top-tab').forEach(function(t) {
-        t.classList.remove('active');
-        if (t.getAttribute('data-tab') === realTab) t.classList.add('active');
-    });
-    document.querySelectorAll('.vk-mob-nav-btn').forEach(function(b) {
-        b.classList.remove('active');
-        var btab = b.getAttribute('data-nav');
-        if (btab === realTab || (realTab === 'messages' && btab === 'msg')) b.classList.add('active');
-    });
-    document.querySelectorAll('.mobile-view-container').forEach(function(c) { c.classList.remove('active'); });
-    var target = document.getElementById('mob-' + realTab);
-    if (target) target.classList.add('active');
-    if (realTab === 'friends') {
-        document.getElementById('mob-friends-list-view').style.display = 'block';
-        document.getElementById('mob-friends-profile-view').style.display = 'none';
-        renderMobileFriends();
-    }
-    if (realTab === 'people') renderMobilePeople('');
-    if (realTab === 'wall') { loadUserProfile(); renderMobileWall(); }
-    if (realTab === 'news') renderMobileNews();
-    if (realTab === 'messages') renderMobileMessages();
-    if (realTab === 'photos') renderMobilePhotos();
-    if (realTab === 'gifts') renderMobileGifts();
-    if (realTab === 'drawings') renderMobileDrawings();
-    closeSideMenu();
-}
-function openSideMenu() { document.getElementById('vk-side-menu').classList.add('open'); document.getElementById('vk-side-overlay').classList.add('open'); }
-function closeSideMenu() { document.getElementById('vk-side-menu').classList.remove('open'); document.getElementById('vk-side-overlay').classList.remove('open'); }
-
-function loadLikesForPosts(postIds, callback) {
-    if (!postIds.length) { callback(); return; }
-    var loaded = 0;
-    postIds.forEach(function(pid) {
-        db.collection('likes').doc(pid).get().then(function(doc) {
-            if (doc.exists) { var d = doc.data(); likesCache[pid] = { count: d.count || 0, users: d.users || [] }; }
-            else { likesCache[pid] = { count: 0, users: [] }; }
-            loaded++; if (loaded === postIds.length) callback();
-        }).catch(function() { likesCache[pid] = { count: 0, users: [] }; loaded++; if (loaded === postIds.length) callback(); });
-    });
-}
-function toggleLike(postId) {
-    var likeData = likesCache[postId] || { count: 0, users: [] };
-    var idx = likeData.users.indexOf(currentUser.uid);
-    if (idx === -1) { likeData.users.push(currentUser.uid); } else { likeData.users.splice(idx, 1); }
-    likeData.count = likeData.users.length;
-    likesCache[postId] = likeData;
-    db.collection('likes').doc(postId).set({ count: likeData.count, users: likeData.users });
-    document.querySelectorAll('.post-action-btn[data-like-post="' + postId + '"]').forEach(function(btn) {
-        btn.classList.toggle('liked', likeData.users.indexOf(currentUser.uid) !== -1);
-        btn.innerHTML = '❤️ ' + likeData.count;
-    });
-}
-function loadComments(postId, callback) {
-    db.collection('comments').where('postId', '==', postId).get()
-        .then(function(snap) {
-            var arr = [];
-            snap.forEach(function(doc) { arr.push({ id: doc.id, data: doc.data() }); });
-            arr.sort(function(a, b) {
-                var ta = a.data.createdAt && a.data.createdAt.toDate ? a.data.createdAt.toDate().getTime() : 0;
-                var tb = b.data.createdAt && b.data.createdAt.toDate ? b.data.createdAt.toDate().getTime() : 0;
-                return ta - tb;
-            });
-            callback(arr);
-        }).catch(function() { callback([]); });
-}
-function toggleComments(postId) {
-    openComments[postId] = !openComments[postId];
-    var block = document.getElementById('comments-' + postId);
-    if (!block) return;
-    if (openComments[postId]) { block.classList.add('open'); loadComments(postId, function(arr) { renderCommentsList(postId, arr); }); }
-    else block.classList.remove('open');
-}
-function renderCommentsList(postId, arr) {
-    var listEl = document.getElementById('comments-list-' + postId);
-    if (!listEl) return;
-    if (!arr.length) { listEl.innerHTML = '<div style="padding:8px;color:#999;font-size:12px;">Пока нет комментариев</div>'; return; }
-    var html = ''; var promises = [];
-    arr.forEach(function(c) {
-        var promise = Promise.all([getUserAvatar(c.data.authorId, c.data.authorName), getBadgeForUser(c.data.authorId)]).then(function(res) {
-            var date = '';
-            try { if (c.data.createdAt && c.data.createdAt.toDate) date = c.data.createdAt.toDate().toLocaleString('ru-RU'); } catch (e) {}
-            var del = (c.data.authorId === currentUser.uid) ? '<span class="comment-delete" onclick="deleteComment(\'' + postId + '\', \'' + c.id + '\')">удалить</span>' : '';
-            html += '<div class="comment-item"><img src="' + res[0] + '"><div class="comment-body"><span class="comment-author">' + escapeHtml(c.data.authorName || 'Аноним') + '</span>' + buildBadgeHtml(res[1]) + '<span class="comment-date">' + date + '</span>' + del + '<div class="comment-text">' + escapeHtml(c.data.text || '') + '</div></div></div>';
-        });
-        promises.push(promise);
-    });
-    Promise.all(promises).then(function() { listEl.innerHTML = html; });
-}
-function submitComment(postId) {
-    var input = document.getElementById('comment-input-' + postId);
-    if (!input) return;
-    var text = input.value.trim();
-    if (!text) return;
-    input.value = '';
-    db.collection('comments').add({ postId: postId, authorId: currentUser.uid, authorName: currentUser.displayName, text: text, createdAt: firebase.firestore.FieldValue.serverTimestamp() })
-        .then(function() {
-            loadComments(postId, function(arr) {
-                renderCommentsList(postId, arr);
-                var btn = document.querySelector('.post-action-btn[data-comment-post="' + postId + '"]');
-                if (btn) btn.innerHTML = '💬 ' + arr.length;
-            });
-        });
-}
-function deleteComment(postId, commentId) {
-    if (!confirm('Удалить?')) return;
-    db.collection('comments').doc(commentId).delete().then(function() {
-        loadComments(postId, function(arr) {
-            renderCommentsList(postId, arr);
-            var btn = document.querySelector('.post-action-btn[data-comment-post="' + postId + '"]');
-            if (btn) btn.innerHTML = '💬 ' + arr.length;
-        });
-    });
-}
-function repost(postId) {
-    db.collection('posts').doc(postId).get().then(function(doc) {
-        if (!doc.exists) return;
-        var p = doc.data();
-        var rd = { authorId: currentUser.uid, authorName: currentUser.displayName, text: p.text || '', createdAt: firebase.firestore.FieldValue.serverTimestamp(), repostedFrom: p.authorName || '' };
-        if (p.imageURL) rd.imageURL = p.imageURL;
-        if (p.videoUrl) rd.videoUrl = p.videoUrl;
-        db.collection('posts').add(rd).then(function() { alert('✅ Репост!'); });
-    });
-}
-function buildPostActions(postId, cc) {
-    var likeData = likesCache[postId] || { count: 0, users: [] };
-    var isLiked = likeData.users.indexOf(currentUser.uid) !== -1;
-    return '<div class="post-actions">' +
-        '<button class="post-action-btn' + (isLiked ? ' liked' : '') + '" data-like-post="' + postId + '" onclick="toggleLike(\'' + postId + '\')">❤️ ' + likeData.count + '</button>' +
-        '<button class="post-action-btn" onclick="repost(\'' + postId + '\')">🔄 Репост</button>' +
-        '<button class="post-action-btn" data-comment-post="' + postId + '" onclick="toggleComments(\'' + postId + '\')">💬 ' + (cc || 0) + '</button>' +
-        '</div>';
-}
-function buildCommentsBlock(postId) {
-    return '<div class="comments-block" id="comments-' + postId + '"><div id="comments-list-' + postId + '"></div><div class="comment-input-row"><input type="text" id="comment-input-' + postId + '" onkeypress="if(event.key===\'Enter\')submitComment(\'' + postId + '\')"><button onclick="submitComment(\'' + postId + '\')">Отпр.</button></div></div>';
-}
-
-function loadUserProfile() {
-    db.collection('users').doc(currentUser.uid).get()
-        .then(function(doc) {
-            if (doc.exists) {
-                var data = doc.data();
-                var avatarUrl = data.photoURL || generateAvatar(currentUser.uid, data.name);
-                Promise.all([
-                    db.collection('photos').where('userId', '==', currentUser.uid).get(),
-                    db.collection('friends').where('userId', '==', currentUser.uid).get(),
-                    db.collection('drawings').where('userId', '==', currentUser.uid).get()
-                ]).then(function(results) {
-                    data.photosCount = results[0].size;
-                    data.friendsCount = results[1].size;
-                    data.drawingsCount = results[2].size;
-                    var mobCont = document.getElementById('vk-mob-profile-container');
-                    if (mobCont) mobCont.innerHTML = buildMobileProfileHtml(data, avatarUrl, currentUser.uid, true);
-                    var deskCont = document.getElementById('desk-wall-profile');
-                    if (deskCont) deskCont.innerHTML = buildProfileHtml(data, avatarUrl, currentUser.uid, true);
-                    var sideName = document.getElementById('vk-side-name'); if (sideName) sideName.innerText = data.name || 'Пользователь';
-                    var sideStatus = document.getElementById('vk-side-status'); if (sideStatus) sideStatus.innerText = data.status || 'онлайн';
-                    var dg = document.getElementById('desk-gifts-coins'); if (dg) dg.innerText = data.coins || 0;
-                    var mg = document.getElementById('mob-gifts-coins'); if (mg) mg.innerText = data.coins || 0;
-                    var dd = document.getElementById('desk-drawings-chalks'); if (dd) dd.innerText = data.chalks || 0;
-                    var md = document.getElementById('mob-drawings-chalks'); if (md) md.innerText = data.chalks || 0;
-                });
-            }
-        });
-}
-
-function openEditProfile() {
-    db.collection('users').doc(currentUser.uid).get().then(function(doc) {
-        var data = doc.data() || {};
-        document.getElementById('edit-name').value = data.name || '';
-        document.getElementById('edit-status-text').value = data.status || '';
-        document.getElementById('edit-badge').value = data.badge || '';
-        document.getElementById('edit-gender').value = data.gender || '';
-        document.getElementById('edit-birthday').value = data.birthday || '';
-        document.getElementById('edit-hometown').value = data.hometown || '';
-        document.getElementById('edit-city').value = data.city || '';
-        document.getElementById('edit-mobile').value = data.mobile || '';
-        document.getElementById('edit-website').value = data.website || '';
-        document.getElementById('edit-profile-modal').style.display = 'flex';
-    });
-}
-function closeEditProfile() { document.getElementById('edit-profile-modal').style.display = 'none'; }
-function saveProfileFull() {
-    var name = document.getElementById('edit-name').value.trim();
-    if (!name || name.length < 2) { alert("Имя минимум 2 символа"); return; }
-    db.collection('users').doc(currentUser.uid).update({
-        name: name,
-        status: document.getElementById('edit-status-text').value.trim(),
-        badge: document.getElementById('edit-badge').value.trim(),
-        gender: document.getElementById('edit-gender').value,
-        birthday: document.getElementById('edit-birthday').value.trim(),
-        hometown: document.getElementById('edit-hometown').value.trim(),
-        city: document.getElementById('edit-city').value.trim(),
-        mobile: document.getElementById('edit-mobile').value.trim(),
-        website: document.getElementById('edit-website').value.trim()
-    }).then(function() {
-        auth.currentUser.updateProfile({ displayName: name });
-        badgeCache[currentUser.uid] = document.getElementById('edit-badge').value.trim();
-        closeEditProfile(); loadUserProfile();
-        alert("✅ Профиль обновлён!");
-    });
-}
-function uploadAvatar() {
-    var fileInput = document.getElementById('avatar-upload');
-    var file = fileInput.files[0];
-    if (!file) return;
-    var reader = new FileReader();
-    reader.onload = function(e) {
-        var img = new Image();
-        img.onload = function() {
-            var c = document.createElement('canvas');
-            var maxS = 200;
-            var w = img.width, h = img.height;
-            if (w > h) { if (w > maxS) { h = Math.round(h * maxS / w); w = maxS; } }
-            else { if (h > maxS) { w = Math.round(w * maxS / h); h = maxS; } }
-            c.width = w; c.height = h;
-            c.getContext('2d').drawImage(img, 0, 0, w, h);
-            var base64 = c.toDataURL('image/jpeg', 0.7);
-            db.collection('users').doc(currentUser.uid).update({ photoURL: base64 }).then(function() {
-                avatarCache = {};
-                alert('🖼️ Аватар обновлён!');
-                loadUserProfile();
-            });
-        };
-        img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-}
-
-function openMobilePostForm() { document.getElementById('vk-mob-post-form').style.display = 'block'; }
-function closeMobilePostForm() {
-    document.getElementById('vk-mob-post-form').style.display = 'none';
-    document.getElementById('mob-post-text').value = '';
-    document.getElementById('mob-post-preview').style.display = 'none';
-    document.getElementById('mob-post-image').value = '';
-}
-function openVideoModal(device) { attachedVideoFor = device; document.getElementById('video-link-input').value = ''; document.getElementById('video-title-input').value = ''; document.getElementById('video-modal').style.display = 'flex'; }
-function closeVideoModal() { document.getElementById('video-modal').style.display = 'none'; }
-function extractGoogleDriveId(url) {
-    if (!url) return null;
-    var m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-    return m ? m[1] : null;
-}
-function attachVideo() {
-    var link = document.getElementById('video-link-input').value.trim();
-    var title = document.getElementById('video-title-input').value.trim();
-    if (!link) { alert("Вставь ссылку!"); return; }
-    var videoId = extractGoogleDriveId(link);
-    if (!videoId) { alert("Не распознал ссылку."); return; }
-    attachedVideoUrl = 'https://drive.google.com/file/d/' + videoId + '/preview';
-    attachedVideoTitle = title || 'Видео';
-    closeVideoModal();
-    alert('🎬 Видео прикреплено! Теперь напиши текст и отправь.');
-}
-function previewPostImage(device) {
-    var fileInput = document.getElementById(device === 'desktop' ? 'desk-post-image' : 'mob-post-image');
-    var previewBox = document.getElementById(device === 'desktop' ? 'desk-post-preview' : 'mob-post-preview');
-    var file = fileInput.files[0];
-    if (!file) { previewBox.style.display = 'none'; return; }
-    previewBox.innerHTML = '<img id="' + (device === 'desktop' ? 'desk-preview-img' : 'mob-preview-img') + '" style="max-width:200px;max-height:150px;border:1px solid #ccc;"><span onclick="removePostImage(\'' + device + '\')" style="position:absolute;top:-8px;left:190px;background:#d9534f;color:#fff;width:20px;height:20px;border-radius:50%;text-align:center;line-height:20px;cursor:pointer;font-weight:bold;">×</span>';
-    var newImg = document.getElementById(device === 'desktop' ? 'desk-preview-img' : 'mob-preview-img');
-    var reader = new FileReader();
-    reader.onload = function(e) { newImg.src = e.target.result; previewBox.style.display = 'block'; };
-    reader.readAsDataURL(file);
-}
-function removePostImage(device) {
-    var fi = document.getElementById(device === 'desktop' ? 'desk-post-image' : 'mob-post-image');
-    if (fi) fi.value = '';
-    var pb = document.getElementById(device === 'desktop' ? 'desk-post-preview' : 'mob-post-preview');
-    if (pb) pb.style.display = 'none';
-}
-
-function createPost(device) {
-    var textEl = document.getElementById(device === 'desktop' ? 'desk-post-text' : 'mob-post-text');
-    var text = textEl.value.trim();
-    var fileInput = document.getElementById(device === 'desktop' ? 'desk-post-image' : 'mob-post-image');
-    var file = fileInput ? fileInput.files[0] : null;
-    var hasVideo = !!attachedVideoUrl;
-    if (!text && !file && !hasVideo) { alert("Напиши текст или прикрепи файл!"); return; }
-    textEl.value = '';
-    if (fileInput) fileInput.value = '';
-    var previewBox = document.getElementById(device === 'desktop' ? 'desk-post-preview' : 'mob-post-preview');
-    if (previewBox) previewBox.style.display = 'none';
-    var vUrl = attachedVideoUrl, vTitle = attachedVideoTitle;
-    attachedVideoUrl = ''; attachedVideoTitle = '';
-    var btn = document.getElementById(device === 'desktop' ? 'desk-send-btn' : 'mob-send-btn');
-    var orig = btn ? btn.innerText : '';
-    if (btn) { btn.innerText = '...'; btn.disabled = true; }
-    var postData = { authorName: currentUser.displayName, authorId: currentUser.uid, text: text, createdAt: firebase.firestore.FieldValue.serverTimestamp() };
-    if (hasVideo) { postData.videoUrl = vUrl; postData.videoTitle = vTitle; }
-    var finish = function() { renderUI(device); if (btn) { btn.innerText = orig; btn.disabled = false; } if (device === 'mobile') closeMobilePostForm(); };
-    if (file) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var img = new Image();
-            img.onload = function() {
-                var c = document.createElement('canvas'); var maxS = 400;
-                var w = img.width, h = img.height;
-                if (w > h) { if (w > maxS) { h = Math.round(h * maxS / w); w = maxS; } } else { if (h > maxS) { w = Math.round(w * maxS / h); h = maxS; } }
-                c.width = w; c.height = h;
-                c.getContext('2d').drawImage(img, 0, 0, w, h);
-                var base64 = c.toDataURL('image/jpeg', 0.45);
-                postData.imageURL = base64;
-                db.collection('posts').add(postData).then(function() { return db.collection('photos').add({ userId: currentUser.uid, userName: currentUser.displayName, imageURL: base64, source: 'post', createdAt: firebase.firestore.FieldValue.serverTimestamp() }); }).then(finish);
-            };
-            img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    } else {
-        db.collection('posts').add(postData).then(finish);
-    }
-}
-
-function renderUI(device) {
-    if (device === 'desktop') { renderDesktopWall(); renderDesktopPhotos(); }
-    else { renderMobileWall(); renderMobilePhotos(); }
-}
-
-function renderDesktopWall() {
-    var container = document.getElementById('desktop-wall-content');
-    db.collection('posts').where('authorId', '==', currentUser.uid).get()
-        .then(function(snap) {
-            if (snap.empty) { container.innerHTML = '<div style="text-align:center;padding:20px;color:#777;">Пока пусто</div>'; return; }
-            var posts = [], postIds = [];
-            snap.forEach(function(doc) { posts.push({ id: doc.id, data: doc.data() }); postIds.push(doc.id); });
-            posts.sort(function(a, b) {
-                var ta = a.data.createdAt && a.data.createdAt.toDate ? a.data.createdAt.toDate().getTime() : 0;
-                var tb = b.data.createdAt && b.data.createdAt.toDate ? b.data.createdAt.toDate().getTime() : 0;
-                return tb - ta;
-            });
-            posts = posts.slice(0, 50);
-            postIds = posts.map(function(p) { return p.id; });
-            loadLikesForPosts(postIds, function() {
-                var html = ''; var promises = [];
-                posts.forEach(function(item) {
-                    var p = item.data, pid = item.id;
-                    var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : '';
-                    var img = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
-                    var vid = p.videoUrl ? '<div style="margin-top:8px;"><iframe src="' + p.videoUrl + '" allowfullscreen style="width:100%;max-width:400px;height:250px;"></iframe></div>' : '';
-                    var promise = Promise.all([getUserAvatar(p.authorId, p.authorName), getBadgeForUser(p.authorId)]).then(function(res) {
-                        html += '<div class="desktop-post"><img src="' + res[0] + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span>' + buildBadgeHtml(res[1]) + '<span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + img + vid + buildPostActions(pid, 0) + buildCommentsBlock(pid) + '</div></div>';
-                    });
-                    promises.push(promise);
-                });
-                Promise.all(promises).then(function() { container.innerHTML = html; });
-            });
-        });
-}
-
-function renderMobileWall() {
-    if (unsubscribeWall) { unsubscribeWall(); unsubscribeWall = null; }
-    var container = document.getElementById('mobile-wall-content');
-    unsubscribeWall = db.collection('posts').where('authorId', '==', currentUser.uid)
-        .onSnapshot(function(snapshot) {
-            if (snapshot.empty) { container.innerHTML = '<div class="mobile-empty"><h3>Пусто</h3></div>'; return; }
-            var posts = [], postIds = [];
-            snapshot.forEach(function(doc) { posts.push({ id: doc.id, data: doc.data() }); postIds.push(doc.id); });
-            posts.sort(function(a, b) {
-                var ta = a.data.createdAt && a.data.createdAt.toDate ? a.data.createdAt.toDate().getTime() : 0;
-                var tb = b.data.createdAt && b.data.createdAt.toDate ? b.data.createdAt.toDate().getTime() : 0;
-                return tb - ta;
-            });
-            posts = posts.slice(0, 50);
-            postIds = posts.map(function(p) { return p.id; });
-            loadLikesForPosts(postIds, function() {
-                var html = ''; var promises = [];
-                posts.forEach(function(item) {
-                    var p = item.data, pid = item.id;
-                    var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : '';
-                    var img = p.imageURL ? '<div style="margin-top:6px;"><img src="' + p.imageURL + '" style="max-width:100%;"></div>' : '';
-                    var vid = p.videoUrl ? '<div style="margin-top:6px;"><iframe src="' + p.videoUrl + '" allowfullscreen style="width:100%;height:180px;"></iframe></div>' : '';
-                    var promise = Promise.all([getUserAvatar(p.authorId, p.authorName), getBadgeForUser(p.authorId)]).then(function(res) {
-                        html += '<div class="vk-mob-post"><div class="vk-mob-post-head"><img src="' + res[0] + '"><div><div class="vk-mob-post-author">' + escapeHtml(p.authorName) + buildBadgeHtml(res[1]) + '</div><div class="vk-mob-post-date">' + date + '</div></div></div><div class="vk-mob-post-text">' + escapeHtml(p.text) + '</div>' + img + vid + buildPostActions(pid, 0) + buildCommentsBlock(pid) + '</div>';
-                    });
-                    promises.push(promise);
-                });
-                Promise.all(promises).then(function() { container.innerHTML = html; });
-            });
-        });
-}
-
-function renderDesktopPeople(searchQuery) {
-    var container = document.getElementById('desk-people-list');
-    container.innerHTML = '<div style="padding:20px;color:#777;">Загрузка...</div>';
-    db.collection('users').get().then(function(snap) {
-        if (snap.empty) { container.innerHTML = '<div style="padding:20px;color:#777;">Нет пользователей</div>'; return; }
-        var html = ''; var promises = []; var q = (searchQuery || '').toLowerCase().trim();
-        snap.forEach(function(doc) {
-            if (doc.id === currentUser.uid) return;
-            var u = doc.data(); var name = u.name || 'Без имени';
-            if (q && name.toLowerCase().indexOf(q) === -1) return;
-            var promise = Promise.all([getUserAvatar(doc.id, name), getBadgeForUser(doc.id), checkFriendship(doc.id)]).then(function(res) {
-                var avatar = res[0], badge = res[1], isFriend = res[2];
-                html += '<div class="person-card"><img src="' + avatar + '" style="cursor:pointer;" onclick="openUserProfileDesktop(\'' + doc.id + '\')"><div class="person-info"><div class="person-name" style="cursor:pointer;" onclick="openUserProfileDesktop(\'' + doc.id + '\')">' + escapeHtml(name) + buildBadgeHtml(badge) + '</div></div><div class="person-actions">';
-                if (isFriend) {
-                    html += '<button class="person-btn friend" onclick="openChat(\'' + doc.id + '\')">✉ Написать</button><button class="person-btn danger" onclick="removeFriend(\'' + doc.id + '\', \'' + escapeHtml(name) + '\')">✕</button>';
-                } else {
-                    html += '<button class="person-btn" onclick="addFriend(\'' + doc.id + '\', \'' + escapeHtml(name) + '\')">+ Добавить</button><button class="person-btn secondary" onclick="openChat(\'' + doc.id + '\')">✉</button>';
-                }
-                html += '</div></div>';
-            });
-            promises.push(promise);
-        });
-        Promise.all(promises).then(function() { if (!html) container.innerHTML = '<div style="padding:20px;color:#777;">Никого</div>'; else container.innerHTML = html; });
-    });
-}
-
-function renderMobilePeople(searchQuery) {
-    var container = document.getElementById('mobile-people-list');
-    container.innerHTML = '<div class="mobile-empty"><h3>Загрузка...</h3></div>';
-    db.collection('users').get().then(function(snap) {
-        var html = ''; var promises = []; var q = (searchQuery || '').toLowerCase().trim();
-        snap.forEach(function(doc) {
-            if (doc.id === currentUser.uid) return;
-            var u = doc.data(); var name = u.name || 'Без имени';
-            if (q && name.toLowerCase().indexOf(q) === -1) return;
-            var promise = Promise.all([getUserAvatar(doc.id, name), getBadgeForUser(doc.id), checkFriendship(doc.id)]).then(function(res) {
-                var avatar = res[0], badge = res[1], isFriend = res[2];
-                html += '<div class="vk-mob-list-item"><img src="' + avatar + '" style="cursor:pointer;" onclick="openUserProfileMobile(\'' + doc.id + '\')"><div style="flex:1;cursor:pointer;" onclick="openUserProfileMobile(\'' + doc.id + '\')"><div class="vk-mob-list-item-name">' + escapeHtml(name) + buildBadgeHtml(badge) + '</div></div>';
-                if (isFriend) html += '<button class="person-btn friend" style="font-size:10px;padding:5px 8px;" onclick="event.stopPropagation(); openChat(\'' + doc.id + '\')">✉</button>';
-                else html += '<button class="person-btn" style="font-size:10px;padding:5px 8px;" onclick="event.stopPropagation(); addFriend(\'' + doc.id + '\', \'' + escapeHtml(name) + '\')">+ Друг</button>';
-                html += '</div>';
-            });
-            promises.push(promise);
-        });
-        Promise.all(promises).then(function() { if (!html) container.innerHTML = '<div class="mobile-empty"><h3>Никого</h3></div>'; else container.innerHTML = html; });
-    });
-}
-
-function renderDesktopFriends(searchQuery) {
-    var container = document.getElementById('desk-friends-list');
-    container.innerHTML = '<div style="padding:20px;color:#777;">Загрузка...</div>';
-    db.collection('friends').where('userId', '==', currentUser.uid).get().then(function(snap) {
-        if (snap.empty) { container.innerHTML = '<div style="padding:20px;color:#777;">У вас нет друзей. Зайдите в «Люди».</div>'; return; }
-        var list = []; snap.forEach(function(doc) { list.push(doc.data()); });
-        var html = ''; var promises = []; var q = (searchQuery || '').toLowerCase().trim();
-        list.forEach(function(f) {
-            if (q && (f.friendName || '').toLowerCase().indexOf(q) === -1) return;
-            var promise = Promise.all([getUserAvatar(f.friendId, f.friendName), getBadgeForUser(f.friendId)]).then(function(res) {
-                html += '<div class="person-card"><img src="' + res[0] + '" style="cursor:pointer;" onclick="openUserProfileDesktop(\'' + f.friendId + '\')"><div class="person-info"><div class="person-name" style="cursor:pointer;" onclick="openUserProfileDesktop(\'' + f.friendId + '\')">' + escapeHtml(f.friendName) + buildBadgeHtml(res[1]) + '</div></div><div class="person-actions"><button class="person-btn secondary" onclick="openChat(\'' + f.friendId + '\')">✉ Написать</button><button class="person-btn danger" onclick="removeFriend(\'' + f.friendId + '\', \'' + escapeHtml(f.friendName) + '\')">✕</button></div></div>';
-            });
-            promises.push(promise);
-        });
-        Promise.all(promises).then(function() { if (!html) container.innerHTML = '<div style="padding:20px;color:#777;">Никого</div>'; else container.innerHTML = html; });
-    });
-}
-
-function renderMobileFriends() {
-    var container = document.getElementById('mobile-friends-list');
-    container.innerHTML = '<div class="mobile-empty"><h3>Загрузка...</h3></div>';
-    db.collection('friends').where('userId', '==', currentUser.uid).get().then(function(snap) {
-        if (snap.empty) { container.innerHTML = '<div class="mobile-empty"><h3>Нет друзей. Зайдите в «Люди».</h3></div>'; return; }
-        var list = []; snap.forEach(function(doc) { list.push(doc.data()); });
-        var html = ''; var promises = [];
-        list.forEach(function(f) {
-            var promise = Promise.all([getUserAvatar(f.friendId, f.friendName), getBadgeForUser(f.friendId)]).then(function(res) {
-                html += '<div class="vk-mob-list-item"><img src="' + res[0] + '" style="cursor:pointer;" onclick="openUserProfileMobile(\'' + f.friendId + '\')"><div style="flex:1;cursor:pointer;" onclick="openUserProfileMobile(\'' + f.friendId + '\')"><div class="vk-mob-list-item-name">' + escapeHtml(f.friendName) + buildBadgeHtml(res[1]) + '</div></div><button class="person-btn" style="font-size:11px;padding:5px 8px;" onclick="event.stopPropagation(); openChat(\'' + f.friendId + '\')">✉</button></div>';
-            });
-            promises.push(promise);
-        });
-        Promise.all(promises).then(function() { container.innerHTML = html; });
-    });
-}
-
-function searchUsers(device) {
-    if (device === 'desktop') renderDesktopFriends(document.getElementById('desk-friends-search').value);
-    else renderMobileFriends();
-}
-
-function openUserProfileDesktop(userId) {
-    if (!userId) return;
-    var listView = document.getElementById('desk-friends-list-view');
-    var profileView = document.getElementById('desk-friends-profile-view');
-    var profileBox = document.getElementById('desk-friends-profile');
-    profileBox.innerHTML = '<div style="padding:20px;color:#777;">Загрузка...</div>';
-    db.collection('users').doc(userId).get().then(function(doc) {
-        if (!doc.exists) return;
-        var data = doc.data();
-        var av = data.photoURL || generateAvatar(userId, data.name);
-        listView.style.display = 'none'; profileView.style.display = 'block';
-        var h = '<button class="edit-btn" onclick="closeUserProfileDesktop()" style="background:#ccc;color:#333;margin-bottom:10px;">← Назад</button>';
-        h += buildProfileHtml(data, av, userId, false);
-        profileBox.innerHTML = h;
-        db.collection('posts').where('authorId', '==', userId).get().then(function(snap2) {
-            var wallHtml = '';
-            if (snap2.empty) { wallHtml = '<div style="padding:20px;color:#777;">Постов нет</div>'; }
-            else {
-                var arr = []; snap2.forEach(function(d) { arr.push(d.data()); });
-                arr.sort(function(a, b) {
-                    var ta = a.createdAt && a.createdAt.toDate ? a.createdAt.toDate().getTime() : 0;
-                    var tb = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate().getTime() : 0;
-                    return tb - ta;
-                });
-                arr = arr.slice(0, 20);
-                var promises = [];
-                arr.forEach(function(p) {
-                    var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : '';
-                    var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                        wallHtml += '<div class="desktop-post"><img src="' + avatar + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span><span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div></div></div>';
-                    });
-                    promises.push(promise);
-                });
-                Promise.all(promises).then(function() { document.getElementById('desk-friends-wall-content').innerHTML = wallHtml; });
-            }
-        });
-    });
-}
-function closeUserProfileDesktop() {
-    document.getElementById('desk-friends-list-view').style.display = 'block';
-    document.getElementById('desk-friends-profile-view').style.display = 'none';
-    renderDesktopFriends('');
-}
-function openUserProfileMobile(userId) {
-    if (!userId) return;
-    db.collection('users').doc(userId).get().then(function(doc) {
-        if (!doc.exists) return;
-        var data = doc.data();
-        var av = data.photoURL || generateAvatar(userId, data.name);
-        document.getElementById('mob-friends-list-view').style.display = 'none';
-        document.getElementById('mob-friends-profile-view').style.display = 'block';
-        var header = document.getElementById('vk-mob-header');
-        header.style.display = 'flex';
-        header.innerHTML = '<span class="back-btn" onclick="closeUserProfileMobile()">←</span><div style="flex:1;text-align:center;">' + escapeHtml(data.name || 'Профиль') + '</div>';
-        document.getElementById('mob-friends-profile').innerHTML = buildMobileProfileHtml(data, av, userId, false);
-        db.collection('posts').where('authorId', '==', userId).get().then(function(snap2) {
-            var wallHtml = '';
-            if (snap2.empty) { wallHtml = '<div class="mobile-empty"><h3>Постов нет</h3></div>'; }
-            else {
-                var arr = []; snap2.forEach(function(d) { arr.push(d.data()); });
-                arr.sort(function(a, b) {
-                    var ta = a.createdAt && a.createdAt.toDate ? a.createdAt.toDate().getTime() : 0;
-                    var tb = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate().getTime() : 0;
-                    return tb - ta;
-                });
-                arr = arr.slice(0, 20);
-                var promises = [];
-                arr.forEach(function(p) {
-                    var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : '';
-                    var promise = getUserAvatar(p.authorId, p.authorName).then(function(avatar) {
-                        wallHtml += '<div class="vk-mob-post"><div class="vk-mob-post-head"><img src="' + avatar + '"><div><div class="vk-mob-post-author">' + escapeHtml(p.authorName) + '</div><div class="vk-mob-post-date">' + date + '</div></div></div><div class="vk-mob-post-text">' + escapeHtml(p.text) + '</div></div>';
-                    });
-                    promises.push(promise);
-                });
-                Promise.all(promises).then(function() { document.getElementById('mob-friends-wall-content').innerHTML = wallHtml; });
-            }
-        });
-    });
-}
-function closeUserProfileMobile() {
-    document.getElementById('mob-friends-list-view').style.display = 'block';
-    document.getElementById('mob-friends-profile-view').style.display = 'none';
-    document.getElementById('vk-mob-header').style.display = 'none';
-    renderMobileFriends();
-}
-
-function renderDesktopMessages() {
-    var container = document.getElementById('desk-msg-list');
-    container.innerHTML = '<div style="padding:20px;color:#777;">Загрузка...</div>';
-    db.collection('friends').where('userId', '==', currentUser.uid).get().then(function(snap) {
-        if (snap.empty) { container.innerHTML = '<div style="padding:20px;color:#777;">Нет диалогов</div>'; return; }
-        var html = ''; var promises = [];
-        snap.forEach(function(doc) {
-            var f = doc.data();
-            var promise = Promise.all([getUserAvatar(f.friendId, f.friendName), getBadgeForUser(f.friendId)]).then(function(res) {
-                html += '<div style="padding:10px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #ddd;cursor:pointer;" onclick="openChat(\'' + f.friendId + '\')"><img src="' + res[0] + '" style="width:40px;height:40px;"><div><b>' + escapeHtml(f.friendName) + '</b>' + buildBadgeHtml(res[1]) + '</div></div>';
-            });
-            promises.push(promise);
-        });
-        Promise.all(promises).then(function() { container.innerHTML = html; });
-    });
-}
-function renderMobileMessages() {
-    var container = document.getElementById('mobile-msg-list');
-    container.innerHTML = '<div class="mobile-empty"><h3>Загрузка...</h3></div>';
-    db.collection('friends').where('userId', '==', currentUser.uid).get().then(function(snap) {
-        if (snap.empty) { container.innerHTML = '<div class="mobile-empty"><h3>Нет диалогов</h3></div>'; return; }
-        var html = ''; var promises = [];
-        snap.forEach(function(doc) {
-            var f = doc.data();
-            var promise = Promise.all([getUserAvatar(f.friendId, f.friendName), getBadgeForUser(f.friendId)]).then(function(res) {
-                html += '<div class="vk-mob-list-item" onclick="openChat(\'' + f.friendId + '\')"><img src="' + res[0] + '"><div class="vk-mob-list-item-info"><div class="vk-mob-list-item-name">' + escapeHtml(f.friendName) + buildBadgeHtml(res[1]) + '</div></div></div>';
-            });
-            promises.push(promise);
-        });
-        Promise.all(promises).then(function() { container.innerHTML = html; });
-    });
-}
-
-function openChat(friendId) {
-    if (!friendId) return;
-    document.getElementById('vk-chat-messages-box').innerHTML = '<div style="padding:10px;color:#777;text-align:center;">Загрузка...</div>';
-    document.getElementById('vk-chat-interface').classList.add('open');
-    db.collection('users').doc(friendId).get().then(function(doc) {
-        if (!doc.exists) { document.getElementById('vk-chat-interface').classList.remove('open'); return; }
-        currentChatPartnerId = friendId;
-        currentChatPartnerName = doc.data().name;
-        document.getElementById('vk-chat-partner-name').innerText = currentChatPartnerName;
-        document.getElementById('vk-chat-avatar').src = doc.data().photoURL || generateAvatar(friendId, currentChatPartnerName);
-        renderChatMessages();
-    });
-}
-function closeChat() {
-    document.getElementById('vk-chat-interface').classList.remove('open');
-    if (unsubscribeChat) unsubscribeChat();
-    currentChatPartnerId = null;
-    renderUI(window.innerWidth > 768 ? 'desktop' : 'mobile');
-}
-function renderChatMessages() {
-    var box = document.getElementById('vk-chat-messages-box');
-    if (unsubscribeChat) unsubscribeChat();
-    var chatId = [currentUser.uid, currentChatPartnerId].sort().join('_');
-    unsubscribeChat = db.collection('messages').where('chatId', '==', chatId)
-        .onSnapshot(function(snapshot) {
-            if (snapshot.empty) { box.innerHTML = '<div style="padding:10px;color:#777;text-align:center;">Начните общение</div>'; return; }
-            var arr = [];
-            snapshot.forEach(function(doc) { arr.push(doc.data()); });
-            arr.sort(function(a, b) {
-                var ta = a.createdAt && a.createdAt.toDate ? a.createdAt.toDate().getTime() : 0;
-                var tb = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate().getTime() : 0;
-                return ta - tb;
-            });
-            var html = '';
-            arr.forEach(function(m) {
-                var isMe = m.fromId === currentUser.uid;
-                var date = m.createdAt ? m.createdAt.toDate().toLocaleString('ru-RU') : 'Сейчас';
-                html += '<div class="vk-chat-bubble ' + (isMe ? 'my-msg' : '') + '">' + escapeHtml(m.text) + '<span style="display:block;font-size:9px;color:#8899AA;">' + date + '</span></div>';
-            });
-            box.innerHTML = html;
-            box.scrollTop = box.scrollHeight;
-        });
-}
-function sendMessage() {
-    var input = document.getElementById('vk-chat-input');
-    var text = input.value.trim();
-    if (!text || !currentChatPartnerId) return;
-    input.value = '';
-    var chatId = [currentUser.uid, currentChatPartnerId].sort().join('_');
-    db.collection('messages').add({ chatId: chatId, fromId: currentUser.uid, toId: currentChatPartnerId, text: text, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-}
-
-function renderDesktopGifts() {
-    var shopEl = document.getElementById('desk-gifts-shop');
-    var myEl = document.getElementById('desk-my-gifts');
-    var html = '';
-    GIFTS.forEach(function(g) {
-        html += '<div class="gift-card" onclick="giveGift(\'' + g.id + '\')">';
-        if (g.img) html += '<img src="' + g.img + '" style="width:70px;height:70px;object-fit:contain;display:block;margin:0 auto 6px;">';
-        else html += '<div class="gift-emoji">' + g.name.split(' ')[0] + '</div>';
-        html += '<div class="gift-name">' + g.name.split(' ').slice(1).join(' ') + '</div><div class="gift-price">💰 <b>' + g.price + '</b></div></div>';
-    });
-    shopEl.innerHTML = html;
-    renderMyGifts(myEl);
-}
-function renderMobileGifts() {
-    var shopEl = document.getElementById('mob-gifts-shop');
-    var myEl = document.getElementById('mob-my-gifts');
-    var html = '';
-    GIFTS.forEach(function(g) {
-        html += '<div style="background:#fff;border:1px solid #C8D0D8;padding:10px;text-align:center;cursor:pointer;" onclick="giveGift(\'' + g.id + '\')">';
-        if (g.img) html += '<img src="' + g.img + '" style="width:60px;height:60px;object-fit:contain;display:block;margin:0 auto 4px;">';
-        else html += '<div style="font-size:38px;">' + g.name.split(' ')[0] + '</div>';
-        html += '<div style="font-size:11px;font-weight:bold;color:#2B587A;margin-top:4px;">' + g.name.split(' ').slice(1).join(' ') + '</div><div style="font-size:10px;color:#667788;">💰 <b>' + g.price + '</b></div></div>';
-    });
-    shopEl.innerHTML = html;
-    renderMyGifts(myEl);
-}
-function renderMyGifts(container) {
-    container.innerHTML = '<div style="padding:10px;color:#777;">Загрузка...</div>';
-    db.collection('gifts').where('toId', '==', currentUser.uid).get().then(function(snap) {
-        if (snap.empty) { container.innerHTML = '<div style="padding:10px;color:#777;">Нет подарков</div>'; return; }
-        var html = '';
-        snap.forEach(function(doc) {
-            var g = doc.data();
-            var gift = GIFTS.find(function(x) { return x.id === g.giftId; });
-            var name = gift ? gift.name.split(' ').slice(1).join(' ') : 'Подарок';
-            var emoji = gift ? gift.name.split(' ')[0] : '🎁';
-            var img = gift ? gift.img : '';
-            html += '<div style="background:#F9F9F9;border:1px solid #C5D0DB;padding:10px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">';
-            if (img) html += '<img src="' + img + '" style="width:42px;height:42px;object-fit:contain;">';
-            else html += '<span style="font-size:36px;">' + emoji + '</span>';
-            html += '<div style="flex:1;"><div style="font-weight:bold;">' + name + '</div><div style="font-size:11px;color:#8899AA;">от ' + escapeHtml(g.fromName || '?') + '</div></div>';
-            html += '<button onclick="returnCoins(\'' + doc.id + '\', \'' + g.fromId + '\', \'' + g.giftId + '\')" style="background:#5E83A9;color:#fff;border:none;padding:5px 10px;border-radius:2px;cursor:pointer;font-size:11px;">↩ Вернуть</button></div>';
-        });
-        container.innerHTML = html;
-    });
-}
-function giveGift(giftId) {
-    db.collection('users').doc(currentUser.uid).get().then(function(doc) {
-        var userData = doc.data() || {};
-        var gift = GIFTS.find(function(g) { return g.id === giftId; });
-        if (!gift) return;
-        if ((userData.coins || 0) < gift.price) { alert("Не хватает монет!"); return; }
-        var targetName = prompt('Кому подарить ' + gift.name + '?');
-        if (!targetName) return;
-        db.collection('users').where('name', '==', targetName.trim()).get().then(function(snap) {
-            if (snap.empty) { alert("Пользователь не найден"); return; }
-            var targetId = snap.docs[0].id;
-            db.collection('users').doc(currentUser.uid).update({ coins: firebase.firestore.FieldValue.increment(-gift.price) });
-            db.collection('gifts').add({ fromId: currentUser.uid, fromName: currentUser.displayName, toId: targetId, toName: targetName, giftId: giftId, returned: false, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-            alert('🎁 Подарок отправлен!');
-            loadUserProfile();
-        });
-    });
-}
-function returnCoins(giftDocId, fromId, giftId) {
-    if (!confirm('Вернуть монеты?')) return;
-    var gift = GIFTS.find(function(g) { return g.id === giftId; });
-    if (!gift) return;
-    db.collection('gifts').doc(giftDocId).get().then(function(doc) {
-        if (!doc.exists || doc.data().returned) { alert("Уже вернули"); return; }
-        db.collection('users').doc(currentUser.uid).get().then(function(myDoc) {
-            if ((myDoc.data().coins || 0) < gift.price) { alert("Не хватает монет"); return; }
-            db.collection('users').doc(fromId).update({ coins: firebase.firestore.FieldValue.increment(gift.price) });
-            db.collection('users').doc(currentUser.uid).update({ coins: firebase.firestore.FieldValue.increment(-gift.price) });
-            db.collection('gifts').doc(giftDocId).update({ returned: true });
-            alert('✅ Возвращено');
-            loadUserProfile();
-        });
-    });
-}
-
-function showDeskPage(page) {
-    var pages = ['wall', 'news', 'music', 'photos', 'videos', 'groups', 'settings', 'friends', 'messages', 'gifts', 'people', 'drawings'];
-    for (var i = 0; i < pages.length; i++) { var el = document.getElementById('desk-page-' + pages[i]); if (el) el.style.display = 'none'; }
-    var pageEl = document.getElementById('desk-page-' + page);
-    if (pageEl) pageEl.style.display = 'block';
-    if (page === 'wall') { document.getElementById('desk-wall-post-input-block').style.display = 'block'; document.getElementById('desk-wall-title').innerText = 'Моя Страница'; loadUserProfile(); renderDesktopWall(); }
-    else if (page === 'people') renderDesktopPeople('');
-    else if (page === 'photos') renderDesktopPhotos();
-    else if (page === 'drawings') renderDesktopDrawings();
-    else if (page === 'gifts') renderDesktopGifts();
-    else if (page === 'friends') { document.getElementById('desk-friends-list-view').style.display = 'block'; document.getElementById('desk-friends-profile-view').style.display = 'none'; renderDesktopFriends(''); }
-    else if (page === 'messages') renderDesktopMessages();
-}
-
-function renderDesktopNews() { document.getElementById('desk-news-content').innerHTML = '<div style="padding:20px;color:#777;">Раздел в разработке</div>'; }
-function renderMobileNews() { document.getElementById('mob-news').innerHTML = '<div class="mobile-empty"><h3>Новости появятся, когда будут друзья</h3></div>'; }
-function renderDesktopVideos() { document.getElementById('desk-videos-list').innerHTML = '<div style="padding:20px;color:#777;">Видео пока нет</div>'; }
-
-auth.onAuthStateChanged(function(user) {
-    if (user && !currentUser) { currentUser = user; enterApp(); }
-});
-</script>
-</body>
-</html>
