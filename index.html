@@ -45,9 +45,23 @@
         .logo-svg { height: 18px; display: block; }
         .search-box { background: #fff; border-radius: 2px; padding: 1px 8px; height: 22px; display: flex; align-items: center; color: #777; }
         .search-box input { border: none; outline: none; font-size: 11px; width: 200px; background: transparent; }
-        .desktop-header .nav-links { display: flex; gap: 15px; font-weight: normal; }
+        .desktop-header .nav-links { display: flex; gap: 15px; font-weight: normal; align-items: center; }
         .desktop-header .nav-links a { color: #E2EBF3; }
         .desktop-header .nav-links a:hover { color: white; }
+
+        .donate-btn {
+            background: #FF6B35 !important;
+            color: #fff !important;
+            padding: 3px 10px !important;
+            border-radius: 3px !important;
+            font-weight: bold !important;
+            text-decoration: none !important;
+        }
+        .donate-btn:hover {
+            background: #E85A24 !important;
+            color: #fff !important;
+            text-decoration: none !important;
+        }
 
         .desktop-layout { display: flex; max-width: 960px; margin: 10px auto; gap: 0; background: #DCE1E7; }
         .desktop-sidebar { width: 200px; padding-right: 15px; }
@@ -97,7 +111,6 @@
         .gift-card .gift-price b { color: #d9534f; }
 
         .my-gift-item { background: #F9F9F9; border: 1px solid #C5D0DB; border-radius: 2px; padding: 10px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
-        .my-gift-item .gift-emoji { font-size: 40px; line-height: 1; }
         .my-gift-item .gift-info { flex: 1; min-width: 0; }
         .my-gift-item .gift-from { font-size: 13px; color: #2B587A; font-weight: bold; }
         .my-gift-item .gift-date { font-size: 11px; color: #8899AA; margin-top: 2px; }
@@ -107,6 +120,23 @@
 
         .coins-bar { background: #FFF8E1; border: 1px solid #F0AD4E; padding: 8px 12px; border-radius: 2px; font-size: 13px; color: #2B587A; margin-bottom: 12px; }
         .coins-bar b { color: #d9534f; }
+
+        /* ЛЮДИ / ДРУЗЬЯ */
+        .people-list { padding: 5px 0; }
+        .person-card { display: flex; gap: 10px; align-items: center; padding: 10px; border-bottom: 1px solid #E5E9ED; }
+        .person-card img { width: 50px; height: 50px; border: 1px solid #C5D0DB; object-fit: cover; flex-shrink: 0; }
+        .person-card .person-info { flex: 1; min-width: 0; }
+        .person-card .person-name { font-weight: bold; color: #2B587A; font-size: 13px; }
+        .person-card .person-status { font-size: 11px; color: #777; margin-top: 2px; }
+        .person-card .person-actions { display: flex; gap: 5px; flex-wrap: wrap; }
+        .person-btn { background: #5E83A9; color: #fff; border: none; padding: 5px 10px; border-radius: 2px; font-size: 11px; cursor: pointer; white-space: nowrap; }
+        .person-btn:hover { background: #4A739E; }
+        .person-btn.secondary { background: #E5E9ED; color: #2B587A; border: 1px solid #C5D0DB; }
+        .person-btn.secondary:hover { background: #D5DDE5; }
+        .person-btn.danger { background: #d9534f; }
+        .person-btn.danger:hover { background: #c9302c; }
+        .person-btn.friend { background: #5cb85c; }
+        .person-btn.friend:hover { background: #449d44; }
 
         /* ПОСТЫ */
         .desktop-post { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; gap: 10px; }
@@ -146,9 +176,6 @@
         .friends-search-box { padding: 10px; background: #fff; border-bottom: 1px solid #E4EAF0; }
         .friends-search-box input { width: 100%; padding: 6px 10px; border: 1px solid #C5D0DB; border-radius: 2px; font-size: 13px; outline: none; }
         .friends-search-box input:focus { border-color: #5E83A9; }
-
-        .friend-item, .chat-item { cursor: pointer; }
-        .friend-item:hover, .chat-item:hover { background: #f4f6f8; }
 
         /* МОБИЛЬНЫЙ */
         .mobile-view { display: none; background: #E8EBEE; min-height: 100vh; }
@@ -207,7 +234,6 @@
         .vk-mob-list-item-name { font-size: 13px; font-weight: bold; color: #2B587A; }
         .vk-mob-list-item-last { font-size: 11px; color: #8899AA; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-        /* Мобильные подарки */
         .vk-mob-gift-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 8px; }
         .vk-mob-gift-card { background: #FFFFFF; border: 1px solid #C8D0D8; padding: 10px; text-align: center; cursor: pointer; }
         .vk-mob-gift-card:active { background: #E8EBEE; }
@@ -224,7 +250,6 @@
         .vk-mob-my-gift button { background: #5E83A9; color: #fff; border: 1px solid #2A4256; padding: 4px 8px; border-radius: 2px; font-size: 10px; cursor: pointer; }
         .vk-mob-my-gift .returned { background: #5cb85c; color: #fff; padding: 3px 8px; border-radius: 2px; font-size: 10px; }
 
-        /* ЧАТ */
         .vk-chat-interface { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #E8EBEE; z-index: 9998; flex-direction: column; }
         .vk-chat-interface.open { display: flex; }
         .vk-chat-header { background: linear-gradient(to bottom, #6D8EB5 0%, #4A6E94 50%, #3A5878 100%); height: 44px; display: flex; align-items: center; padding: 0 4px; color: #fff; font-size: 15px; font-weight: bold; text-shadow: 0 1px 0 rgba(0,0,0,0.5); border-bottom: 1px solid #2A4256; flex-shrink: 0; }
@@ -239,13 +264,12 @@
         .vk-chat-input-area input { flex: 1; padding: 7px 12px; border: 1px solid #9BAAB8; border-radius: 14px; font-size: 13px; font-family: Tahoma, Verdana, sans-serif; background: #F5F7F8; outline: none; }
         .vk-chat-input-area button { background: linear-gradient(to bottom, #6D8EB5 0%, #4A6E94 100%); color: #fff; border: 1px solid #2A4256; padding: 0 14px; font-size: 12px; font-weight: bold; cursor: pointer; border-radius: 14px; text-shadow: 0 1px 0 rgba(0,0,0,0.4); }
 
-        /* БОКОВОЕ МЕНЮ */
         .vk-mob-side-menu { position: fixed; top: 0; left: -280px; width: 260px; height: 100%; background: #2A2A2A; z-index: 10000; transition: left 0.25s; overflow-y: auto; box-shadow: 2px 0 8px rgba(0,0,0,0.5); }
         .vk-mob-side-menu.open { left: 0; }
         .vk-mob-side-menu-head { background: linear-gradient(to bottom, #5E83A9 0%, #3A6087 100%); padding: 12px; color: #fff; border-bottom: 1px solid #1A2A3A; }
         .vk-mob-side-menu-head .name { font-size: 15px; font-weight: bold; }
         .vk-mob-side-menu-head .status { font-size: 11px; color: #C8D8E8; margin-top: 2px; }
-        .vk-mob-side-menu-item { padding: 12px 14px; color: #FFFFFF; font-size: 13px; border-bottom: 1px solid #3A3A3A; display: flex; align-items: center; gap: 10px; cursor: pointer; font-family: Tahoma, Verdana, sans-serif; }
+        .vk-mob-side-menu-item { padding: 12px 14px; color: #FFFFFF; font-size: 13px; border-bottom: 1px solid #3A3A3A; display: flex; align-items: center; gap: 10px; cursor: pointer; font-family: Tahoma, Verdana, sans-serif; text-decoration: none; }
         .vk-mob-side-menu-item:active { background: #3A3A3A; }
         .vk-mob-side-menu-item svg { width: 20px; height: 20px; fill: #8899AA; flex-shrink: 0; }
         .vk-mob-side-menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; display: none; }
@@ -274,7 +298,6 @@
 
     <div id="offline-banner">⚠️ Нет соединения с интернетом. Проверьте подключение.</div>
 
-    <!-- ЭКРАН ВХОДА -->
     <div id="auth-screen">
         <div class="auth-header-bar">
             <svg viewBox="0 0 24 24"><path d="M21.6 8.5c.3-.9.6-1.4-1.2-1.4h-2.9c-.9 0-1.3.5-1.5 1.2L14.5 13l-1.7-4.9c-.2-.6-.6-1-1.4-1H8.8c-.9 0-1.2.5-1.2.9 0 1.2 2.4 7.6 2.4 7.6s-1.6 2.3-1.8 2.5c-.2.2-.3.5-.3.8 0 .4.1.8.8.8h2.9v4.1c0 .5.2.7.8.7h2.5c.5 0 .8-.3.8-.8v-5.5c0-.8.4-1 1.2-1h1.4c1.2 0 1.4-.6 1.6-1.3l2.1-5.9z"/></svg>
@@ -308,6 +331,7 @@
                 </div>
             </div>
             <div class="nav-links">
+                <a href="https://www.donationalerts.com/r/arteh_k_k_" target="_blank" rel="noopener" class="donate-btn">💛 донат</a>
                 <a href="#">люди</a>
                 <a href="#">сообщества</a>
                 <a href="#">игры</a>
@@ -321,6 +345,7 @@
             <div class="desktop-sidebar">
                 <ul>
                     <li><a href="#" onclick="showDeskPage('wall'); return false;"><b>Моя Страница</b> <span style="font-weight:normal;color:#777;font-size:11px;">ред.</span></a></li>
+                    <li><a href="#" onclick="showDeskPage('people'); return false;">Люди</a></li>
                     <li><a href="#" onclick="showDeskPage('friends'); return false;">Мои Друзья</a></li>
                     <li><a href="#" onclick="showDeskPage('photos'); return false;">Мои Фотографии</a></li>
                     <li><a href="#" onclick="showDeskPage('videos'); return false;">Мои Видеозаписи</a></li>
@@ -365,6 +390,14 @@
                     </div>
                 </div>
 
+                <div id="desk-page-people" style="display:none;">
+                    <div class="desktop-page-title">Люди</div>
+                    <div class="friends-search-box">
+                        <input type="text" id="desk-people-search" placeholder="Поиск людей..." oninput="renderDesktopPeople(this.value)">
+                    </div>
+                    <div class="desktop-page-content"><div id="desk-people-list" class="people-list"></div></div>
+                </div>
+
                 <div id="desk-page-news" style="display:none;">
                     <div class="desktop-page-title">Новости</div>
                     <div class="desktop-page-content"><div id="desk-news-content"></div></div>
@@ -393,7 +426,6 @@
                     </div>
                 </div>
 
-                <!-- ПОДАРКИ (десктоп) -->
                 <div id="desk-page-gifts" style="display:none;">
                     <div class="desktop-page-title">Мои Подарки</div>
                     <div class="desktop-page-content">
@@ -419,9 +451,9 @@
                     <div class="desktop-page-title" id="desk-friends-title">Мои Друзья</div>
                     <div id="desk-friends-list-view">
                         <div class="friends-search-box">
-                            <input type="text" id="desk-friends-search" placeholder="Поиск людей..." oninput="searchUsers('desktop')">
+                            <input type="text" id="desk-friends-search" placeholder="Поиск друзей..." oninput="renderDesktopFriends(this.value)">
                         </div>
-                        <div class="desktop-page-content"><div id="desk-friends-list"></div></div>
+                        <div class="desktop-page-content"><div id="desk-friends-list" class="people-list"></div></div>
                     </div>
                     <div id="desk-friends-profile-view" style="display:none;">
                         <div class="desktop-page-content" id="desk-friends-profile"></div>
@@ -447,6 +479,10 @@
                 <div class="name" id="vk-side-name">Загрузка...</div>
                 <div class="status" id="vk-side-status">онлайн</div>
             </div>
+            <div class="vk-mob-side-menu-item" onclick="switchMobTab('people')">
+                <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                Люди
+            </div>
             <div class="vk-mob-side-menu-item" onclick="switchMobTab('friends')">
                 <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                 Друзья
@@ -471,6 +507,10 @@
                 <svg viewBox="0 0 24 24"><path d="M22 3H2v16h20V3z"/></svg>
                 Новости
             </div>
+            <a href="https://www.donationalerts.com/r/arteh_k_k_" target="_blank" rel="noopener" class="vk-mob-side-menu-item" style="background:#FF6B35; color:#fff;">
+                <svg viewBox="0 0 24 24" style="fill:#fff;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                💛 Поддержать (Донат)
+            </a>
             <div class="vk-mob-side-menu-item" onclick="logout()">
                 <svg viewBox="0 0 24 24"><path d="M10 17l1.41-1.41L8.83 13H20v-2H8.83l2.58-2.59L10 7l-5 5z"/></svg>
                 Выйти
@@ -516,10 +556,17 @@
             <div id="mobile-wall-content"></div>
         </div>
 
+        <div id="mob-people" class="mobile-view-container">
+            <div style="padding:8px; background:#D6DEE5; border-bottom:1px solid #A0AEB8;">
+                <input type="text" id="mob-people-search" placeholder="Поиск людей" style="width:100%; padding:6px 10px; border:1px solid #9BAAB8; border-radius:12px; font-size:13px; background:#fff; outline:none;" oninput="renderMobilePeople(this.value)">
+            </div>
+            <div id="mobile-people-list"></div>
+        </div>
+
         <div id="mob-friends" class="mobile-view-container">
             <div id="mob-friends-list-view">
                 <div style="padding:8px; background:#D6DEE5; border-bottom:1px solid #A0AEB8;">
-                    <input type="text" id="mob-search-input" placeholder="Поиск людей" style="width:100%; padding:6px 10px; border:1px solid #9BAAB8; border-radius:12px; font-size:13px; background:#fff; outline:none;" oninput="searchUsers('mobile')">
+                    <input type="text" id="mob-search-input" placeholder="Поиск друзей" style="width:100%; padding:6px 10px; border:1px solid #9BAAB8; border-radius:12px; font-size:13px; background:#fff; outline:none;" oninput="searchUsers('mobile')">
                 </div>
                 <div id="mobile-friends-list"></div>
             </div>
@@ -537,7 +584,6 @@
             <div id="mobile-photos-list" style="padding:6px;"></div>
         </div>
 
-        <!-- ПОДАРКИ (мобильный) -->
         <div id="mob-gifts" class="mobile-view-container">
             <div style="background:#FFF8E1; border-bottom:1px solid #F0AD4E; padding:8px 12px; font-size:13px;">💰 У вас: <b><span id="mob-gifts-coins">0</span> монет</b></div>
             <div class="vk-mob-section">
@@ -649,7 +695,6 @@
     </div>
 
     <script>
-        // ================== КОНФИГУРАЦИЯ FIREBASE ==================
         var firebaseConfig = {
             apiKey: "AIzaSyCIBVlQhliefITacCWgtHJlol0s3QWYcZU",
             authDomain: "vk11-9074e.firebaseapp.com",
@@ -685,12 +730,6 @@
             'founder':   { text: 'Основатель',            cls: 'badge-founder' }
         };
 
-        // ================== ПОДАРКИ ==================
-        // Чтобы добавить подарок — скопируй строку и поменяй поля.
-        // id — уникальный (латиница, без пробелов)
-        // name — как отображать (эмодзи пробел Название)
-        // price — целое число монет
-        // img — ссылка на картинку в папке gifts (или оставь пустым — будет эмодзи)
         var GIFTS = [
             { id: 'rose',   name: '🌹 Роза',     price: 10, img: 'https://artehkk.github.io/vk11/gifts/rose.png' },
             { id: 'bear',   name: '🧸 Мишка',    price: 15, img: 'https://artehkk.github.io/vk11/gifts/bear.png' },
@@ -704,7 +743,6 @@
         function giftPrice(id) { var g = GIFTS.find(function(x) { return x.id === id; }); return g ? g.price : 0; }
         function giftImg(id) { var g = GIFTS.find(function(x) { return x.id === id; }); return g ? (g.img || '') : ''; }
 
-        // ================== УТИЛИТЫ ==================
         function escapeHtml(text) {
             if (!text) return "";
             var map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
@@ -748,20 +786,53 @@
             return ' <span class="user-badge ' + b.cls + '">' + b.text + '</span>';
         }
 
-        // ================== ГЛОБАЛЬНЫЙ КЛИК ==================
+        function checkFriendship(friendId) {
+            return new Promise(function(resolve) {
+                db.collection('friends').where('userId', '==', currentUser.uid).where('friendId', '==', friendId).get()
+                    .then(function(snap) { resolve(!snap.empty); })
+                    .catch(function() { resolve(false); });
+            });
+        }
+
+        function addFriend(friendId, friendName) {
+            db.collection('friends').where('userId', '==', currentUser.uid).where('friendId', '==', friendId).get()
+                .then(function(snap) {
+                    if (!snap.empty) { alert('Уже в друзьях'); return; }
+                    db.collection('friends').add({
+                        userId: currentUser.uid,
+                        friendId: friendId,
+                        friendName: friendName,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    }).then(function() {
+                        alert('✅ ' + friendName + ' добавлен в друзья!');
+                        if (window.innerWidth <= 768) { renderMobileFriends(); renderMobilePeople(''); }
+                        else { renderDesktopFriends(''); renderDesktopPeople(''); }
+                    });
+                });
+        }
+
+        function removeFriend(friendId, friendName) {
+            if (!confirm('Удалить ' + friendName + ' из друзей?')) return;
+            db.collection('friends').where('userId', '==', currentUser.uid).where('friendId', '==', friendId).get()
+                .then(function(snap) {
+                    var batch = db.batch();
+                    snap.forEach(function(doc) { batch.delete(doc.ref); });
+                    batch.commit().then(function() {
+                        alert('✅ Удалён из друзей');
+                        if (window.innerWidth <= 768) { renderMobileFriends(); renderMobilePeople(''); }
+                        else { renderDesktopFriends(''); renderDesktopPeople(''); }
+                    });
+                });
+        }
+
         document.addEventListener('click', function(e) {
-            var friendEl = e.target.closest('.friend-item[data-user-id], .vk-mob-list-item[data-user-id]');
-            if (friendEl) {
+            var friendEl = e.target.closest('.friend-item[data-user-id]');
+            if (friendEl && !e.target.closest('button')) {
                 var userId = friendEl.getAttribute('data-user-id');
                 if (userId) {
                     var isMobile = window.innerWidth <= 768;
                     if (isMobile) openUserProfileMobile(userId); else openUserProfileDesktop(userId);
                 }
-            }
-            var chatEl = e.target.closest('.chat-item[data-user-id], .vk-mob-list-item[data-chat-id]');
-            if (chatEl) {
-                var chatId = chatEl.getAttribute('data-chat-id') || chatEl.getAttribute('data-user-id');
-                if (chatId) openChat(chatId);
             }
         });
 
@@ -848,7 +919,7 @@
             if (unsubscribeChat) unsubscribeChat();
             if (unsubscribeWall) unsubscribeWall();
             if (unsubscribeNews) unsubscribeNews();
-            var map = { news: 'news', wall: 'wall', friends: 'friends', msg: 'messages', messages: 'messages', photos: 'photos', gifts: 'gifts' };
+            var map = { news: 'news', wall: 'wall', friends: 'friends', msg: 'messages', messages: 'messages', photos: 'photos', gifts: 'gifts', people: 'people' };
             var realTab = map[tab] || 'wall';
 
             document.querySelectorAll('.vk-top-tab').forEach(function(t) {
@@ -870,6 +941,7 @@
                 document.getElementById('mob-friends-profile-view').style.display = 'none';
                 renderMobileFriends();
             }
+            if (realTab === 'people') renderMobilePeople('');
             if (realTab === 'wall') { loadUserProfile(); renderMobileWall(); }
             if (realTab === 'news') renderMobileNews();
             if (realTab === 'messages') renderMobileMessages();
@@ -1294,14 +1366,13 @@
                         var cl = 0, cc = {}; if (!postIds.length) cl = postIds.length;
                         postIds.forEach(function(pid) {
                             db.collection('comments').where('postId', '==', pid).get().then(function(cs) {
-                                cc[pid] = cs.size; cl++; if (cl === postIds.length) renderDesktopWallHtml(posts, cc);
-                            }).catch(function() { cc[pid] = 0; cl++; if (cl === postIds.length) renderDesktopWallHtml(posts, cc); });
+                                cc[pid] = cs.size; cl++; if (cl === postIds.length) renderDesktopWallHtml(posts, cc, container);
+                            }).catch(function() { cc[pid] = 0; cl++; if (cl === postIds.length) renderDesktopWallHtml(posts, cc, container); });
                         });
                     });
                 });
         }
-        function renderDesktopWallHtml(posts, cc) {
-            var container = document.getElementById('desktop-wall-content');
+        function renderDesktopWallHtml(posts, cc, container) {
             var html = ''; var promises = [];
             posts.forEach(function(item) {
                 var p = item.data, pid = item.id;
@@ -1354,63 +1425,153 @@
         }
         function badgeHtmlSafe(b) { return buildBadgeHtml(b); }
 
-        // ================== ДРУЗЬЯ ==================
-        function renderMobileFriends() {
-            var container = document.getElementById('mobile-friends-list');
-            db.collection('users').get()
-                .then(function(snap) {
-                    if (snap.empty) { container.innerHTML = '<div class="mobile-empty"><h3>Пользователей нет</h3></div>'; return; }
-                    var html = ''; var promises = [];
-                    snap.forEach(function(doc) {
-                        if (doc.id === currentUser.uid) return;
-                        var u = doc.data(), name = u.name || 'Без имени';
-                        var promise = Promise.all([getUserAvatar(doc.id, name), getBadgeForUser(doc.id)]).then(function(res) {
-                            html += '<div class="vk-mob-list-item" data-user-id="' + doc.id + '"><img src="' + res[0] + '"><div class="vk-mob-list-item-info"><div class="vk-mob-list-item-name">' + escapeHtml(name) + badgeHtmlSafe(res[1]) + '</div><div class="vk-mob-list-item-last">нажми, чтобы открыть профиль</div></div></div>';
-                        });
-                        promises.push(promise);
-                    });
-                    Promise.all(promises).then(function() { if (!html) container.innerHTML = '<div class="mobile-empty"><h3>Пользователей нет</h3></div>'; else container.innerHTML = html; });
-                });
-        }
-        function renderDesktopFriends(searchQuery) {
-            var container = document.getElementById('desk-friends-list');
+        // ================== ЛЮДИ (ДЕСКТОП) ==================
+        function renderDesktopPeople(searchQuery) {
+            var container = document.getElementById('desk-people-list');
+            if (!container) return;
+            container.innerHTML = '<div style="padding:20px;color:#777;">Загрузка...</div>';
             db.collection('users').get()
                 .then(function(snap) {
                     if (snap.empty) { container.innerHTML = '<div style="padding:20px;color:#777;">Пользователей нет</div>'; return; }
-                    var html = ''; var promises = [];
+                    var html = '';
+                    var promises = [];
                     var q = (searchQuery || '').toLowerCase().trim();
                     snap.forEach(function(doc) {
                         if (doc.id === currentUser.uid) return;
-                        var u = doc.data(), name = u.name || 'Без имени';
+                        var u = doc.data();
+                        var name = u.name || 'Без имени';
                         if (q && name.toLowerCase().indexOf(q) === -1) return;
-                        var promise = Promise.all([getUserAvatar(doc.id, name), getBadgeForUser(doc.id)]).then(function(res) {
-                            html += '<div class="friend-item" data-user-id="' + doc.id + '" style="padding:10px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #eee;"><img src="' + res[0] + '" style="width:45px;height:45px;object-fit:cover;border:1px solid #ddd;"><div><b>' + escapeHtml(name) + '</b>' + badgeHtmlSafe(res[1]) + '</div></div>';
+                        var promise = Promise.all([getUserAvatar(doc.id, name), getBadgeForUser(doc.id), checkFriendship(doc.id)]).then(function(res) {
+                            var avatar = res[0], badge = res[1], isFriend = res[2];
+                            html += '<div class="person-card">';
+                            html += '<img src="' + avatar + '" style="cursor:pointer;" onclick="openUserProfileDesktop(\'' + doc.id + '\')">';
+                            html += '<div class="person-info"><div class="person-name" style="cursor:pointer;" onclick="openUserProfileDesktop(\'' + doc.id + '\')">' + escapeHtml(name) + badgeHtmlSafe(badge) + '</div>';
+                            if (u.status) html += '<div class="person-status">' + escapeHtml(u.status) + '</div>';
+                            html += '</div>';
+                            html += '<div class="person-actions">';
+                            if (isFriend) {
+                                html += '<button class="person-btn friend" onclick="openChat(\'' + doc.id + '\')">✉ Написать</button>';
+                                html += '<button class="person-btn danger" onclick="removeFriend(\'' + doc.id + '\', \'' + escapeHtml(name) + '\')">✕</button>';
+                            } else {
+                                html += '<button class="person-btn" onclick="addFriend(\'' + doc.id + '\', \'' + escapeHtml(name) + '\')">+ Добавить</button>';
+                                html += '<button class="person-btn secondary" onclick="openChat(\'' + doc.id + '\')">✉</button>';
+                            }
+                            html += '</div></div>';
                         });
                         promises.push(promise);
                     });
-                    Promise.all(promises).then(function() { if (!html) container.innerHTML = '<div style="padding:20px;color:#777;">Никого</div>'; else container.innerHTML = html; });
+                    Promise.all(promises).then(function() {
+                        if (!html) container.innerHTML = '<div style="padding:20px;color:#777;">Никого не найдено</div>';
+                        else container.innerHTML = html;
+                    });
                 });
         }
-        function searchUsers(device) {
-            if (device === 'desktop') renderDesktopFriends(document.getElementById('desk-friends-search').value);
-            else renderMobileFriendsSearch(document.getElementById('mob-search-input').value);
-        }
-        function renderMobileFriendsSearch(query) {
-            var container = document.getElementById('mobile-friends-list');
+
+        // ================== ЛЮДИ (МОБИЛЬНЫЙ) ==================
+        function renderMobilePeople(searchQuery) {
+            var container = document.getElementById('mobile-people-list');
+            if (!container) return;
+            container.innerHTML = '<div class="mobile-empty"><h3>Загрузка...</h3></div>';
             db.collection('users').get()
                 .then(function(snap) {
-                    var html = ''; var promises = []; var q = (query || '').toLowerCase().trim();
+                    if (snap.empty) { container.innerHTML = '<div class="mobile-empty"><h3>Пользователей нет</h3></div>'; return; }
+                    var html = '';
+                    var promises = [];
+                    var q = (searchQuery || '').toLowerCase().trim();
                     snap.forEach(function(doc) {
                         if (doc.id === currentUser.uid) return;
-                        var u = doc.data(), name = u.name || 'Без имени';
+                        var u = doc.data();
+                        var name = u.name || 'Без имени';
                         if (q && name.toLowerCase().indexOf(q) === -1) return;
-                        var promise = Promise.all([getUserAvatar(doc.id, name), getBadgeForUser(doc.id)]).then(function(res) {
-                            html += '<div class="vk-mob-list-item" data-user-id="' + doc.id + '"><img src="' + res[0] + '"><div class="vk-mob-list-item-info"><div class="vk-mob-list-item-name">' + escapeHtml(name) + badgeHtmlSafe(res[1]) + '</div></div></div>';
+                        var promise = Promise.all([getUserAvatar(doc.id, name), getBadgeForUser(doc.id), checkFriendship(doc.id)]).then(function(res) {
+                            var avatar = res[0], badge = res[1], isFriend = res[2];
+                            html += '<div class="vk-mob-list-item" style="padding:8px;">';
+                            html += '<img src="' + avatar + '" style="cursor:pointer;" onclick="openUserProfileMobile(\'' + doc.id + '\')">';
+                            html += '<div class="vk-mob-list-item-info" style="cursor:pointer;" onclick="openUserProfileMobile(\'' + doc.id + '\')"><div class="vk-mob-list-item-name">' + escapeHtml(name) + badgeHtmlSafe(badge) + '</div></div>';
+                            html += '<div style="display:flex; gap:4px;">';
+                            if (isFriend) {
+                                html += '<button class="person-btn friend" style="font-size:10px; padding:5px 8px;" onclick="event.stopPropagation(); openChat(\'' + doc.id + '\')">✉</button>';
+                            } else {
+                                html += '<button class="person-btn" style="font-size:10px; padding:5px 8px;" onclick="event.stopPropagation(); addFriend(\'' + doc.id + '\', \'' + escapeHtml(name) + '\')">+ Друг</button>';
+                            }
+                            html += '</div></div>';
                         });
                         promises.push(promise);
                     });
-                    Promise.all(promises).then(function() { if (!html) container.innerHTML = '<div class="mobile-empty"><h3>Никого</h3></div>'; else container.innerHTML = html; });
+                    Promise.all(promises).then(function() {
+                        if (!html) container.innerHTML = '<div class="mobile-empty"><h3>Никого</h3></div>';
+                        else container.innerHTML = html;
+                    });
                 });
+        }
+
+        // ================== ДРУЗЬЯ (ДЕСКТОП) ==================
+        function renderDesktopFriends(searchQuery) {
+            var container = document.getElementById('desk-friends-list');
+            if (!container) return;
+            container.innerHTML = '<div style="padding:20px;color:#777;">Загрузка...</div>';
+            db.collection('friends').where('userId', '==', currentUser.uid).get()
+                .then(function(snap) {
+                    if (snap.empty) {
+                        container.innerHTML = '<div style="padding:20px;color:#777;">У вас пока нет друзей. Перейдите в раздел «Люди», чтобы добавить.</div>';
+                        return;
+                    }
+                    var friendList = [];
+                    snap.forEach(function(doc) { var f = doc.data(); friendList.push({ friendId: f.friendId, friendName: f.friendName }); });
+                    var html = '';
+                    var promises = [];
+                    var q = (searchQuery || '').toLowerCase().trim();
+                    friendList.forEach(function(f) {
+                        if (q && (f.friendName || '').toLowerCase().indexOf(q) === -1) return;
+                        var promise = Promise.all([getUserAvatar(f.friendId, f.friendName), getBadgeForUser(f.friendId)]).then(function(res) {
+                            html += '<div class="person-card">';
+                            html += '<img src="' + res[0] + '" style="cursor:pointer;" onclick="openUserProfileDesktop(\'' + f.friendId + '\')">';
+                            html += '<div class="person-info"><div class="person-name" style="cursor:pointer;" onclick="openUserProfileDesktop(\'' + f.friendId + '\')">' + escapeHtml(f.friendName || 'Друг') + badgeHtmlSafe(res[1]) + '</div></div>';
+                            html += '<div class="person-actions">';
+                            html += '<button class="person-btn secondary" onclick="openChat(\'' + f.friendId + '\')">✉ Написать</button>';
+                            html += '<button class="person-btn danger" onclick="removeFriend(\'' + f.friendId + '\', \'' + escapeHtml(f.friendName) + '\')">✕ Удалить</button>';
+                            html += '</div></div>';
+                        });
+                        promises.push(promise);
+                    });
+                    Promise.all(promises).then(function() {
+                        if (!html) container.innerHTML = '<div style="padding:20px;color:#777;">Никого не найдено</div>';
+                        else container.innerHTML = html;
+                    });
+                });
+        }
+
+        // ================== ДРУЗЬЯ (МОБИЛЬНЫЙ) ==================
+        function renderMobileFriends() {
+            var container = document.getElementById('mobile-friends-list');
+            container.innerHTML = '<div class="mobile-empty"><h3>Загрузка...</h3></div>';
+            db.collection('friends').where('userId', '==', currentUser.uid).get()
+                .then(function(snap) {
+                    if (snap.empty) {
+                        container.innerHTML = '<div class="mobile-empty"><h3>У вас пока нет друзей. Перейдите в «Люди».</h3></div>';
+                        return;
+                    }
+                    var friendList = [];
+                    snap.forEach(function(doc) { var f = doc.data(); friendList.push({ friendId: f.friendId, friendName: f.friendName }); });
+                    var html = '';
+                    var promises = [];
+                    friendList.forEach(function(f) {
+                        var promise = Promise.all([getUserAvatar(f.friendId, f.friendName), getBadgeForUser(f.friendId)]).then(function(res) {
+                            html += '<div class="vk-mob-list-item" style="padding:8px;">';
+                            html += '<img src="' + res[0] + '" style="cursor:pointer;" onclick="openUserProfileMobile(\'' + f.friendId + '\')">';
+                            html += '<div class="vk-mob-list-item-info" style="cursor:pointer;" onclick="openUserProfileMobile(\'' + f.friendId + '\')"><div class="vk-mob-list-item-name">' + escapeHtml(f.friendName || 'Друг') + badgeHtmlSafe(res[1]) + '</div><div class="vk-mob-list-item-last">нажми, чтобы открыть профиль</div></div>';
+                            html += '<button class="person-btn" style="font-size:11px; padding:5px 8px;" onclick="event.stopPropagation(); openChat(\'' + f.friendId + '\')">✉</button>';
+                            html += '</div>';
+                        });
+                        promises.push(promise);
+                    });
+                    Promise.all(promises).then(function() { container.innerHTML = html; });
+                });
+        }
+
+        function searchUsers(device) {
+            if (device === 'desktop') renderDesktopFriends(document.getElementById('desk-friends-search').value);
+            else renderMobileFriends();
         }
 
         function openUserProfileDesktop(userId) {
@@ -1428,7 +1589,7 @@
                     var av = data.photoURL || generateAvatar(userId, data.name);
                     listView.style.display = 'none'; profileView.style.display = 'block';
                     if (title) title.innerText = 'Страница ' + (data.name || 'Пользователя');
-                    var h = '<button class="edit-btn" onclick="closeUserProfileDesktop()" style="background:#ccc; color:#333; margin-bottom:10px;">← Назад к друзьям</button>';
+                    var h = '<button class="edit-btn" onclick="closeUserProfileDesktop()" style="background:#ccc; color:#333; margin-bottom:10px;">← Назад</button>';
                     h += buildProfileHtml(data, av, userId, false);
                     profileBox.innerHTML = h;
                     renderUserWallDesktopInFriends(userId);
@@ -1447,26 +1608,11 @@
                         var cl = 0, cc = {}; if (!postIds.length) cl = postIds.length;
                         postIds.forEach(function(pid) {
                             db.collection('comments').where('postId', '==', pid).get().then(function(cs) {
-                                cc[pid] = cs.size; cl++; if (cl === postIds.length) renderDesktopWallHtmlInFriends(posts, cc, container);
-                            }).catch(function() { cc[pid] = 0; cl++; if (cl === postIds.length) renderDesktopWallHtmlInFriends(posts, cc, container); });
+                                cc[pid] = cs.size; cl++; if (cl === postIds.length) renderDesktopWallHtml(posts, cc, container);
+                            }).catch(function() { cc[pid] = 0; cl++; if (cl === postIds.length) renderDesktopWallHtml(posts, cc, container); });
                         });
                     });
                 });
-        }
-        function renderDesktopWallHtmlInFriends(posts, cc, container) {
-            var html = ''; var promises = [];
-            posts.forEach(function(item) {
-                var p = item.data, pid = item.id;
-                if (!p.authorId) return;
-                var date = p.createdAt ? p.createdAt.toDate().toLocaleString('ru-RU') : '';
-                var img = p.imageURL ? '<div class="post-image-container"><img src="' + p.imageURL + '"></div>' : '';
-                var vid = p.videoUrl ? '<div class="video-embed"><iframe src="' + p.videoUrl + '" allowfullscreen style="width:100%; max-width:400px; height:250px;"></iframe></div>' : '';
-                var promise = Promise.all([getUserAvatar(p.authorId, p.authorName), getBadgeForUser(p.authorId)]).then(function(res) {
-                    html += '<div class="desktop-post"><img src="' + res[0] + '" class="post-avatar"><div class="post-body"><span class="author">' + escapeHtml(p.authorName) + '</span>' + badgeHtmlSafe(res[1]) + '<span class="date">' + date + '</span><div class="text">' + escapeHtml(p.text) + '</div>' + img + vid + buildPostActions(pid, cc[pid] || 0) + buildCommentsBlock(pid) + '</div></div>';
-                });
-                promises.push(promise);
-            });
-            Promise.all(promises).then(function() { container.innerHTML = html; });
         }
         function closeUserProfileDesktop() {
             document.getElementById('desk-friends-list-view').style.display = 'block';
@@ -1528,7 +1674,7 @@
                     snap.forEach(function(doc) {
                         var f = doc.data();
                         var promise = Promise.all([getUserAvatar(f.friendId, f.friendName), getBadgeForUser(f.friendId)]).then(function(res) {
-                            html += '<div class="chat-item" data-user-id="' + f.friendId + '" style="padding:10px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #ddd;"><img src="' + res[0] + '" style="width:40px;height:40px;object-fit:cover;"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b>' + badgeHtmlSafe(res[1]) + '</div></div>';
+                            html += '<div class="chat-item" data-user-id="' + f.friendId + '" style="padding:10px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #ddd;cursor:pointer;" onclick="openChat(\'' + f.friendId + '\')"><img src="' + res[0] + '" style="width:40px;height:40px;object-fit:cover;"><div><b>' + escapeHtml(f.friendName || 'Друг') + '</b>' + badgeHtmlSafe(res[1]) + '</div></div>';
                         });
                         promises.push(promise);
                     });
@@ -1545,7 +1691,7 @@
                     snap.forEach(function(doc) {
                         var f = doc.data();
                         var promise = Promise.all([getUserAvatar(f.friendId, f.friendName), getBadgeForUser(f.friendId)]).then(function(res) {
-                            html += '<div class="vk-mob-list-item" data-chat-id="' + f.friendId + '"><img src="' + res[0] + '"><div class="vk-mob-list-item-info"><div class="vk-mob-list-item-name">' + escapeHtml(f.friendName || 'Друг') + badgeHtmlSafe(res[1]) + '</div></div></div>';
+                            html += '<div class="vk-mob-list-item" data-chat-id="' + f.friendId + '" onclick="openChat(\'' + f.friendId + '\')"><img src="' + res[0] + '"><div class="vk-mob-list-item-info"><div class="vk-mob-list-item-name">' + escapeHtml(f.friendName || 'Друг') + badgeHtmlSafe(res[1]) + '</div></div></div>';
                         });
                         promises.push(promise);
                     });
@@ -1602,7 +1748,7 @@
             db.collection('messages').add({ chatId: chatId, fromId: currentUser.uid, toId: currentChatPartnerId, text: text, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
         }
 
-        // ================== ПОДАРКИ (функции) ==================
+        // ================== ПОДАРКИ ==================
         function renderDesktopGifts() {
             var shopEl = document.getElementById('desk-gifts-shop');
             var myEl = document.getElementById('desk-my-gifts');
@@ -1736,11 +1882,12 @@
 
         // ================== НАВИГАЦИЯ ДЕСКТОП ==================
         function showDeskPage(page) {
-            var pages = ['wall', 'news', 'music', 'photos', 'videos', 'groups', 'settings', 'friends', 'messages', 'gifts'];
+            var pages = ['wall', 'news', 'music', 'photos', 'videos', 'groups', 'settings', 'friends', 'messages', 'gifts', 'people'];
             for (var i = 0; i < pages.length; i++) { var el = document.getElementById('desk-page-' + pages[i]); if (el) el.style.display = 'none'; }
             var pageEl = document.getElementById('desk-page-' + page);
             if (pageEl) pageEl.style.display = 'block';
             if (page === 'wall') { document.getElementById('desk-wall-post-input-block').style.display = 'block'; document.getElementById('desk-wall-title').innerText = 'Моя Страница'; loadUserProfile(); renderDesktopWall(); }
+            else if (page === 'people') renderDesktopPeople('');
             else if (page === 'news') renderDesktopNews();
             else if (page === 'photos') renderDesktopPhotos();
             else if (page === 'videos') renderDesktopVideos();
@@ -1766,8 +1913,8 @@
                                 var cl = 0, cc = {}; if (!postIds.length) cl = postIds.length;
                                 postIds.forEach(function(pid) {
                                     db.collection('comments').where('postId', '==', pid).get().then(function(cs) {
-                                        cc[pid] = cs.size; cl++; if (cl === postIds.length) renderDesktopWallHtmlInFriends(posts, cc, container);
-                                    }).catch(function() { cc[pid] = 0; cl++; if (cl === postIds.length) renderDesktopWallHtmlInFriends(posts, cc, container); });
+                                        cc[pid] = cs.size; cl++; if (cl === postIds.length) renderDesktopWallHtml(posts, cc, container);
+                                    }).catch(function() { cc[pid] = 0; cl++; if (cl === postIds.length) renderDesktopWallHtml(posts, cc, container); });
                                 });
                             });
                         });
