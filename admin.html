@@ -13,7 +13,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tahoma', 'Verdana', Arial, sans-serif; }
         body { background: #DCE1E7; color: #2B587A; }
 
-        /* ЭКРАН ВХОДА */
         #login-screen { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background: #2B587A; }
         .login-box { background: #fff; padding: 30px; border-radius: 4px; width: 90%; max-width: 400px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
         .login-box h1 { font-size: 20px; color: #d9534f; margin-bottom: 20px; text-align: center; }
@@ -24,7 +23,6 @@
         #login-error { color: #d9534f; font-size: 12px; margin-bottom: 10px; display: none; text-align: center; }
         .back-link { display: block; text-align: center; margin-top: 15px; font-size: 12px; color: #5E83A9; }
 
-        /* АДМИНКА */
         #admin-panel { display: none; min-height: 100vh; background: #DCE1E7; }
         .admin-header { background: linear-gradient(to bottom, #d9534f, #a02b1f); color: #fff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .admin-header h1 { font-size: 18px; }
@@ -79,13 +77,12 @@
 </head>
 <body>
 
-    <!-- ЭКРАН ВХОДА -->
     <div id="login-screen">
         <div class="login-box">
             <h1>⚙️ Админ-панель</h1>
-            <p style="font-size:12px; color:#777; text-align:center; margin-bottom:15px;">Только для администратора</p>
+            <p style="font-size:12px; color:#777; text-align:center; margin-bottom:15px;">Только для artehkk</p>
             <div id="login-error"></div>
-            <label>Логин (имя пользователя):</label>
+            <label>Логин:</label>
             <input type="text" id="admin-login" placeholder="artehkk">
             <label>Пароль:</label>
             <input type="password" id="admin-password" placeholder="••••••••" onkeypress="if(event.key==='Enter') adminLogin()">
@@ -94,7 +91,6 @@
         </div>
     </div>
 
-    <!-- АДМИН-ПАНЕЛЬ -->
     <div id="admin-panel">
         <div class="admin-header">
             <h1>⚙️ Админ-панель ВКонтакте</h1>
@@ -121,7 +117,6 @@
     </div>
 
     <script>
-        // ================== КОНФИГУРАЦИЯ FIREBASE ==================
         var firebaseConfig = {
             apiKey: "AIzaSyCIBVlQhliefITacCWgtHJlol0s3QWYcZU",
             authDomain: "vk11-9074e.firebaseapp.com",
@@ -136,6 +131,7 @@
         var currentAdmin = null;
         var usersCache = [];
         var avatarCache = {};
+        var ADMIN_NAME = 'artehkk';
 
         var BADGES = {
             'developer': { text: 'Разработчик ВКонтакте', cls: 'badge-developer' },
@@ -151,7 +147,6 @@
             return text.replace(/[&<>"']/g, function(m) { return map[m]; });
         }
 
-        // ================== ВХОД ==================
         function adminLogin() {
             var name = document.getElementById('admin-login').value.trim();
             var pass = document.getElementById('admin-password').value.trim();
@@ -160,10 +155,8 @@
 
             if (!name || !pass) { errEl.innerText = "Заполните поля"; errEl.style.display = 'block'; return; }
 
-            // Проверка: имя должно быть в списке админов
-            var admins = ['artehkk', 'arteh_k_k_'];
-            if (admins.indexOf(name) === -1) {
-                errEl.innerText = "⛔ У вас нет доступа";
+            if (name !== ADMIN_NAME) {
+                errEl.innerText = "⛔ Доступ только для artehkk";
                 errEl.style.display = 'block';
                 return;
             }
@@ -206,7 +199,6 @@
             document.getElementById('admin-password').value = '';
         }
 
-        // ================== СТАТИСТИКА ==================
         function loadStats() {
             db.collection('users').get().then(function(s) { document.getElementById('stat-users').innerText = s.size; });
             db.collection('posts').get().then(function(s) { document.getElementById('stat-posts').innerText = s.size; });
@@ -214,7 +206,6 @@
             db.collection('drawings').get().then(function(s) { document.getElementById('stat-drawings').innerText = s.size; });
         }
 
-        // ================== СПИСОК ПОЛЬЗОВАТЕЛЕЙ ==================
         function loadUsers() {
             db.collection('users').get().then(function(snap) {
                 usersCache = [];
@@ -275,7 +266,6 @@
             container.innerHTML = html;
         }
 
-        // ================== ДЕЙСТВИЯ ==================
         function addCoins(userId, inputId) {
             var amount = parseInt(document.getElementById(inputId).value) || 0;
             if (amount === 0) { alert("Введи число"); return; }
@@ -324,7 +314,6 @@
             }).catch(function(e) { alert("Ошибка: " + e.message); });
         }
 
-        // Генерация заглушки-аватара
         function generateAvatar(userId, name) {
             if (!userId) userId = 'unknown';
             var hash = userId.split('').reduce(function(a, b) { a = ((a << 5) - a) + b.charCodeAt(0); return a & a; }, 0);
@@ -334,15 +323,18 @@
             return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='40' fill='%23" + color + "%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='30' font-weight='bold'%3E" + letter + "%3C/text%3E%3C/svg%3E";
         }
 
-        // Проверка, что уже залогинен
         auth.onAuthStateChanged(function(user) {
-            if (user) {
+            if (user && user.displayName === ADMIN_NAME) {
                 currentAdmin = user;
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('admin-panel').style.display = 'block';
-                document.getElementById('admin-name').innerText = user.displayName || 'Админ';
+                document.getElementById('admin-name').innerText = user.displayName;
                 loadUsers();
                 loadStats();
+            } else if (user) {
+                auth.signOut();
+                document.getElementById('login-screen').style.display = 'flex';
+                document.getElementById('admin-panel').style.display = 'none';
             }
         });
     </script>
