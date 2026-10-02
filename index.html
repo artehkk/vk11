@@ -1593,7 +1593,13 @@ function renderDesktopGifts() {
     var sh = document.getElementById('desk-gifts-shop');
     var my = document.getElementById('desk-my-gifts');
     var h = '';
-    GIFTS.forEach(function(g){ h += '<div class="gift-card" onclick="giveGift(\''+g.id+'\')"><div class="gift-emoji">'+g.name.split(' ')[0]+'</div><div class="gift-name">'+g.name.split(' ').slice(1).join(' ')+'</div><div class="gift-price">💰 <b>'+g.price+'</b></div></div>'; });
+    GIFTS.forEach(function(g){
+        h += '<div class="gift-card" onclick="giveGift(\''+g.id+'\')">';
+        h += '<img src="'+g.img+'" style="width:80px;height:80px;object-fit:contain;display:block;margin:0 auto 6px;">';
+        h += '<div class="gift-name">'+g.name+'</div>';
+        h += '<div class="gift-price">💰 <b>'+g.price+'</b></div>';
+        h += '</div>';
+    });
     sh.innerHTML = h;
     renderMyGifts(my);
 }
@@ -1601,9 +1607,16 @@ function renderMobileGifts() {
     var sh = document.getElementById('mob-gifts-shop');
     var my = document.getElementById('mob-my-gifts');
     var h = '';
-    GIFTS.forEach(function(g){ h += '<div style="background:#fff;border:1px solid #C8D0D8;padding:10px;text-align:center;cursor:pointer;" onclick="giveGift(\''+g.id+'\')"><div style="font-size:38px;">'+g.name.split(' ')[0]+'</div><div style="font-size:11px;font-weight:bold;margin-top:4px;">'+g.name.split(' ').slice(1).join(' ')+'</div><div style="font-size:10px;color:#667788;">💰 <b>'+g.price+'</b></div></div>'; });
+    GIFTS.forEach(function(g){
+        h += '<div style="background:#fff;border:1px solid #C8D0D8;padding:10px;text-align:center;cursor:pointer;" onclick="giveGift(\''+g.id+'\')">';
+        h += '<img src="'+g.img+'" style="width:64px;height:64px;object-fit:contain;display:block;margin:0 auto 4px;">';
+        h += '<div style="font-size:12px;font-weight:bold;margin-top:4px;">'+g.name+'</div>';
+        h += '<div style="font-size:10px;color:#667788;">💰 <b>'+g.price+'</b></div>';
+        h += '</div>';
+    });
     sh.innerHTML = h;
     renderMyGifts(my);
+
 }
 function renderMyGifts(c) {
     c.innerHTML = '<div style="padding:10px;color:#777;">Загрузка...</div>';
@@ -1613,11 +1626,17 @@ function renderMyGifts(c) {
         s.forEach(function(d) {
             var g = d.data();
             var gift = GIFTS.find(function(x){return x.id === g.giftId;});
-            var nm = gift ? gift.name.split(' ').slice(1).join(' ') : 'Подарок';
-            var em = gift ? gift.name.split(' ')[0] : '🎁';
-            h += '<div style="background:#F9F9F9;border:1px solid #C5D0DB;padding:10px;margin-bottom:8px;display:flex;align-items:center;gap:12px;"><span style="font-size:36px;">'+em+'</span><div style="flex:1;"><div style="font-weight:bold;">'+nm+'</div><div style="font-size:11px;color:#8899AA;">от '+escapeHtml(g.fromName||'?')+'</div></div><button onclick="returnCoins(\''+d.id+'\',\''+g.fromId+'\',\''+g.giftId+'\')" style="background:#5E83A9;color:#fff;border:none;padding:5px 10px;cursor:pointer;font-size:11px;">↩ Вернуть</button></div>';
+            var nm = gift ? gift.name : 'Подарок';
+            var im = gift ? gift.img : '';
+            h += '<div style="background:#F9F9F9;border:1px solid #C5D0DB;padding:10px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">';
+            if (im) h += '<img src="'+im+'" style="width:48px;height:48px;object-fit:contain;">';
+            h += '<div style="flex:1;"><div style="font-weight:bold;">'+nm+'</div><div style="font-size:11px;color:#8899AA;">от '+escapeHtml(g.fromName||'?')+'</div></div>';
+            h += '<button onclick="returnCoins(\''+d.id+'\',\''+g.fromId+'\',\''+g.giftId+'\')" style="background:#5E83A9;color:#fff;border:none;padding:5px 10px;cursor:pointer;font-size:11px;">↩ Вернуть</button>';
+            h += '</div>';
         });
         c.innerHTML = h;
+    });
+
     });
 }
 function giveGift(gid) {
